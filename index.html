@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Animus — Discover Your Pet's Personality</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&family=Caveat:wght@600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --amber: #E8820C;
+    --amber-light: #F4A340;
+    --amber-pale: #FDE8CC;
+    --cream: #FBF7F0;
+    --sand: #F0E8D8;
+    --brown-dark: #2C1A0E;
+    --brown-mid: #5C3D1E;
+    --brown-soft: #8B6347;
+    --charcoal: #1E1E1E;
+    --white: #FFFFFF;
+    --green-accent: #3DAA7A;
+    --purple-accent: #7C5CBF;
+    --font-display: 'Playfair Display', serif;
+    --font-body: 'DM Sans', sans-serif;
+    --font-script: 'Caveat', cursive;
+    --shadow-warm: 0 8px 40px rgba(232,130,12,0.15);
+    --shadow-card: 0 4px 24px rgba(44,26,14,0.10);
+    --radius: 20px;
+    --radius-sm: 12px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--cream);
+    color: var(--brown-dark);
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ── PAGES ── */
+  .page { display: none; min-height: 100vh; }
+  .page.active { display: block; animation: fadeIn 0.4s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(251,247,240,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(232,130,12,0.12);
+    padding: 0 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 70px;
+  }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 1.5rem; font-weight: 900;
+    color: var(--brown-dark);
+    letter-spacing: -0.5px;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .nav-logo span { color: var(--amber); }
+  .nav-paw { font-size: 1.2rem; }
+  .nav-links { display: flex; gap: 32px; align-items: center; }
+  .nav-links a {
+    font-size: 0.9rem; font-weight: 500;
+    color: var(--brown-mid); text-decoration: none;
+    transition: color 0.2s;
+    cursor: pointer;
+  }
+  .nav-links a:hover { color: var(--amber); }
+  .nav-cta {
+    background: var(--amber); color: white;
+    border: none; border-radius: 50px;
+    padding: 10px 22px; font-size: 0.875rem; font-weight: 600;
+    cursor: pointer; transition: background 0.2s, transform 0.15s;
+    font-family: var(--font-body);
+  }
+  .nav-cta:hover { background: var(--amber-light); transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    padding: 80px 5% 0;
+    overflow: hidden;
+    min-height: 88vh;
+    display: flex; align-items: center;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 70% 40%, #FDE8CC 0%, transparent 70%),
+                radial-gradient(ellipse 50% 50% at 10% 80%, rgba(232,130,12,0.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-blob {
+    position: absolute; right: -60px; top: 50%;
+    transform: translateY(-50%);
+    width: 55vw; max-width: 700px;
+    background: linear-gradient(135deg, var(--amber) 0%, var(--amber-light) 50%, #F9C06B 100%);
+    border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%;
+    aspect-ratio: 1;
+    opacity: 0.12;
+    animation: blobMorph 8s ease-in-out infinite;
+  }
+  @keyframes blobMorph {
+    0%,100% { border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%; }
+    33% { border-radius: 45% 55% 40% 60% / 60% 40% 55% 45%; }
+    66% { border-radius: 55% 45% 60% 40% / 45% 55% 50% 50%; }
+  }
+  .hero-content { position: relative; z-index: 2; max-width: 580px; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--amber-pale); color: var(--amber);
+    font-size: 0.8rem; font-weight: 600; letter-spacing: 0.5px;
+    padding: 6px 16px; border-radius: 50px;
+    margin-bottom: 24px;
+    border: 1px solid rgba(232,130,12,0.25);
+  }
+  .hero-script {
+    font-family: var(--font-script);
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    color: var(--amber);
+    display: block; margin-bottom: 8px;
+    transform: rotate(-1.5deg);
+  }
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.8rem, 5.5vw, 4.2rem);
+    font-weight: 900;
+    line-height: 1.08;
+    color: var(--brown-dark);
+    letter-spacing: -2px;
+    margin-bottom: 22px;
+  }
+  .hero-title em { font-style: italic; color: var(--amber); }
+  .hero-sub {
+    font-size: 1.05rem; line-height: 1.65;
+    color: var(--brown-soft);
+    max-width: 430px;
+    margin-bottom: 36px;
+  }
+  .hero-actions { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--amber); color: white;
+    border: none; border-radius: 50px;
+    padding: 16px 36px; font-size: 1rem; font-weight: 600;
+    cursor: pointer; transition: all 0.2s;
+    font-family: var(--font-body);
+    box-shadow: 0 6px 24px rgba(232,130,12,0.35);
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary:hover { background: var(--amber-light); transform: translateY(-2px); box-shadow: 0 10px 32px rgba(232,130,12,0.4); }
+  .btn-ghost {
+    background: transparent; color: var(--brown-mid);
+    border: 2px solid rgba(44,26,14,0.15); border-radius: 50px;
+    padding: 14px 28px; font-size: 1rem; font-weight: 500;
+    cursor: pointer; transition: all 0.2s;
+    font-family: var(--font-body);
+  }
+  .btn-ghost:hover { border-color: var(--amber); color: var(--amber); }
+  .hero-stats {
+    display: flex; gap: 32px; margin-top: 52px;
+    padding-top: 32px; border-top: 1px solid rgba(44,26,14,0.08);
+  }
+  .stat-item { text-align: left; }
+  .stat-num { font-family: var(--font-display); font-size: 1.8rem; font-weight: 900; color: var(--amber); }
+  .stat-label { font-size: 0.8rem; color: var(--brown-soft); margin-top: 2px; }
+  .hero-visual {
+    position: absolute; right: 5%; top: 50%;
+    transform: translateY(-50%);
+    width: 44vw; max-width: 560px;
+    z-index: 2;
+  }
+  .hero-card {
+    background: white;
+    border-radius: 28px;
+    padding: 32px;
+    box-shadow: var(--shadow-warm), 0 2px 0 rgba(232,130,12,0.1);
+    position: relative;
+  }
+  .hero-card-header {
+    background: linear-gradient(135deg, var(--amber) 0%, #F4A340 100%);
+    border-radius: 18px;
+    padding: 28px;
+    color: white; text-align: center;
+    margin-bottom: 24px;
+    position: relative; overflow: hidden;
+  }
+  .hero-card-header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .hero-card-header h3 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; position: relative; }
+  .hero-card-header p { font-size: 0.85rem; opacity: 0.85; margin-top: 4px; position: relative; }
+  .hero-card-pets { font-size: 3rem; margin-bottom: 8px; }
+  .hero-card-steps { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .step-chip {
+    background: var(--sand);
+    border-radius: var(--radius-sm);
+    padding: 14px;
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .step-chip-icon { font-size: 1.3rem; }
+  .step-chip-text { font-size: 0.78rem; font-weight: 600; color: var(--brown-mid); line-height: 1.4; }
+  .floating-badge {
+    position: absolute;
+    background: white;
+    border-radius: 50px;
+    padding: 8px 16px;
+    box-shadow: var(--shadow-card);
+    font-size: 0.78rem; font-weight: 600;
+    display: flex; align-items: center; gap: 6px;
+    white-space: nowrap;
+    animation: float 3s ease-in-out infinite;
+  }
+  .floating-badge.top-right { top: -16px; right: 20px; color: var(--green-accent); animation-delay: 0.5s; }
+  .floating-badge.bottom-left { bottom: -16px; left: 20px; color: var(--purple-accent); animation-delay: 1s; }
+  @keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  /* ── HOW IT WORKS ── */
+  .section { padding: 96px 5%; }
+  .section-label {
+    display: inline-block;
+    font-size: 0.78rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--amber); margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    font-weight: 900; letter-spacing: -1px;
+    color: var(--brown-dark);
+    margin-bottom: 16px; line-height: 1.15;
+  }
+  .section-sub {
+    font-size: 1rem; color: var(--brown-soft); line-height: 1.65;
+    max-width: 500px;
+  }
+  .section-header { margin-bottom: 56px; }
+
+  .how-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .how-card {
+    background: white; border-radius: var(--radius);
+    padding: 28px 22px;
+    box-shadow: var(--shadow-card);
+    position: relative;
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .how-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-warm); }
+  .how-number {
+    font-family: var(--font-display);
+    font-size: 3rem; font-weight: 900;
+    color: var(--amber-pale); line-height: 1;
+    margin-bottom: 12px;
+  }
+  .how-icon { font-size: 2rem; margin-bottom: 12px; }
+  .how-card h4 { font-size: 1rem; font-weight: 700; color: var(--brown-dark); margin-bottom: 8px; }
+  .how-card p { font-size: 0.85rem; color: var(--brown-soft); line-height: 1.55; }
+  .how-card-line {
+    position: absolute; top: 50px; right: -10px;
+    width: 20px; height: 2px;
+    background: var(--amber-pale);
+  }
+  .how-card:last-child .how-card-line { display: none; }
+
+  /* ── PERSONALITIES PREVIEW ── */
+  .personalities-bg { background: var(--brown-dark); padding: 96px 5%; }
+  .personalities-bg .section-label { color: var(--amber-light); }
+  .personalities-bg .section-title { color: white; }
+  .personalities-bg .section-sub { color: rgba(255,255,255,0.6); }
+  .personalities-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 48px; }
+  @media (min-width: 768px) { .personalities-grid { grid-template-columns: repeat(4, 1fr); } }
+  .personality-card {
+    border-radius: var(--radius);
+    padding: 24px 20px;
+    cursor: pointer;
+    transition: transform 0.25s;
+    position: relative; overflow: hidden;
+  }
+  .personality-card:hover { transform: translateY(-4px) scale(1.02); }
+  .personality-card::before {
+    content: ''; position: absolute; inset: 0;
+    background: rgba(255,255,255,0.05);
+    opacity: 0; transition: opacity 0.2s;
+  }
+  .personality-card:hover::before { opacity: 1; }
+  .pc-adventurer { background: linear-gradient(135deg, #E8820C 0%, #F4A340 100%); }
+  .pc-cuddler { background: linear-gradient(135deg, #7C5CBF 0%, #A886E8 100%); }
+  .pc-zen { background: linear-gradient(135deg, #3DAA7A 0%, #5FD4A0 100%); }
+  .pc-social { background: linear-gradient(135deg, #E84B6A 0%, #F47A90 100%); }
+  .pc-emoji { font-size: 2.5rem; margin-bottom: 12px; }
+  .pc-name { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: white; margin-bottom: 4px; }
+  .pc-desc { font-size: 0.8rem; color: rgba(255,255,255,0.8); line-height: 1.5; }
+  .pc-tag {
+    display: inline-block; margin-top: 12px;
+    background: rgba(255,255,255,0.2); color: white;
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.5px;
+    padding: 4px 10px; border-radius: 50px;
+  }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials-section { background: var(--sand); padding: 96px 5%; }
+  .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .testimonial-card {
+    background: white; border-radius: var(--radius);
+    padding: 28px;
+    box-shadow: var(--shadow-card);
+    transition: transform 0.25s;
+  }
+  .testimonial-card:hover { transform: translateY(-4px); }
+  .tc-stars { color: var(--amber); font-size: 1.1rem; margin-bottom: 14px; }
+  .tc-quote { font-size: 0.93rem; line-height: 1.65; color: var(--brown-mid); margin-bottom: 20px; font-style: italic; }
+  .tc-author { display: flex; align-items: center; gap: 12px; }
+  .tc-avatar { width: 44px; height: 44px; border-radius: 50%; background: var(--amber-pale); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; }
+  .tc-name { font-weight: 700; font-size: 0.88rem; color: var(--brown-dark); }
+  .tc-pet { font-size: 0.78rem; color: var(--brown-soft); margin-top: 2px; }
+
+  /* ── CTA BAND ── */
+  .cta-band {
+    background: linear-gradient(135deg, var(--amber) 0%, var(--amber-light) 100%);
+    padding: 80px 5%;
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .cta-band::before {
+    content: '🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾';
+    position: absolute; top: 10px; left: 0; right: 0;
+    font-size: 1.2rem; letter-spacing: 8px; opacity: 0.15;
+    white-space: nowrap; overflow: hidden;
+  }
+  .cta-band h2 { font-family: var(--font-display); font-size: clamp(2rem,4vw,3rem); font-weight: 900; color: white; margin-bottom: 16px; }
+  .cta-band p { color: rgba(255,255,255,0.85); font-size: 1.05rem; margin-bottom: 32px; }
+  .btn-white {
+    background: white; color: var(--amber);
+    border: none; border-radius: 50px;
+    padding: 16px 40px; font-size: 1rem; font-weight: 700;
+    cursor: pointer; transition: all 0.2s;
+    font-family: var(--font-body);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+  }
+  .btn-white:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(0,0,0,0.2); }
+
+  /* ── ABOUT PAGE ── */
+  .about-hero {
+    padding: 100px 5% 80px;
+    background: linear-gradient(160deg, var(--cream) 60%, var(--amber-pale) 100%);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+  }
+  .about-card-visual {
+    background: white; border-radius: 28px;
+    overflow: hidden; box-shadow: var(--shadow-warm);
+  }
+  .about-card-top {
+    background: linear-gradient(135deg, var(--amber) 0%, var(--amber-light) 100%);
+    padding: 48px; text-align: center;
+  }
+  .about-card-top .big-emoji { font-size: 4rem; }
+  .about-card-body { padding: 28px; }
+  .about-mission-pills { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+  .pill {
+    background: var(--amber-pale); color: var(--amber);
+    font-size: 0.8rem; font-weight: 600;
+    padding: 6px 14px; border-radius: 50px;
+    border: 1px solid rgba(232,130,12,0.2);
+  }
+  .about-values { padding: 80px 5%; }
+  .values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
+  .value-card {
+    padding: 32px 24px;
+    background: white;
+    border-radius: var(--radius); box-shadow: var(--shadow-card);
+    border-top: 4px solid var(--amber);
+    transition: transform 0.25s;
+  }
+  .value-card:hover { transform: translateY(-4px); }
+  .value-icon { font-size: 2rem; margin-bottom: 16px; }
+  .value-card h4 { font-size: 1.1rem; font-weight: 700; color: var(--brown-dark); margin-bottom: 8px; }
+  .value-card p { font-size: 0.88rem; color: var(--brown-soft); line-height: 1.6; }
+
+  /* ── QUIZ PAGE ── */
+  .quiz-container {
+    min-height: 100vh;
+    background: linear-gradient(160deg, var(--cream) 0%, var(--sand) 100%);
+    display: flex; flex-direction: column; align-items: center;
+    padding: 60px 20px 40px;
+  }
+  .quiz-logo {
+    font-family: var(--font-display);
+    font-size: 1.8rem; font-weight: 900;
+    color: var(--amber); margin-bottom: 40px;
+    letter-spacing: -0.5px;
+  }
+  .quiz-card {
+    background: white; border-radius: 28px;
+    padding: 40px 44px;
+    box-shadow: var(--shadow-warm);
+    width: 100%; max-width: 600px;
+    animation: fadeIn 0.35s ease;
+  }
+  .quiz-progress-bar {
+    width: 100%; height: 6px;
+    background: var(--sand); border-radius: 50px;
+    margin-bottom: 36px; overflow: hidden;
+  }
+  .quiz-progress-fill {
+    height: 100%; background: linear-gradient(90deg, var(--amber) 0%, var(--amber-light) 100%);
+    border-radius: 50px; transition: width 0.4s ease;
+  }
+  .quiz-step-label { font-size: 0.78rem; font-weight: 600; color: var(--brown-soft); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; }
+  .quiz-emoji { font-size: 2.8rem; margin-bottom: 14px; display: block; }
+  .quiz-question { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--brown-dark); line-height: 1.3; margin-bottom: 28px; }
+  .quiz-input {
+    width: 100%; border: 2px solid rgba(44,26,14,0.12); border-radius: var(--radius-sm);
+    padding: 14px 18px; font-size: 1rem; font-family: var(--font-body);
+    color: var(--brown-dark); background: var(--cream);
+    transition: border-color 0.2s; outline: none; margin-bottom: 8px;
+  }
+  .quiz-input:focus { border-color: var(--amber); background: white; }
+  .quiz-options { display: flex; flex-direction: column; gap: 12px; }
+  .quiz-option {
+    display: flex; align-items: center; gap: 14px;
+    padding: 16px 20px; border-radius: var(--radius-sm);
+    border: 2px solid rgba(44,26,14,0.10);
+    cursor: pointer; transition: all 0.2s;
+    background: var(--cream);
+    font-size: 0.95rem; font-weight: 500; color: var(--brown-mid);
+  }
+  .quiz-option:hover { border-color: var(--amber); background: var(--amber-pale); color: var(--brown-dark); }
+  .quiz-option.selected { border-color: var(--amber); background: var(--amber-pale); color: var(--brown-dark); font-weight: 600; }
+  .quiz-option.selected .opt-letter { background: var(--amber); color: white; }
+  .quiz-option-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .quiz-option-grid .quiz-option { flex-direction: column; text-align: center; padding: 20px 14px; gap: 8px; justify-content: center; }
+  .quiz-option-grid .quiz-option .opt-icon { font-size: 2.2rem; }
+  .opt-letter {
+    min-width: 30px; height: 30px; border-radius: 50%;
+    background: rgba(44,26,14,0.08); display: flex; align-items: center; justify-content: center;
+    font-size: 0.8rem; font-weight: 700; color: var(--brown-soft);
+    transition: all 0.2s; flex-shrink: 0;
+  }
+  .quiz-btn-row { display: flex; gap: 12px; margin-top: 28px; }
+  .btn-back {
+    background: transparent; color: var(--brown-soft);
+    border: 2px solid rgba(44,26,14,0.12); border-radius: 50px;
+    padding: 14px 24px; font-size: 0.95rem; font-weight: 500;
+    cursor: pointer; transition: all 0.2s; font-family: var(--font-body);
+  }
+  .btn-back:hover { border-color: var(--brown-mid); color: var(--brown-mid); }
+  .quiz-hint { font-size: 0.78rem; color: var(--brown-soft); margin-top: 12px; text-align: center; }
+
+  /* ── EMAIL CAPTURE ── */
+  .email-icon { font-size: 3.5rem; margin-bottom: 16px; display: block; text-align: center; }
+  .email-title { font-family: var(--font-display); font-size: 1.7rem; font-weight: 900; color: var(--brown-dark); text-align: center; margin-bottom: 8px; }
+  .email-sub { font-size: 0.95rem; color: var(--brown-soft); text-align: center; line-height: 1.6; margin-bottom: 28px; }
+  .email-form { display: flex; flex-direction: column; gap: 14px; }
+  .email-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .input-group label { font-size: 0.8rem; font-weight: 600; color: var(--brown-mid); margin-bottom: 6px; display: block; }
+  .privacy-note { font-size: 0.75rem; color: var(--brown-soft); text-align: center; line-height: 1.5; }
+  .privacy-note a { color: var(--amber); text-decoration: none; }
+
+  /* ── RESULTS ── */
+  .results-container {
+    min-height: 100vh;
+    background: linear-gradient(160deg, var(--cream) 0%, var(--sand) 100%);
+    padding: 60px 5% 80px;
+  }
+  .results-header { text-align: center; margin-bottom: 48px; }
+  .results-pet-name {
+    font-family: var(--font-script);
+    font-size: 1.5rem; color: var(--brown-soft);
+    margin-bottom: 4px;
+  }
+  .results-personality-name {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 4vw, 3rem);
+    font-weight: 900; color: var(--amber);
+    letter-spacing: -1px; margin-bottom: 12px;
+  }
+  .results-emoji { font-size: 4rem; margin-bottom: 12px; display: block; }
+  .results-desc { font-size: 1rem; color: var(--brown-soft); max-width: 500px; margin: 0 auto; line-height: 1.65; }
+  .results-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 1000px; margin: 0 auto; }
+  .results-card { background: white; border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow-card); }
+  .results-card h3 { font-size: 0.78rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--amber); margin-bottom: 18px; display: flex; align-items: center; gap: 8px; }
+  .breakdown-row { margin-bottom: 14px; }
+  .breakdown-label { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+  .breakdown-label span:first-child { font-size: 0.88rem; font-weight: 600; color: var(--brown-mid); }
+  .breakdown-label span:last-child { font-size: 0.82rem; font-weight: 700; color: var(--brown-dark); }
+  .breakdown-bar { height: 8px; background: var(--sand); border-radius: 50px; overflow: hidden; }
+  .breakdown-fill { height: 100%; border-radius: 50px; transition: width 1s ease 0.3s; }
+  .traits-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .trait-chip {
+    padding: 6px 14px; border-radius: 50px; font-size: 0.8rem; font-weight: 600;
+    border: 2px solid;
+  }
+  .care-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .care-list li {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 0.88rem; color: var(--brown-mid); line-height: 1.5;
+  }
+  .care-check { color: var(--green-accent); font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+  .products-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .product-item {
+    border: 2px solid rgba(44,26,14,0.08); border-radius: var(--radius-sm);
+    padding: 14px; transition: all 0.2s; cursor: pointer;
+  }
+  .product-item:hover { border-color: var(--amber); background: var(--amber-pale); }
+  .product-name { font-size: 0.85rem; font-weight: 700; color: var(--brown-dark); margin-bottom: 3px; }
+  .product-desc { font-size: 0.75rem; color: var(--brown-soft); margin-bottom: 8px; }
+  .product-price { font-size: 0.9rem; font-weight: 700; color: var(--green-accent); }
+  .results-share { text-align: center; margin-top: 40px; }
+  .results-share h3 { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; color: var(--brown-dark); margin-bottom: 6px; }
+  .results-share p { color: var(--brown-soft); font-size: 0.9rem; margin-bottom: 20px; }
+  .share-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-share {
+    padding: 12px 24px; border-radius: 50px; font-size: 0.88rem; font-weight: 600;
+    cursor: pointer; border: 2px solid; transition: all 0.2s; font-family: var(--font-body);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .btn-retake { background: white; color: var(--amber); border-color: var(--amber); }
+  .btn-retake:hover { background: var(--amber); color: white; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--brown-dark); color: rgba(255,255,255,0.6);
+    padding: 48px 5% 32px;
+    display: grid; grid-template-columns: 2fr 1fr 1fr;
+    gap: 40px; align-items: start;
+  }
+  footer .footer-logo { font-family: var(--font-display); font-size: 1.6rem; font-weight: 900; color: white; margin-bottom: 8px; }
+  footer .footer-logo span { color: var(--amber); }
+  footer p { font-size: 0.85rem; line-height: 1.6; max-width: 280px; }
+  footer h5 { color: white; font-size: 0.9rem; font-weight: 700; margin-bottom: 14px; }
+  footer ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  footer ul li { font-size: 0.85rem; cursor: pointer; transition: color 0.2s; }
+  footer ul li:hover { color: var(--amber-light); }
+  .footer-bottom {
+    background: var(--brown-dark); border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 16px 5%; text-align: center;
+    font-size: 0.78rem; color: rgba(255,255,255,0.35);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .hero-visual { display: none; }
+    .hero-content { max-width: 100%; }
+    .how-grid { grid-template-columns: 1fr 1fr; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .results-grid { grid-template-columns: 1fr; }
+    .about-hero { grid-template-columns: 1fr; }
+    .values-grid { grid-template-columns: 1fr; }
+    footer { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .how-grid { grid-template-columns: 1fr; }
+    .email-row { grid-template-columns: 1fr; }
+    nav { padding: 0 4%; }
+    .nav-links { display: none; }
+    .quiz-card { padding: 28px 22px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <div class="nav-logo" onclick="showPage('home')">
+    <span class="nav-paw">🐾</span>
+    <span>Ani<span>mus</span></span>
+  </div>
+  <div class="nav-links">
+    <a onclick="showPage('home')">Home</a>
+    <a onclick="showPage('about')">About Us</a>
+    <a onclick="scrollToSection('how')">How It Works</a>
+    <a onclick="scrollToSection('testimonials')">Testimonials</a>
+  </div>
+  <button class="nav-cta" onclick="startQuiz()">Take The Test ✨</button>
+</nav>
+
+<!-- ═══════════════════════════ HOME PAGE ═══════════════════════════ -->
+<div id="page-home" class="page active">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-blob"></div>
+    <div class="hero-content">
+      <div class="hero-badge">🧬 Science-backed personality profiling</div>
+      <span class="hero-script">Discover the real</span>
+      <h1 class="hero-title">Soul Behind<br>Your <em>Pet</em></h1>
+      <p class="hero-sub">Answer 8 quick questions about your dog or cat and get a full personality breakdown — with tailored care tips and product picks made just for them.</p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="startQuiz()">Start The Test ✨</button>
+        <button class="btn-ghost" onclick="showPage('about')">Learn More →</button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item"><div class="stat-num">12k+</div><div class="stat-label">Pets Profiled</div></div>
+        <div class="stat-item"><div class="stat-num">4</div><div class="stat-label">Personality Types</div></div>
+        <div class="stat-item"><div class="stat-num">2 min</div><div class="stat-label">Quiz Duration</div></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card">
+        <div class="floating-badge top-right">✅ Free & Instant Results</div>
+        <div class="hero-card-header">
+          <div class="hero-card-pets">🐕 🐈</div>
+          <h3>What's Your Pet's Personality?</h3>
+          <p>Discover your furry friend's unique traits</p>
+        </div>
+        <div class="hero-card-steps">
+          <div class="step-chip"><div class="step-chip-icon">❓</div><div class="step-chip-text">Answer Questions</div></div>
+          <div class="step-chip"><div class="step-chip-icon">⏱️</div><div class="step-chip-text">5 Minutes</div></div>
+          <div class="step-chip"><div class="step-chip-icon">📊</div><div class="step-chip-text">Get Results</div></div>
+          <div class="step-chip"><div class="step-chip-icon">🎯</div><div class="step-chip-text">Personalized Tips</div></div>
+        </div>
+        <div class="floating-badge bottom-left">🐾 Join 12,000+ pet parents</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section" id="how">
+    <div class="section-header">
+      <div class="section-label">How It Works</div>
+      <h2 class="section-title">Four steps to<br>know your pet better</h2>
+      <p class="section-sub">Our comprehensive assessment evaluates your pet's behavior, preferences, and quirks to reveal their unique personality profile.</p>
+    </div>
+    <div class="how-grid">
+      <div class="how-card">
+        <div class="how-number">01</div>
+        <div class="how-icon">🐾</div>
+        <h4>Pick Your Pet</h4>
+        <p>Tell us whether you have a dog or cat, then give us their name — we'll personalize everything for them.</p>
+        <div class="how-card-line"></div>
+      </div>
+      <div class="how-card">
+        <div class="how-number">02</div>
+        <div class="how-icon">📋</div>
+        <h4>Answer Questions</h4>
+        <p>Complete 8 simple, fun questions about your pet's daily behavior, reactions, and favorite moments.</p>
+        <div class="how-card-line"></div>
+      </div>
+      <div class="how-card">
+        <div class="how-number">03</div>
+        <div class="how-icon">🔬</div>
+        <h4>Get Your Results</h4>
+        <p>Receive a detailed personality breakdown with your pet's dominant traits across 4 personality types.</p>
+        <div class="how-card-line"></div>
+      </div>
+      <div class="how-card">
+        <div class="how-number">04</div>
+        <div class="how-icon">🎁</div>
+        <h4>Personalized Tips</h4>
+        <p>Unlock customized care advice and curated product recommendations tailored to your pet's personality.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PERSONALITY TYPES -->
+  <section class="personalities-bg">
+    <div class="section-label">Personality Types</div>
+    <h2 class="section-title" style="color:white;">Which one is your pet?</h2>
+    <p class="section-sub" style="color:rgba(255,255,255,0.6);">Every pet is a unique blend — our test reveals their dominant personality and what makes them truly special.</p>
+    <div class="personalities-grid">
+      <div class="personality-card pc-adventurer">
+        <div class="pc-emoji">🏃</div>
+        <div class="pc-name">The Adventurer</div>
+        <div class="pc-desc">Bold, energetic and always ready for the next big thing. Loves new experiences.</div>
+        <div class="pc-tag">High Energy</div>
+      </div>
+      <div class="personality-card pc-cuddler">
+        <div class="pc-emoji">🤗</div>
+        <div class="pc-name">The Cuddler</div>
+        <div class="pc-desc">Warm, affectionate and happiest when close to their favorite humans.</div>
+        <div class="pc-tag">Affectionate</div>
+      </div>
+      <div class="personality-card pc-zen">
+        <div class="pc-emoji">🧘</div>
+        <div class="pc-name">The Zen Master</div>
+        <div class="pc-desc">Calm, wise, and unshakeable. Their peaceful energy brings harmony to every room.</div>
+        <div class="pc-tag">Low-Stress</div>
+      </div>
+      <div class="personality-card pc-social">
+        <div class="pc-emoji">🦋</div>
+        <div class="pc-name">The Social Butterfly</div>
+        <div class="pc-desc">Outgoing, playful and the life of every party. Everyone's best friend.</div>
+        <div class="pc-tag">People-Lover</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials-section" id="testimonials">
+    <div class="section-header">
+      <div class="section-label">Testimonials</div>
+      <h2 class="section-title">Pet parents love Animus</h2>
+      <p class="section-sub">Real stories from people who discovered something new about their beloved companions.</p>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="tc-stars">★★★★★</div>
+        <p class="tc-quote">"I always knew my dog Max was a bit of a free spirit, but seeing 'The Adventurer' laid out with actual care tips was eye-opening. The product recommendations were spot on!"</p>
+        <div class="tc-author">
+          <div class="tc-avatar">🐕</div>
+          <div><div class="tc-name">Isla M.</div><div class="tc-pet">Dog mom to Max</div></div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="tc-stars">★★★★★</div>
+        <p class="tc-quote">"My cat Luna got Zen Master and honestly? It explains EVERYTHING. The quiz was quick, fun, and the results page is genuinely beautiful. Shared it with all my friends."</p>
+        <div class="tc-author">
+          <div class="tc-avatar">🐈</div>
+          <div><div class="tc-name">Mason K.</div><div class="tc-pet">Cat dad to Luna</div></div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="tc-stars">★★★★★</div>
+        <p class="tc-quote">"The care tips matched my dog's energy perfectly. We got the outdoor activity bundle they suggested and he's been so much happier. This actually works — highly recommend!"</p>
+        <div class="tc-author">
+          <div class="tc-avatar">🐶</div>
+          <div><div class="tc-name">Jonah P.</div><div class="tc-pet">Dog dad to Buddy</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BAND -->
+  <section class="cta-band">
+    <h2>Ready to meet the real them?</h2>
+    <p>Join 12,000+ pet parents who've discovered their pet's true personality.</p>
+    <button class="btn-white" onclick="startQuiz()">🐾 Take The Free Test</button>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>
+      <div class="footer-logo">Ani<span>mus</span></div>
+      <p>Helping pet parents understand what makes their companions tick — fostering deeper connections and happier, healthier relationships.</p>
+    </div>
+    <div>
+      <h5>Navigate</h5>
+      <ul>
+        <li onclick="showPage('home')">Home</li>
+        <li onclick="startQuiz()">Take The Test</li>
+        <li onclick="showPage('about')">About Us</li>
+        <li onclick="scrollToSection('testimonials')">Testimonials</li>
+      </ul>
+    </div>
+    <div>
+      <h5>Connect</h5>
+      <ul>
+        <li>Instagram</li>
+        <li>TikTok</li>
+        <li>Contact Us</li>
+        <li>animuspet.com</li>
+      </ul>
+    </div>
+  </footer>
+  <div class="footer-bottom">© 2025 Animus · Built with love for pet parents everywhere 🐾</div>
+</div>
+
+<!-- ═══════════════════════════ ABOUT PAGE ═══════════════════════════ -->
+<div id="page-about" class="page">
+  <section class="about-hero">
+    <div>
+      <div class="section-label">About Us</div>
+      <h1 class="section-title">We believe every pet has a soul worth understanding</h1>
+      <p class="section-sub" style="margin-bottom:24px;">At Animus, we're pet lovers who got tired of one-size-fits-all advice. We built this platform to give every animal the recognition of their individuality — and to give every owner the tools to truly connect with their companion.</p>
+      <div class="about-mission-pills">
+        <span class="pill">🎯 Our Mission</span>
+        <span class="pill">💡 Science-Backed</span>
+        <span class="pill">❤️ Pet-First</span>
+        <span class="pill">🌱 Ethical Products</span>
+      </div>
+    </div>
+    <div class="about-card-visual">
+      <div class="about-card-top">
+        <div class="big-emoji">🐾</div>
+      </div>
+      <div class="about-card-body">
+        <p style="font-size:0.9rem;line-height:1.65;color:var(--brown-mid);">At Animus, we believe every pet has a unique personality that deserves to be understood and celebrated. Our mission is to help pet parents discover what makes their companions tick, fostering deeper connections and happier, healthier relationships.</p>
+        <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--sand);">
+          <div style="font-weight:700;font-size:0.85rem;color:var(--brown-dark);margin-bottom:4px;">Ellen Barreiros</div>
+          <div style="font-size:0.78rem;color:var(--brown-soft);">Founder & CS Student · animuspet.com</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-values">
+    <div class="section-header">
+      <div class="section-label">Our Values</div>
+      <h2 class="section-title">What drives us every day</h2>
+    </div>
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="value-icon">💡</div>
+        <h4>Our Mission</h4>
+        <p>To help pet parents discover what makes their companions tick — going beyond selling products to building genuine understanding between owners and their pets.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🎯</div>
+        <h4>Our Vision</h4>
+        <p>A world where every pet is understood as the unique individual they are, and every owner has the knowledge to give them the life they deserve.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">✏️</div>
+        <h4>Our Work</h4>
+        <p>We combine behavioral science with thoughtful design to create a quiz experience that's fun, insightful, and genuinely useful for everyday pet care decisions.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <h2>Curious about your pet?</h2>
+    <p>Take our free personality test and unlock insights in just 2 minutes.</p>
+    <button class="btn-white" onclick="startQuiz()">🐾 Start The Test</button>
+  </section>
+
+  <footer>
+    <div>
+      <div class="footer-logo">Ani<span>mus</span></div>
+      <p>Helping pet parents understand what makes their companions tick — fostering deeper connections and happier, healthier relationships.</p>
+    </div>
+    <div>
+      <h5>Navigate</h5>
+      <ul>
+        <li onclick="showPage('home')">Home</li>
+        <li onclick="startQuiz()">Take The Test</li>
+        <li onclick="showPage('about')">About Us</li>
+      </ul>
+    </div>
+    <div>
+      <h5>Connect</h5>
+      <ul>
+        <li>Instagram</li>
+        <li>TikTok</li>
+        <li>Contact Us</li>
+      </ul>
+    </div>
+  </footer>
+  <div class="footer-bottom">© 2025 Animus · Built with love for pet parents everywhere 🐾</div>
+</div>
+
+<!-- ═══════════════════════════ QUIZ PAGE ═══════════════════════════ -->
+<div id="page-quiz" class="page">
+  <div class="quiz-container">
+    <div class="quiz-logo">🐾 Animus</div>
+    <div class="quiz-card" id="quiz-card">
+      <!-- Injected by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ RESULTS PAGE ═══════════════════════════ -->
+<div id="page-results" class="page">
+  <div class="results-container" id="results-container">
+    <!-- Injected by JS -->
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════
+// STATE
+// ══════════════════════════════════════
+let state = {
+  petType: null,
+  petName: '',
+  ownerName: '',
+  ownerEmail: '',
+  answers: {},
+  scores: { adventurer: 0, cuddler: 0, zen: 0, social: 0 },
+  step: 0
+};
+
+// ══════════════════════════════════════
+// QUIZ DATA
+// ══════════════════════════════════════
+const quizSteps = [
+  {
+    id: 'pet_type',
+    emoji: '🐾',
+    question: 'What type of pet do you have?',
+    type: 'pet_select'
+  },
+  {
+    id: 'pet_name',
+    emoji: null,
+    question: null,
+    type: 'name_input'
+  },
+  {
+    id: 'q1',
+    emoji: '👋',
+    question: 'When a stranger approaches, how does your pet typically react?',
+    type: 'options',
+    options: [
+      { label: 'Runs to greet them excitedly', scores: { social: 2 } },
+      { label: 'Observes cautiously from a distance', scores: { zen: 2 } },
+      { label: 'Hides or retreats to a safe spot', scores: { cuddler: 2 } },
+      { label: 'Barks/meows but warms up eventually', scores: { adventurer: 1, social: 1 } }
+    ]
+  },
+  {
+    id: 'q2',
+    emoji: '🏠',
+    question: 'What does your pet prefer to do on a lazy Sunday afternoon?',
+    type: 'options',
+    options: [
+      { label: 'Nap all day in the coziest spot', scores: { zen: 2 } },
+      { label: 'Cuddle next to you on the couch', scores: { cuddler: 2 } },
+      { label: 'Play with toys or explore around', scores: { adventurer: 2 } },
+      { label: 'Follow you from room to room', scores: { social: 2 } }
+    ]
+  },
+  {
+    id: 'q3',
+    emoji: '🎾',
+    question: 'How does your pet respond to playtime?',
+    type: 'options',
+    options: [
+      { label: 'Goes absolutely wild and non-stop', scores: { adventurer: 2 } },
+      { label: 'Plays gently and then snuggles up', scores: { cuddler: 2 } },
+      { label: 'Prefers to watch more than participate', scores: { zen: 2 } },
+      { label: 'Loves group play and showing off', scores: { social: 2 } }
+    ]
+  },
+  {
+    id: 'q4',
+    emoji: '🌿',
+    question: 'When you take your pet outside, they usually…',
+    type: 'options',
+    options: [
+      { label: 'Run ahead and explore everything', scores: { adventurer: 2 } },
+      { label: 'Stay close to your side', scores: { cuddler: 2 } },
+      { label: 'Walk at a calm, steady pace', scores: { zen: 2 } },
+      { label: 'Try to greet every person and animal', scores: { social: 2 } }
+    ]
+  },
+  {
+    id: 'q5',
+    emoji: '😴',
+    question: 'Where does your pet sleep?',
+    type: 'options',
+    options: [
+      { label: 'Pressed against you or in your bed', scores: { cuddler: 2 } },
+      { label: 'Their own cozy bed in a quiet spot', scores: { zen: 2 } },
+      { label: 'Wherever they last had an adventure', scores: { adventurer: 2 } },
+      { label: 'Near the door to catch all the action', scores: { social: 2 } }
+    ]
+  },
+  {
+    id: 'q6',
+    emoji: '😟',
+    question: 'How does your pet handle being left alone?',
+    type: 'options',
+    options: [
+      { label: 'Gets anxious and misses you a lot', scores: { cuddler: 2 } },
+      { label: 'Completely fine — barely notices', scores: { zen: 2 } },
+      { label: 'Uses it as adventure/exploration time', scores: { adventurer: 2 } },
+      { label: 'Waits by the door for your return', scores: { social: 2 } }
+    ]
+  },
+  {
+    id: 'q7',
+    emoji: '🍖',
+    question: 'How would you describe your pet\'s eating style?',
+    type: 'options',
+    options: [
+      { label: 'Eats quickly and moves on immediately', scores: { adventurer: 2 } },
+      { label: 'Slow and mindful — savors every bite', scores: { zen: 2 } },
+      { label: 'Wants you nearby while they eat', scores: { cuddler: 2 } },
+      { label: 'Gets excited and does tricks for food', scores: { social: 2 } }
+    ]
+  },
+  {
+    id: 'q8',
+    emoji: '⭐',
+    question: 'In three words, your pet is mostly…',
+    type: 'options',
+    options: [
+      { label: 'Bold, brave, restless', scores: { adventurer: 3 } },
+      { label: 'Warm, gentle, loyal', scores: { cuddler: 3 } },
+      { label: 'Calm, wise, peaceful', scores: { zen: 3 } },
+      { label: 'Social, playful, charming', scores: { social: 3 } }
+    ]
+  },
+  {
+    id: 'email',
+    type: 'email_capture'
+  }
+];
+
+// ══════════════════════════════════════
+// PERSONALITIES DATA
+// ══════════════════════════════════════
+const personalities = {
+  adventurer: {
+    name: 'The Adventurer',
+    emoji: '🏃',
+    color: '#E8820C',
+    colorLight: '#FDE8CC',
+    desc: 'Your pet is a born explorer! They have boundless energy, love new experiences, and approach the world with fearless curiosity. Every day is a new expedition for them.',
+    traits: [
+      { label: 'Bold', color: '#E8820C', bg: '#FDE8CC' },
+      { label: 'Energetic', color: '#E8820C', bg: '#FDE8CC' },
+      { label: 'Curious', color: '#7C5CBF', bg: '#EDE5FA' },
+      { label: 'Independent', color: '#3DAA7A', bg: '#D4F4E7' }
+    ],
+    care: [
+      'Schedule at least 2 active play sessions per day',
+      'Rotate toys weekly to prevent boredom',
+      'Try outdoor adventures like hiking trails or dog parks',
+      'Provide puzzle feeders to stimulate their curious mind',
+      'Consider agility training — they\'ll thrive on challenges'
+    ],
+    products: [
+      { name: 'Explorer Activity Bundle', desc: 'Durable toys for adventurers', price: '$49.99' },
+      { name: 'Outdoor Adventure Harness', desc: 'Secure & comfy for trails', price: '$34.99' },
+      { name: 'Puzzle Feeder Pro', desc: 'Mental stimulation at mealtime', price: '$24.99' },
+      { name: 'Interactive Treat Launcher', desc: 'Keep them chasing & active', price: '$29.99' }
+    ]
+  },
+  cuddler: {
+    name: 'The Cuddler',
+    emoji: '🤗',
+    color: '#7C5CBF',
+    colorLight: '#EDE5FA',
+    desc: 'Your pet is a love bug through and through. They find their greatest happiness in physical closeness, gentle moments, and being your constant shadow. Bond is everything to them.',
+    traits: [
+      { label: 'Affectionate', color: '#7C5CBF', bg: '#EDE5FA' },
+      { label: 'Loyal', color: '#E8820C', bg: '#FDE8CC' },
+      { label: 'Gentle', color: '#3DAA7A', bg: '#D4F4E7' },
+      { label: 'Sensitive', color: '#E84B6A', bg: '#FCE4EA' }
+    ],
+    care: [
+      'Maintain consistent daily routines — they feel secure with predictability',
+      'Dedicate 20+ minutes of intentional cuddle time daily',
+      'Use soft bedding and comfort items near your resting spots',
+      'Speak in calm, reassuring tones during stressful moments',
+      'Introduce changes gradually to avoid anxiety'
+    ],
+    products: [
+      { name: 'Luxury Comfort Bed', desc: 'Premium plush for snugglers', price: '$59.99' },
+      { name: 'Calming Blanket Set', desc: 'Weighted comfort at rest', price: '$39.99' },
+      { name: 'Gentle Grooming Kit', desc: 'Spa experience at home', price: '$29.99' },
+      { name: 'Heartbeat Plush Toy', desc: 'Soothing company when apart', price: '$22.99' }
+    ]
+  },
+  zen: {
+    name: 'The Zen Master',
+    emoji: '🧘',
+    color: '#3DAA7A',
+    colorLight: '#D4F4E7',
+    desc: 'Your pet is the embodiment of serenity. They\'re calm, wise, and rarely flustered by anything. Their peaceful energy brings balance to your home and everyone in it.',
+    traits: [
+      { label: 'Calm', color: '#3DAA7A', bg: '#D4F4E7' },
+      { label: 'Patient', color: '#3DAA7A', bg: '#D4F4E7' },
+      { label: 'Adaptable', color: '#E8820C', bg: '#FDE8CC' },
+      { label: 'Low-stress', color: '#7C5CBF', bg: '#EDE5FA' }
+    ],
+    care: [
+      'Maintain consistent daily routines they can rely on',
+      'Create multiple cozy resting spots throughout your home',
+      'Gentle play sessions work best with this temperament',
+      'Encourage regular but moderate exercise',
+      'Zen pets thrive with calm, slow-paced environments'
+    ],
+    products: [
+      { name: 'Serenity Orthopedic Bed', desc: 'Premium comfort & joint support', price: '$84.99' },
+      { name: 'Calm Essential Kit', desc: 'Relaxation tools & aromatherapy', price: '$39.99' },
+      { name: 'Zen Feeder Bowl', desc: 'Mindful, slow-paced feeding', price: '$24.99' },
+      { name: 'Wellness Grooming Set', desc: 'Gentle massage & spa experience', price: '$29.99' }
+    ]
+  },
+  social: {
+    name: 'The Social Butterfly',
+    emoji: '🦋',
+    color: '#E84B6A',
+    colorLight: '#FCE4EA',
+    desc: 'Your pet is a natural-born charmer! They light up every room, make friends with everyone, and live for interaction. Social time isn\'t optional for them — it\'s essential.',
+    traits: [
+      { label: 'Outgoing', color: '#E84B6A', bg: '#FCE4EA' },
+      { label: 'Playful', color: '#E8820C', bg: '#FDE8CC' },
+      { label: 'Charming', color: '#7C5CBF', bg: '#EDE5FA' },
+      { label: 'People-loving', color: '#3DAA7A', bg: '#D4F4E7' }
+    ],
+    care: [
+      'Regular playdates with other animals are essential',
+      'Interactive toys that mimic social play work best',
+      'Reward social behaviors with treats and praise',
+      'Consider doggy daycare or group training classes',
+      'Always introduce them to new friends and environments'
+    ],
+    products: [
+      { name: 'Social Play Bundle', desc: 'Interactive toys for sharing', price: '$44.99' },
+      { name: 'Training Treat Pack', desc: 'For rewarding good behavior', price: '$19.99' },
+      { name: 'Tug-of-War Rope Set', desc: 'Perfect for group play', price: '$22.99' },
+      { name: 'Photo Collar Tag', desc: 'Show off their personality', price: '$14.99' }
+    ]
+  }
+};
+
+// ══════════════════════════════════════
+// PAGE NAVIGATION
+// ══════════════════════════════════════
+function showPage(pageId) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + pageId).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function scrollToSection(id) {
+  showPage('home');
+  setTimeout(() => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  }, 100);
+}
+
+function startQuiz() {
+  state = { petType: null, petName: '', ownerName: '', ownerEmail: '', answers: {}, scores: { adventurer: 0, cuddler: 0, zen: 0, social: 0 }, step: 0 };
+  showPage('quiz');
+  renderQuizStep();
+}
+
+// ══════════════════════════════════════
+// QUIZ RENDERING
+// ══════════════════════════════════════
+function renderQuizStep() {
+  const card = document.getElementById('quiz-card');
+  const step = quizSteps[state.step];
+  const totalQuestions = quizSteps.length;
+  const progress = Math.round((state.step / (totalQuestions - 1)) * 100);
+
+  if (step.type === 'pet_select') {
+    card.innerHTML = `
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" style="width:${progress}%"></div></div>
+      <div class="quiz-step-label">Step 1 of ${totalQuestions - 1}</div>
+      <span class="quiz-emoji">🐾</span>
+      <div class="quiz-question">What type of pet do you have?</div>
+      <div class="quiz-options quiz-option-grid">
+        <div class="quiz-option ${state.petType==='dog'?'selected':''}" onclick="selectPet('dog')">
+          <span class="opt-icon">🐕</span><span>Dog</span>
+        </div>
+        <div class="quiz-option ${state.petType==='cat'?'selected':''}" onclick="selectPet('cat')">
+          <span class="opt-icon">🐈</span><span>Cat</span>
+        </div>
+      </div>
+      <div class="quiz-btn-row">
+        <button class="btn-primary" style="flex:1" onclick="nextStep()" ${!state.petType?'disabled style="opacity:0.5;cursor:not-allowed"':''}>Continue →</button>
+      </div>`;
+  } else if (step.type === 'name_input') {
+    const petLabel = state.petType === 'dog' ? '🐕' : '🐈';
+    const petWord = state.petType === 'dog' ? 'Dog' : 'Cat';
+    card.innerHTML = `
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" style="width:${progress}%"></div></div>
+      <div class="quiz-step-label">Step 2 of ${totalQuestions - 1}</div>
+      <span class="quiz-emoji">${petLabel}</span>
+      <div class="quiz-question">What's your ${petWord}'s name?</div>
+      <input class="quiz-input" id="pet-name-input" type="text" placeholder="Enter their name…" value="${state.petName}" oninput="state.petName=this.value" onkeydown="if(event.key==='Enter' && state.petName.trim())nextStep()" autofocus />
+      <p class="quiz-hint">We'll personalize your results with their name 🐾</p>
+      <div class="quiz-btn-row">
+        <button class="btn-back" onclick="prevStep()">← Back</button>
+        <button class="btn-primary" style="flex:1" onclick="nextStep()" id="name-next-btn">Continue →</button>
+      </div>`;
+    setTimeout(() => document.getElementById('pet-name-input')?.focus(), 100);
+  } else if (step.type === 'options') {
+    const qNum = state.step - 1;
+    card.innerHTML = `
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" style="width:${progress}%"></div></div>
+      <div class="quiz-step-label">Question ${qNum} of 8</div>
+      <span class="quiz-emoji">${step.emoji}</span>
+      <div class="quiz-question">${step.question}</div>
+      <div class="quiz-options">
+        ${step.options.map((opt, i) => `
+          <div class="quiz-option ${state.answers[step.id]===i?'selected':''}" onclick="selectOption('${step.id}', ${i})">
+            <div class="opt-letter">${String.fromCharCode(65+i)}</div>
+            <span>${opt.label}</span>
+          </div>`).join('')}
+      </div>
+      <div class="quiz-btn-row">
+        <button class="btn-back" onclick="prevStep()">← Back</button>
+        <button class="btn-primary" style="flex:1" onclick="nextStep()" ${state.answers[step.id]===undefined?'disabled style="opacity:0.5;cursor:not-allowed"':''}>Continue →</button>
+      </div>`;
+  } else if (step.type === 'email_capture') {
+    const pName = state.petName || (state.petType === 'dog' ? 'your dog' : 'your cat');
+    card.innerHTML = `
+      <span class="email-icon">📬</span>
+      <div class="email-title">Your results are ready!</div>
+      <p class="email-sub">Enter your details to unlock <strong>${pName}'s</strong> personality profile, personalized care tips, and product recommendations.</p>
+      <div class="email-form">
+        <div class="email-row">
+          <div class="input-group">
+            <label>Your Name</label>
+            <input class="quiz-input" style="margin:0" type="text" placeholder="Ellen" value="${state.ownerName}" oninput="state.ownerName=this.value" />
+          </div>
+          <div class="input-group">
+            <label>Email Address</label>
+            <input class="quiz-input" style="margin:0" id="email-input" type="email" placeholder="you@email.com" value="${state.ownerEmail}" oninput="state.ownerEmail=this.value" onkeydown="if(event.key==='Enter')submitEmail()" />
+          </div>
+        </div>
+        <button class="btn-primary" style="width:100%;justify-content:center" onclick="submitEmail()">🎉 Reveal ${pName}'s Personality</button>
+        <p class="privacy-note">🔒 We respect your privacy. No spam, ever. <a href="#">Privacy Policy</a></p>
+      </div>`;
+  }
+}
+
+function selectPet(type) {
+  state.petType = type;
+  renderQuizStep();
+}
+
+function selectOption(questionId, index) {
+  state.answers[questionId] = index;
+  renderQuizStep();
+}
+
+function nextStep() {
+  const step = quizSteps[state.step];
+  if (step.type === 'name_input' && !state.petName.trim()) {
+    state.petName = state.petType === 'dog' ? 'your pup' : 'your kitty';
+  }
+  if (state.step < quizSteps.length - 1) {
+    state.step++;
+    renderQuizStep();
+    document.getElementById('quiz-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+function prevStep() {
+  if (state.step > 0) {
+    state.step--;
+    renderQuizStep();
+  }
+}
+
+function submitEmail() {
+  const email = state.ownerEmail.trim();
+  if (!email || !email.includes('@')) {
+    const inp = document.getElementById('email-input');
+    if (inp) { inp.style.borderColor = '#E84B6A'; inp.focus(); }
+    return;
+  }
+  calculateResults();
+  renderResults();
+  showPage('results');
+}
+
+// ══════════════════════════════════════
+// SCORING
+// ══════════════════════════════════════
+function calculateResults() {
+  state.scores = { adventurer: 0, cuddler: 0, zen: 0, social: 0 };
+  quizSteps.forEach(step => {
+    if (step.type === 'options' && state.answers[step.id] !== undefined) {
+      const chosen = step.options[state.answers[step.id]];
+      Object.entries(chosen.scores).forEach(([key, val]) => {
+        state.scores[key] += val;
+      });
+    }
+  });
+}
+
+function getDominantPersonality() {
+  return Object.entries(state.scores).sort((a, b) => b[1] - a[1])[0][0];
+}
+
+function getScorePercents() {
+  const total = Object.values(state.scores).reduce((a, b) => a + b, 0) || 1;
+  return Object.fromEntries(Object.entries(state.scores).map(([k, v]) => [k, Math.round((v / total) * 100)]));
+}
+
+// ══════════════════════════════════════
+// RESULTS RENDERING
+// ══════════════════════════════════════
+function renderResults() {
+  const dominant = getDominantPersonality();
+  const p = personalities[dominant];
+  const percents = getScorePercents();
+  const petName = state.petName || (state.petType === 'dog' ? 'Your Pup' : 'Your Kitty');
+  const ownerName = state.ownerName ? `, ${state.ownerName}` : '';
+
+  const barColors = {
+    adventurer: '#E8820C',
+    cuddler: '#7C5CBF',
+    zen: '#3DAA7A',
+    social: '#E84B6A'
+  };
+  const barLabels = {
+    adventurer: 'The Adventurer',
+    cuddler: 'The Cuddler',
+    zen: 'The Zen Master',
+    social: 'Social Butterfly'
+  };
+
+  const container = document.getElementById('results-container');
+  container.innerHTML = `
+    <div style="max-width:900px;margin:0 auto;">
+      <div style="text-align:center;margin-bottom:48px;">
+        <div style="display:inline-flex;align-items:center;gap:8px;background:${p.colorLight};color:${p.color};font-size:0.8rem;font-weight:700;letter-spacing:0.5px;padding:6px 16px;border-radius:50px;margin-bottom:20px;border:1px solid ${p.color}30;">
+          🎉 Results Ready${ownerName}!
+        </div>
+        <div class="results-pet-name">${petName}'s Personality</div>
+        <div class="results-personality-name">${p.name}</div>
+        <span class="results-emoji">${p.emoji}</span>
+        <p class="results-desc">${p.desc}</p>
+      </div>
+
+      <div class="results-grid">
+        <!-- Breakdown -->
+        <div class="results-card">
+          <h3>📊 Personality Breakdown</h3>
+          ${Object.entries(barLabels).map(([key, label]) => `
+            <div class="breakdown-row">
+              <div class="breakdown-label">
+                <span>${label}</span>
+                <span>${percents[key]}%</span>
+              </div>
+              <div class="breakdown-bar">
+                <div class="breakdown-fill" style="width:0%;background:${barColors[key]}" data-width="${percents[key]}%"></div>
+              </div>
+            </div>`).join('')}
+        </div>
+
+        <!-- Key Traits -->
+        <div class="results-card">
+          <h3>✨ Key Traits</h3>
+          <div class="traits-chips" style="margin-bottom:24px;">
+            ${p.traits.map(t => `<span class="trait-chip" style="color:${t.color};background:${t.bg};border-color:${t.color}30;">${t.label}</span>`).join('')}
+          </div>
+          <h3>💡 Care Tips for ${p.name}</h3>
+          <ul class="care-list">
+            ${p.care.map(tip => `<li><span class="care-check">✓</span><span>${tip}</span></li>`).join('')}
+          </ul>
+        </div>
+
+        <!-- Products -->
+        <div class="results-card" style="grid-column:1/-1">
+          <h3>🛍️ Recommended Products for ${petName}</h3>
+          <div class="products-grid">
+            ${p.products.map(prod => `
+              <div class="product-item">
+                <div class="product-name">${prod.name}</div>
+                <div class="product-desc">${prod.desc}</div>
+                <div class="product-price">${prod.price}</div>
+              </div>`).join('')}
+          </div>
+        </div>
+      </div>
+
+      <div class="results-share">
+        <h3>Love the results?</h3>
+        <p>Share ${petName}'s personality or discover someone else's pet!</p>
+        <div class="share-btns">
+          <button class="btn-share btn-retake" onclick="startQuiz()">🔄 Test Another Pet</button>
+          <button class="btn-share" style="background:var(--amber);color:white;border-color:var(--amber)" onclick="shareResult('${p.name}', '${petName}')">📤 Share Results</button>
+          <button class="btn-share" style="background:white;color:var(--brown-mid);border-color:rgba(44,26,14,0.15)" onclick="showPage('home')">🏠 Back to Home</button>
+        </div>
+      </div>
+    </div>`;
+
+  // Animate bars after DOM update
+  setTimeout(() => {
+    document.querySelectorAll('.breakdown-fill').forEach(bar => {
+      bar.style.width = bar.dataset.width;
+    });
+  }, 200);
+}
+
+function shareResult(personality, petName) {
+  const text = `🐾 ${petName} just got their Animus personality result: "${personality}"! Find out your pet's personality at animuspet.com`;
+  if (navigator.share) {
+    navigator.share({ title: 'Animus Pet Personality', text, url: 'https://animuspet.com' }).catch(() => {});
+  } else if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => alert('Copied to clipboard! 🐾'));
+  } else {
+    prompt('Copy and share:', text);
+  }
+}
+</script>
+</body>
+</html>
