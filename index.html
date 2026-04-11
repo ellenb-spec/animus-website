@@ -30,24 +30,126 @@
     --radius-sm: 12px;
   }
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  /* ── DARK MODE ── */
+  body.dark {
+    --cream: #1A1209;
+    --sand: #231808;
+    --brown-dark: #F5EDE0;
+    --brown-mid: #D4B896;
+    --brown-soft: #A88B6E;
+    --white: #1A1209;
+    --shadow-warm: 0 8px 40px rgba(232,130,12,0.22);
+    --shadow-card: 0 4px 24px rgba(0,0,0,0.35);
+  }
+  body.dark nav { background: rgba(26,18,9,0.95); border-bottom-color: rgba(232,130,12,0.18); }
+  body.dark .hero-card { background: #251A0D; }
+  body.dark .step-chip { background: #2E1F0F; }
+  body.dark .how-card { background: #1F1409; }
+  body.dark .testimonial-card { background: #1F1409; }
+  body.dark .results-card { background: #1F1409; }
+  body.dark .quiz-card { background: #1F1409; }
+  body.dark .quiz-input { background: #2A1C0C; border-color: rgba(212,184,150,0.15); color: var(--brown-dark); }
+  body.dark .quiz-input:focus { background: #321F0D; border-color: var(--amber); }
+  body.dark .quiz-option { background: #2A1C0C; border-color: rgba(212,184,150,0.12); color: var(--brown-mid); }
+  body.dark .quiz-option:hover, body.dark .quiz-option.selected { background: rgba(232,130,12,0.18); border-color: var(--amber); color: #F5EDE0; }
+  body.dark .modal-box { background: #1F1409; }
+  body.dark .product-item { background: #2A1C0C; border-color: rgba(212,184,150,0.1); }
+  body.dark .product-item:hover { background: #321F0D; }
+  body.dark .mobile-nav-overlay { background: rgba(26,18,9,0.98); }
+  body.dark .mobile-nav-overlay a { color: #F5EDE0; border-bottom-color: rgba(212,184,150,0.08); }
+  body.dark .floating-badge { background: #251A0D; }
+  body.dark .hero-stats { border-top-color: rgba(212,184,150,0.1); }
+  body.dark .about-hero { background: linear-gradient(160deg, #1A1209 60%, #2C1A0E 100%); }
+  body.dark footer { background: #060402; }
+  body.dark .footer-bottom { background: #060402; border-top-color: rgba(255,255,255,0.04); }
+  body.dark .about-card-visual { background: #1F1409; }
+  body.dark .about-card-body p { color: var(--brown-mid); }
+  body.dark .value-card { background: #1F1409; }
+  body.dark .personalities-bg { background: #0E0B06; }
+  body.dark .quiz-container { background: linear-gradient(160deg, #1A1209 0%, #231808 100%); }
+  body.dark .results-container { background: linear-gradient(160deg, #1A1209 0%, #231808 100%); }
+  body.dark .testimonials-section { background: #231808; }
+  body.dark .testimonials-section .section-title { color: var(--brown-dark); }
+  body.dark .testimonials-section .section-sub { color: var(--brown-mid); }
+  body.dark .testimonial-card { background: #1F1409; }
+  body.dark .tc-quote { color: var(--brown-mid); }
+  body.dark .tc-name { color: var(--brown-dark); }
+  body.dark .cta-band { background: linear-gradient(135deg, #b55e00 0%, #c97d10 100%); }
+  body.dark .how-card h4 { color: var(--brown-dark); }
+  body.dark .how-card p { color: var(--brown-mid); }
+  body.dark .how-number { color: rgba(232,130,12,0.25); }
+  body.dark .section-title { color: var(--brown-dark); }
+  body.dark .section-sub { color: var(--brown-mid); }
 
-  html { scroll-behavior: smooth; }
+  /* Dark mode toggle button */
+  .dark-toggle {
+    width: 40px; height: 40px; border-radius: 50%;
+    border: 2px solid rgba(44,26,14,0.15);
+    background: transparent;
+    cursor: pointer; font-size: 1.1rem;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s; flex-shrink: 0;
+    color: var(--brown-mid);
+  }
+  .dark-toggle:hover { border-color: var(--amber); background: var(--amber-pale); }
+  body.dark .dark-toggle { border-color: rgba(212,184,150,0.2); color: var(--brown-mid); }
+  body.dark .dark-toggle:hover { background: rgba(232,130,12,0.15); border-color: var(--amber); }
 
-  body {
-    font-family: var(--font-body);
-    background: var(--cream);
-    color: var(--brown-dark);
-    overflow-x: hidden;
-    cursor: default;
+  /* ── CONFETTI CANVAS ── */
+  #confetti-canvas {
+    position: fixed; inset: 0; pointer-events: none;
+    z-index: 9999; width: 100%; height: 100%;
   }
 
-  /* ── PAGES ── */
+  /* ── SHARE CARD MODAL ── */
+  .share-card-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.72); z-index: 500;
+    align-items: center; justify-content: center;
+    padding: 20px; backdrop-filter: blur(6px);
+  }
+  .share-card-overlay.open { display: flex; animation: fadeIn 0.25s ease; }
+  .share-card-modal {
+    background: white; border-radius: 24px;
+    padding: 32px; max-width: 480px; width: 100%;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.4);
+    text-align: center;
+  }
+  body.dark .share-card-modal { background: #1F1409; }
+  .share-card-modal h3 {
+    font-family: var(--font-display); font-size: 1.3rem; font-weight: 900;
+    color: var(--brown-dark); margin-bottom: 6px;
+  }
+  .share-card-modal p { font-size: 0.85rem; color: var(--brown-soft); margin-bottom: 20px; }
+  #personality-card-canvas {
+    width: 100%; border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    display: block; margin-bottom: 20px;
+  }
+  .share-card-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .btn-download {
+    background: var(--amber); color: white; border: none;
+    border-radius: 50px; padding: 12px 24px; font-size: 0.9rem; font-weight: 600;
+    cursor: pointer; font-family: var(--font-body); transition: all 0.2s;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .btn-download:hover { background: var(--amber-light); transform: translateY(-1px); }
+  .btn-close-modal {
+    background: transparent; color: var(--brown-soft);
+    border: 2px solid rgba(44,26,14,0.15); border-radius: 50px;
+    padding: 12px 24px; font-size: 0.9rem; font-weight: 500;
+    cursor: pointer; font-family: var(--font-body); transition: all 0.2s;
+  }
+  .btn-close-modal:hover { border-color: var(--brown-mid); color: var(--brown-dark); }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); background: var(--cream); color: var(--brown-dark); overflow-x: hidden; cursor: default; transition: background 0.3s, color 0.3s; }
+
   .page { display: none; min-height: 100vh; }
   .page.active { display: block; animation: fadeIn 0.4s ease; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 
-  /* ── NAV ── */
   nav {
     position: sticky; top: 0; z-index: 100;
     background: rgba(251,247,240,0.92);
@@ -57,266 +159,184 @@
     display: flex; align-items: center; justify-content: space-between;
     height: 70px;
   }
-  .nav-logo {
-    font-family: var(--font-display);
-    font-size: 1.5rem; font-weight: 900;
-    color: var(--brown-dark);
-    letter-spacing: -0.5px;
-    cursor: pointer;
-    display: flex; align-items: center; gap: 8px;
-  }
+  .nav-logo { font-family: var(--font-display); font-size: 1.5rem; font-weight: 900; color: var(--brown-dark); letter-spacing: -0.5px; cursor: pointer; display: flex; align-items: center; gap: 8px; }
   .nav-logo span { color: var(--amber); }
   .nav-paw { font-size: 1.2rem; }
   .nav-links { display: flex; gap: 32px; align-items: center; }
-  .nav-links a {
-    font-size: 0.9rem; font-weight: 500;
-    color: var(--brown-mid); text-decoration: none;
-    transition: color 0.2s;
-    cursor: pointer;
-  }
+  .nav-links a { font-size: 0.9rem; font-weight: 500; color: var(--brown-mid); text-decoration: none; transition: color 0.2s; cursor: pointer; }
   .nav-links a:hover { color: var(--amber); }
-  .nav-cta {
-    background: var(--amber); color: white;
-    border: none; border-radius: 50px;
-    padding: 10px 22px; font-size: 0.875rem; font-weight: 600;
-    cursor: pointer; transition: background 0.2s, transform 0.15s;
-    font-family: var(--font-body);
-  }
+  .nav-cta { background: var(--amber); color: white; border: none; border-radius: 50px; padding: 10px 22px; font-size: 0.875rem; font-weight: 600; cursor: pointer; transition: background 0.2s, transform 0.15s; font-family: var(--font-body); }
   .nav-cta:hover { background: var(--amber-light); transform: translateY(-1px); }
   @media (max-width: 600px) { .nav-cta { display: none !important; } }
 
-  /* ── HERO ── */
-  .hero {
-    position: relative;
-    padding: 80px 5% 0;
-    overflow: hidden;
-    min-height: 88vh;
-    display: flex; align-items: center;
-  }
-  .hero-bg {
-    position: absolute; inset: 0;
-    background: radial-gradient(ellipse 80% 60% at 70% 40%, #FDE8CC 0%, transparent 70%),
-                radial-gradient(ellipse 50% 50% at 10% 80%, rgba(232,130,12,0.08) 0%, transparent 60%);
-    pointer-events: none;
-  }
-  .hero-blob {
-    position: absolute; right: -60px; top: 50%;
-    transform: translateY(-50%);
-    width: 55vw; max-width: 700px;
-    background: linear-gradient(135deg, var(--amber) 0%, var(--amber-light) 50%, #F9C06B 100%);
-    border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%;
-    aspect-ratio: 1;
-    opacity: 0.12;
-    animation: blobMorph 8s ease-in-out infinite;
-  }
-  @keyframes blobMorph {
-    0%,100% { border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%; }
-    33% { border-radius: 45% 55% 40% 60% / 60% 40% 55% 45%; }
-    66% { border-radius: 55% 45% 60% 40% / 45% 55% 50% 50%; }
-  }
+  .hero { position: relative; padding: 80px 5% 0; overflow: hidden; min-height: 88vh; display: flex; align-items: center; }
+  .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 70% 40%, #FDE8CC 0%, transparent 70%), radial-gradient(ellipse 50% 50% at 10% 80%, rgba(232,130,12,0.08) 0%, transparent 60%); pointer-events: none; }
+  .hero-blob { position: absolute; right: -60px; top: 50%; transform: translateY(-50%); width: 55vw; max-width: 700px; background: linear-gradient(135deg, var(--amber) 0%, var(--amber-light) 50%, #F9C06B 100%); border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%; aspect-ratio: 1; opacity: 0.12; animation: blobMorph 8s ease-in-out infinite; }
+  @keyframes blobMorph { 0%,100% { border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%; } 33% { border-radius: 45% 55% 40% 60% / 60% 40% 55% 45%; } 66% { border-radius: 55% 45% 60% 40% / 45% 55% 50% 50%; } }
   .hero-content { position: relative; z-index: 2; max-width: 580px; }
-  .hero-badge {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: var(--amber-pale); color: var(--amber);
-    font-size: 0.8rem; font-weight: 600; letter-spacing: 0.5px;
-    padding: 6px 16px; border-radius: 50px;
-    margin-bottom: 24px;
-    border: 1px solid rgba(232,130,12,0.25);
-  }
-  .hero-script {
-    font-family: var(--font-script);
-    font-size: clamp(1.6rem, 3vw, 2.2rem);
-    color: var(--amber);
-    display: block; margin-bottom: 8px;
-    transform: rotate(-1.5deg);
-  }
-  .hero-title {
-    font-family: var(--font-display);
-    font-size: clamp(2.8rem, 5.5vw, 4.2rem);
-    font-weight: 900;
-    line-height: 1.08;
-    color: var(--brown-dark);
-    letter-spacing: -2px;
-    margin-bottom: 22px;
-  }
+  .hero-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--amber-pale); color: var(--amber); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.5px; padding: 6px 16px; border-radius: 50px; margin-bottom: 24px; border: 1px solid rgba(232,130,12,0.25); }
+  .hero-script { font-family: var(--font-script); font-size: clamp(1.6rem, 3vw, 2.2rem); color: var(--amber); display: block; margin-bottom: 8px; transform: rotate(-1.5deg); }
+  .hero-title { font-family: var(--font-display); font-size: clamp(2.8rem, 5.5vw, 4.2rem); font-weight: 900; line-height: 1.08; color: var(--brown-dark); letter-spacing: -2px; margin-bottom: 22px; }
   .hero-title em { font-style: italic; color: var(--amber); }
-  .hero-sub {
-    font-size: 1.05rem; line-height: 1.65;
-    color: var(--brown-soft);
-    max-width: 430px;
-    margin-bottom: 36px;
-  }
+  .hero-sub { font-size: 1.05rem; line-height: 1.65; color: var(--brown-soft); max-width: 430px; margin-bottom: 36px; }
   .hero-actions { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
-  .btn-primary {
-    background: var(--amber); color: white;
-    border: none; border-radius: 50px;
-    padding: 16px 36px; font-size: 1rem; font-weight: 600;
-    cursor: pointer; transition: all 0.2s;
-    font-family: var(--font-body);
-    box-shadow: 0 6px 24px rgba(232,130,12,0.35);
-    display: inline-flex; align-items: center; gap: 8px;
-  }
+  .btn-primary { background: var(--amber); color: white; border: none; border-radius: 50px; padding: 16px 36px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: var(--font-body); box-shadow: 0 6px 24px rgba(232,130,12,0.35); display: inline-flex; align-items: center; gap: 8px; }
   .btn-primary:hover { background: var(--amber-light); transform: translateY(-2px); box-shadow: 0 10px 32px rgba(232,130,12,0.4); }
-  .btn-ghost {
-    background: transparent; color: var(--brown-mid);
-    border: 2px solid rgba(44,26,14,0.15); border-radius: 50px;
-    padding: 14px 28px; font-size: 1rem; font-weight: 500;
-    cursor: pointer; transition: all 0.2s;
-    font-family: var(--font-body);
-  }
+  .btn-ghost { background: transparent; color: var(--brown-mid); border: 2px solid rgba(44,26,14,0.15); border-radius: 50px; padding: 14px 28px; font-size: 1rem; font-weight: 500; cursor: pointer; transition: all 0.2s; font-family: var(--font-body); }
   .btn-ghost:hover { border-color: var(--amber); color: var(--amber); }
-  .hero-stats {
-    display: flex; gap: 32px; margin-top: 52px;
-    padding-top: 32px; border-top: 1px solid rgba(44,26,14,0.08);
-  }
+  .hero-stats { display: flex; gap: 32px; margin-top: 52px; padding-top: 32px; border-top: 1px solid rgba(44,26,14,0.08); }
   .stat-item { text-align: left; }
   .stat-num { font-family: var(--font-display); font-size: 1.8rem; font-weight: 900; color: var(--amber); }
   .stat-label { font-size: 0.8rem; color: var(--brown-soft); margin-top: 2px; }
-  .hero-visual {
-    position: absolute; right: 5%; top: 50%;
-    transform: translateY(-50%);
-    width: 44vw; max-width: 560px;
-    z-index: 2;
-  }
-  .hero-card {
-    background: white;
-    border-radius: 28px;
-    padding: 32px;
-    box-shadow: var(--shadow-warm), 0 2px 0 rgba(232,130,12,0.1);
-    position: relative;
-  }
-  .hero-card-header {
-    background: linear-gradient(135deg, var(--amber) 0%, #F4A340 100%);
-    border-radius: 18px;
-    padding: 28px;
-    color: white; text-align: center;
-    margin-bottom: 24px;
-    position: relative; overflow: hidden;
-  }
-  .hero-card-header::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-  }
+  .hero-visual { position: absolute; right: 5%; top: 50%; transform: translateY(-50%); width: 44vw; max-width: 560px; z-index: 2; }
+  .hero-card { background: white; border-radius: 28px; padding: 32px; box-shadow: var(--shadow-warm), 0 2px 0 rgba(232,130,12,0.1); position: relative; }
+  .hero-card-header { background: linear-gradient(135deg, var(--amber) 0%, #F4A340 100%); border-radius: 18px; padding: 28px; color: white; text-align: center; margin-bottom: 24px; position: relative; overflow: hidden; }
+  .hero-card-header::before { content: ''; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); }
   .hero-card-header h3 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; position: relative; }
   .hero-card-header p { font-size: 0.85rem; opacity: 0.85; margin-top: 4px; position: relative; }
   .hero-card-pets { font-size: 3rem; margin-bottom: 8px; }
   .hero-card-steps { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .step-chip {
-    background: var(--sand);
-    border-radius: var(--radius-sm);
-    padding: 14px;
-    display: flex; align-items: flex-start; gap: 10px;
-  }
+  .step-chip { background: var(--sand); border-radius: var(--radius-sm); padding: 14px; display: flex; align-items: flex-start; gap: 10px; }
   .step-chip-icon { font-size: 1.3rem; }
   .step-chip-text { font-size: 0.78rem; font-weight: 600; color: var(--brown-mid); line-height: 1.4; }
-  .floating-badge {
-    position: absolute;
-    background: white;
-    border-radius: 50px;
-    padding: 8px 16px;
-    box-shadow: var(--shadow-card);
-    font-size: 0.78rem; font-weight: 600;
-    display: flex; align-items: center; gap: 6px;
-    white-space: nowrap;
-    animation: float 3s ease-in-out infinite;
-  }
+  .floating-badge { position: absolute; background: white; border-radius: 50px; padding: 8px 16px; box-shadow: var(--shadow-card); font-size: 0.78rem; font-weight: 600; display: flex; align-items: center; gap: 6px; white-space: nowrap; animation: float 3s ease-in-out infinite; }
   .floating-badge.top-right { top: -16px; right: 20px; color: var(--green-accent); animation-delay: 0.5s; }
   .floating-badge.bottom-left { bottom: -16px; left: 20px; color: var(--purple-accent); animation-delay: 1s; }
-  @keyframes float {
-    0%,100% { transform: translateY(0); }
-    50% { transform: translateY(-6px); }
-  }
+  @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
 
-  /* ── HOW IT WORKS ── */
   .section { padding: 96px 5%; }
-  .section-label {
-    display: inline-block;
-    font-size: 0.78rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-    color: var(--amber); margin-bottom: 12px;
-  }
-  .section-title {
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 3.5vw, 2.8rem);
-    font-weight: 900; letter-spacing: -1px;
-    color: var(--brown-dark);
-    margin-bottom: 16px; line-height: 1.15;
-  }
-  .section-sub {
-    font-size: 1rem; color: var(--brown-soft); line-height: 1.65;
-    max-width: 500px;
-  }
+  .section-label { display: inline-block; font-size: 0.78rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--amber); margin-bottom: 12px; }
+  .section-title { font-family: var(--font-display); font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 900; letter-spacing: -1px; color: var(--brown-dark); margin-bottom: 16px; line-height: 1.15; }
+  .section-sub { font-size: 1rem; color: var(--brown-soft); line-height: 1.65; max-width: 500px; }
   .section-header { margin-bottom: 56px; }
 
   .how-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-  .how-card {
-    background: white; border-radius: var(--radius);
-    padding: 28px 22px;
-    box-shadow: var(--shadow-card);
-    position: relative;
-    transition: transform 0.25s, box-shadow 0.25s;
-  }
+  .how-card { background: white; border-radius: var(--radius); padding: 28px 22px; box-shadow: var(--shadow-card); position: relative; transition: transform 0.25s, box-shadow 0.25s; }
   .how-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-warm); }
-  .how-number {
-    font-family: var(--font-display);
-    font-size: 3rem; font-weight: 900;
-    color: var(--amber-pale); line-height: 1;
-    margin-bottom: 12px;
-  }
+  .how-number { font-family: var(--font-display); font-size: 3rem; font-weight: 900; color: var(--amber-pale); line-height: 1; margin-bottom: 12px; }
   .how-icon { font-size: 2rem; margin-bottom: 12px; }
   .how-card h4 { font-size: 1rem; font-weight: 700; color: var(--brown-dark); margin-bottom: 8px; }
   .how-card p { font-size: 0.85rem; color: var(--brown-soft); line-height: 1.55; }
-  .how-card-line {
-    position: absolute; top: 50px; right: -10px;
-    width: 20px; height: 2px;
-    background: var(--amber-pale);
-  }
+  .how-card-line { position: absolute; top: 50px; right: -10px; width: 20px; height: 2px; background: var(--amber-pale); }
   .how-card:last-child .how-card-line { display: none; }
 
-  /* ── PERSONALITIES PREVIEW ── */
+  /* ── PERSONALITIES ── */
   .personalities-bg { background: var(--brown-dark); padding: 96px 5%; }
   .personalities-bg .section-label { color: var(--amber-light); }
   .personalities-bg .section-title { color: white; }
   .personalities-bg .section-sub { color: rgba(255,255,255,0.6); }
   .personalities-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 48px; }
   @media (min-width: 768px) { .personalities-grid { grid-template-columns: repeat(4, 1fr); } }
-  .personality-card {
-    border-radius: var(--radius);
-    padding: 24px 20px;
-    cursor: pointer;
-    transition: transform 0.25s;
-    position: relative; overflow: hidden;
-  }
+  .personality-card { border-radius: var(--radius); cursor: pointer; transition: transform 0.25s; position: relative; overflow: hidden; }
   .personality-card:hover { transform: translateY(-4px) scale(1.02); }
-  .personality-card::before {
-    content: ''; position: absolute; inset: 0;
-    background: rgba(255,255,255,0.05);
-    opacity: 0; transition: opacity 0.2s;
-  }
+  .personality-card::before { content: ''; position: absolute; inset: 0; background: rgba(255,255,255,0.05); opacity: 0; transition: opacity 0.2s; }
   .personality-card:hover::before { opacity: 1; }
   .pc-adventurer { background: linear-gradient(135deg, #E8820C 0%, #F4A340 100%); }
   .pc-cuddler { background: linear-gradient(135deg, #7C5CBF 0%, #A886E8 100%); }
   .pc-zen { background: linear-gradient(135deg, #3DAA7A 0%, #5FD4A0 100%); }
   .pc-social { background: linear-gradient(135deg, #E84B6A 0%, #F47A90 100%); }
-  .pc-emoji { font-size: 2.5rem; margin-bottom: 12px; }
+
+  /* Personality card animation banner */
+  .pc-anim {
+    width: 100%; height: 160px; overflow: hidden; position: relative;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .pc-anim svg { width: 100%; height: 100%; position: absolute; inset: 0; }
+
+  /* ── ADVENTURER animation ── */
+  .pc-anim-adventurer { background: linear-gradient(135deg, #b85e00 0%, #d4780a 100%); }
+  .adv-ground { animation: advGroundShift 2.2s linear infinite; }
+  .adv-dog { animation: advDogRun 0.38s steps(1) infinite; }
+  .adv-skateboard { animation: advSkate 2.2s linear infinite; }
+  .adv-stars { animation: advStars 1.1s ease-in-out infinite alternate; }
+  @keyframes advGroundShift { from { transform: translateX(0); } to { transform: translateX(-80px); } }
+  @keyframes advSkate { from { transform: translateX(-60px); } to { transform: translateX(360px); } }
+  @keyframes advDogRun { 0%,100% { transform: translateX(-60px) scaleX(1); }
+                         50%      { transform: translateX(-60px) scaleX(1) translateY(-3px); } }
+  @keyframes advStars { from { opacity:0.4; transform:scale(0.9); } to { opacity:1; transform:scale(1.1); } }
+
+  /* ── CUDDLER animation ── */
+  .pc-anim-cuddler { background: linear-gradient(135deg, #5a3a99 0%, #8a65d4 100%); }
+  .cuddle-glow { animation: cuddleGlow 2s ease-in-out infinite alternate; transform-origin: center; }
+  .cuddle-heart1 { animation: heartFloat1 2.4s ease-in-out infinite; }
+  .cuddle-heart2 { animation: heartFloat2 3s ease-in-out infinite; }
+  .cuddle-heart3 { animation: heartFloat3 2.7s ease-in-out infinite; }
+  .cuddle-dog { animation: cuddleNuzzle 3s ease-in-out infinite; transform-origin: 50% 80%; }
+  @keyframes cuddleGlow { from { opacity:0.3; r:28px; } to { opacity:0.7; r:42px; } }
+  @keyframes heartFloat1 { 0%,100%{transform:translateY(0) scale(1);opacity:1} 50%{transform:translateY(-22px) scale(1.2);opacity:0.7} }
+  @keyframes heartFloat2 { 0%,100%{transform:translateY(0) scale(0.8);opacity:0.8} 50%{transform:translateY(-18px) scale(1);opacity:0.5} }
+  @keyframes heartFloat3 { 0%,100%{transform:translateY(0);opacity:0.6} 50%{transform:translateY(-14px);opacity:0.3} }
+  @keyframes cuddleNuzzle { 0%,100%{transform:rotate(-2deg)} 50%{transform:rotate(2deg)} }
+
+  /* ── ZEN animation ── */
+  .pc-anim-zen { background: linear-gradient(135deg, #1e7a52 0%, #2fb87a 100%); }
+  .zen-ripple1 { animation: zenRipple 3s ease-out infinite; transform-origin: 50% 72%; }
+  .zen-ripple2 { animation: zenRipple 3s ease-out infinite 1s; transform-origin: 50% 72%; }
+  .zen-ripple3 { animation: zenRipple 3s ease-out infinite 2s; transform-origin: 50% 72%; }
+  .zen-cat { animation: zenBreathe 4s ease-in-out infinite; transform-origin: 50% 60%; }
+  .zen-particle { animation: zenFloat 4s ease-in-out infinite; }
+  .zen-particle:nth-child(2) { animation-delay: 1.3s; }
+  .zen-particle:nth-child(3) { animation-delay: 2.6s; }
+  @keyframes zenRipple { 0%{transform:scale(0.4);opacity:0.7} 100%{transform:scale(2.4);opacity:0} }
+  @keyframes zenBreathe { 0%,100%{transform:scale(1)} 50%{transform:scale(1.04)} }
+  @keyframes zenFloat { 0%,100%{transform:translateY(0) rotate(0deg);opacity:0.7} 50%{transform:translateY(-14px) rotate(15deg);opacity:1} }
+
+  /* ── SOCIAL animation ── */
+  .pc-anim-social { background: linear-gradient(135deg, #b02050 0%, #e0507a 100%); }
+  .social-dog1 { animation: socialBounce1 1.4s ease-in-out infinite; transform-origin: 50% 85%; }
+  .social-dog2 { animation: socialBounce2 1.6s ease-in-out infinite; transform-origin: 50% 85%; }
+  .social-confetti { animation: socialConfetti 2s ease-in-out infinite; }
+  .social-confetti:nth-child(2) { animation-delay:0.4s; }
+  .social-confetti:nth-child(3) { animation-delay:0.8s; }
+  .social-confetti:nth-child(4) { animation-delay:1.2s; }
+  .social-confetti:nth-child(5) { animation-delay:1.6s; }
+  .social-star { animation: socialSpin 1.8s linear infinite; transform-origin: 50% 50%; }
+  @keyframes socialBounce1 { 0%,100%{transform:translateY(0) rotate(-3deg)} 50%{transform:translateY(-10px) rotate(3deg)} }
+  @keyframes socialBounce2 { 0%,100%{transform:translateY(0) rotate(3deg)} 50%{transform:translateY(-14px) rotate(-3deg)} }
+  @keyframes socialConfetti { 0%{transform:translateY(0) rotate(0deg);opacity:1} 100%{transform:translateY(-50px) rotate(360deg);opacity:0} }
+  @keyframes socialSpin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+
+  /* ── BLOG animation banners ── */
+  .blog-anim {
+    width: 100%; height: 220px; overflow: hidden; position: relative;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .blog-anim svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+  /* Blog 1 - training/dog */
+  .blog-anim-1 { background: linear-gradient(135deg, #2a1a00 0%, #7a3d00 50%, #c46200 100%); }
+  .b1-dog { animation: b1DogWalk 3s ease-in-out infinite; transform-origin: 50% 80%; }
+  .b1-star { animation: b1StarPop 1.5s ease-in-out infinite; transform-origin: 50% 50%; }
+  .b1-star:nth-child(2){animation-delay:.5s} .b1-star:nth-child(3){animation-delay:1s}
+  .b1-wave { animation: b1Wave 2.5s ease-in-out infinite; }
+  .b1-wave:nth-child(2){animation-delay:.8s} .b1-wave:nth-child(3){animation-delay:1.6s}
+  @keyframes b1DogWalk { 0%,100%{transform:translateX(-6px) rotate(-2deg)} 50%{transform:translateX(6px) rotate(2deg)} }
+  @keyframes b1StarPop { 0%,100%{transform:scale(0.8) rotate(0deg);opacity:0.6} 50%{transform:scale(1.3) rotate(20deg);opacity:1} }
+  @keyframes b1Wave { 0%,100%{transform:scaleX(1) translateX(0)} 50%{transform:scaleX(1.08) translateX(-4px)} }
+
+  /* Blog 2 - cat science */
+  .blog-anim-2 { background: linear-gradient(135deg, #0a1a2e 0%, #0e3a5a 50%, #1a6090 100%); }
+  .b2-cat { animation: b2CatIdle 3.5s ease-in-out infinite; transform-origin: 50% 70%; }
+  .b2-orb { animation: b2OrbFloat 2.8s ease-in-out infinite; }
+  .b2-orb:nth-child(2){animation-delay:.9s} .b2-orb:nth-child(3){animation-delay:1.8s}
+  .b2-dna { animation: b2DnaSpin 6s linear infinite; transform-origin: 50% 50%; }
+  .b2-spark { animation: b2Spark 2s ease-in-out infinite; }
+  .b2-spark:nth-child(2){animation-delay:.7s} .b2-spark:nth-child(3){animation-delay:1.4s}
+  @keyframes b2CatIdle { 0%,100%{transform:translateY(0) rotate(0deg)} 50%{transform:translateY(-6px) rotate(1deg)} }
+  @keyframes b2OrbFloat { 0%,100%{transform:translateY(0) scale(1);opacity:0.6} 50%{transform:translateY(-16px) scale(1.15);opacity:1} }
+  @keyframes b2DnaSpin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+  @keyframes b2Spark { 0%,100%{opacity:0;transform:scale(0)} 40%,60%{opacity:1;transform:scale(1)} }
+  .pc-body { padding: 18px 20px 22px; }
+  .pc-emoji { font-size: 1.8rem; margin-bottom: 8px; display: block; }
   .pc-name { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: white; margin-bottom: 4px; }
   .pc-desc { font-size: 0.8rem; color: rgba(255,255,255,0.8); line-height: 1.5; }
-  .pc-tag {
-    display: inline-block; margin-top: 12px;
-    background: rgba(255,255,255,0.2); color: white;
-    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.5px;
-    padding: 4px 10px; border-radius: 50px;
-  }
+  .pc-tag { display: inline-block; margin-top: 12px; background: rgba(255,255,255,0.2); color: white; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.5px; padding: 4px 10px; border-radius: 50px; }
 
   /* ── TESTIMONIALS ── */
   .testimonials-section { background: var(--sand); padding: 96px 5%; }
   .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-  .testimonial-card {
-    background: white; border-radius: var(--radius);
-    padding: 28px;
-    box-shadow: var(--shadow-card);
-    transition: transform 0.25s;
-  }
+  .testimonial-card { background: white; border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow-card); transition: transform 0.25s; }
   .testimonial-card:hover { transform: translateY(-4px); }
   .tc-stars { color: var(--amber); font-size: 1.1rem; margin-bottom: 14px; }
   .tc-quote { font-size: 0.93rem; line-height: 1.65; color: var(--brown-mid); margin-bottom: 20px; font-style: italic; }
@@ -326,133 +346,51 @@
   .tc-pet { font-size: 0.78rem; color: var(--brown-soft); margin-top: 2px; }
 
   /* ── CTA BAND ── */
-  .cta-band {
-    background: linear-gradient(135deg, var(--amber) 0%, var(--amber-light) 100%);
-    padding: 80px 5%;
-    text-align: center; position: relative; overflow: hidden;
-  }
-  .cta-band::before {
-    content: '🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾';
-    position: absolute; top: 10px; left: 0; right: 0;
-    font-size: 1.2rem; letter-spacing: 8px; opacity: 0.15;
-    white-space: nowrap; overflow: hidden;
-  }
+  .cta-band { background: linear-gradient(135deg, var(--amber) 0%, var(--amber-light) 100%); padding: 80px 5%; text-align: center; position: relative; overflow: hidden; }
+  .cta-band::before { content: '🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾🐾'; position: absolute; top: 10px; left: 0; right: 0; font-size: 1.2rem; letter-spacing: 8px; opacity: 0.15; white-space: nowrap; overflow: hidden; }
   .cta-band h2 { font-family: var(--font-display); font-size: clamp(2rem,4vw,3rem); font-weight: 900; color: white; margin-bottom: 16px; }
   .cta-band p { color: rgba(255,255,255,0.85); font-size: 1.05rem; margin-bottom: 32px; }
-  .btn-white {
-    background: white; color: var(--amber);
-    border: none; border-radius: 50px;
-    padding: 16px 40px; font-size: 1rem; font-weight: 700;
-    cursor: pointer; transition: all 0.2s;
-    font-family: var(--font-body);
-    box-shadow: 0 6px 24px rgba(0,0,0,0.15);
-  }
+  .btn-white { background: white; color: var(--amber); border: none; border-radius: 50px; padding: 16px 40px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.2s; font-family: var(--font-body); box-shadow: 0 6px 24px rgba(0,0,0,0.15); }
   .btn-white:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(0,0,0,0.2); }
 
-  /* ── ABOUT PAGE ── */
-  .about-hero {
-    padding: 100px 5% 80px;
-    background: linear-gradient(160deg, var(--cream) 60%, var(--amber-pale) 100%);
-    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
-  }
-  .about-card-visual {
-    background: white; border-radius: 28px;
-    overflow: hidden; box-shadow: var(--shadow-warm);
-  }
-  .about-card-top {
-    background: linear-gradient(135deg, var(--amber) 0%, var(--amber-light) 100%);
-    padding: 48px; text-align: center;
-  }
+  /* ── ABOUT ── */
+  .about-hero { padding: 100px 5% 80px; background: linear-gradient(160deg, var(--cream) 60%, var(--amber-pale) 100%); display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+  .about-card-visual { background: white; border-radius: 28px; overflow: hidden; box-shadow: var(--shadow-warm); }
+  .about-card-top { background: linear-gradient(135deg, var(--amber) 0%, var(--amber-light) 100%); padding: 48px; text-align: center; }
   .about-card-top .big-emoji { font-size: 4rem; }
   .about-card-body { padding: 28px; }
   .about-mission-pills { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
-  .pill {
-    background: var(--amber-pale); color: var(--amber);
-    font-size: 0.8rem; font-weight: 600;
-    padding: 6px 14px; border-radius: 50px;
-    border: 1px solid rgba(232,130,12,0.2);
-  }
+  .pill { background: var(--amber-pale); color: var(--amber); font-size: 0.8rem; font-weight: 600; padding: 6px 14px; border-radius: 50px; border: 1px solid rgba(232,130,12,0.2); }
   .about-values { padding: 80px 5%; }
   .values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
-  .value-card {
-    padding: 32px 24px;
-    background: white;
-    border-radius: var(--radius); box-shadow: var(--shadow-card);
-    border-top: 4px solid var(--amber);
-    transition: transform 0.25s;
-  }
+  .value-card { padding: 32px 24px; background: white; border-radius: var(--radius); box-shadow: var(--shadow-card); border-top: 4px solid var(--amber); transition: transform 0.25s; }
   .value-card:hover { transform: translateY(-4px); }
   .value-icon { font-size: 2rem; margin-bottom: 16px; }
   .value-card h4 { font-size: 1.1rem; font-weight: 700; color: var(--brown-dark); margin-bottom: 8px; }
   .value-card p { font-size: 0.88rem; color: var(--brown-soft); line-height: 1.6; }
 
-  /* ── QUIZ PAGE ── */
-  .quiz-container {
-    min-height: 100vh;
-    background: linear-gradient(160deg, var(--cream) 0%, var(--sand) 100%);
-    display: flex; flex-direction: column; align-items: center;
-    padding: 60px 20px 40px;
-  }
-  .quiz-logo {
-    font-family: var(--font-display);
-    font-size: 1.8rem; font-weight: 900;
-    color: var(--amber); margin-bottom: 40px;
-    letter-spacing: -0.5px;
-  }
-  .quiz-card {
-    background: white; border-radius: 28px;
-    padding: 40px 44px;
-    box-shadow: var(--shadow-warm);
-    width: 100%; max-width: 600px;
-    animation: fadeIn 0.35s ease;
-  }
-  .quiz-progress-bar {
-    width: 100%; height: 6px;
-    background: var(--sand); border-radius: 50px;
-    margin-bottom: 36px; overflow: hidden;
-  }
-  .quiz-progress-fill {
-    height: 100%; background: linear-gradient(90deg, var(--amber) 0%, var(--amber-light) 100%);
-    border-radius: 50px; transition: width 0.4s ease;
-  }
+  /* ── QUIZ ── */
+  .quiz-container { min-height: 100vh; background: linear-gradient(160deg, var(--cream) 0%, var(--sand) 100%); display: flex; flex-direction: column; align-items: center; padding: 60px 20px 40px; }
+  .quiz-logo { font-family: var(--font-display); font-size: 1.8rem; font-weight: 900; color: var(--amber); margin-bottom: 40px; letter-spacing: -0.5px; }
+  .quiz-card { background: white; border-radius: 28px; padding: 40px 44px; box-shadow: var(--shadow-warm); width: 100%; max-width: 600px; animation: fadeIn 0.35s ease; }
+  .quiz-progress-bar { width: 100%; height: 6px; background: var(--sand); border-radius: 50px; margin-bottom: 36px; overflow: hidden; }
+  .quiz-progress-fill { height: 100%; background: linear-gradient(90deg, var(--amber) 0%, var(--amber-light) 100%); border-radius: 50px; transition: width 0.4s ease; }
   .quiz-step-label { font-size: 0.78rem; font-weight: 600; color: var(--brown-soft); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; }
   .quiz-emoji { font-size: 2.8rem; margin-bottom: 14px; display: block; }
   .quiz-question { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--brown-dark); line-height: 1.3; margin-bottom: 28px; }
-  .quiz-input {
-    width: 100%; border: 2px solid rgba(44,26,14,0.12); border-radius: var(--radius-sm);
-    padding: 14px 18px; font-size: 1rem; font-family: var(--font-body);
-    color: var(--brown-dark); background: var(--cream);
-    transition: border-color 0.2s; outline: none; margin-bottom: 8px;
-  }
+  .quiz-input { width: 100%; border: 2px solid rgba(44,26,14,0.12); border-radius: var(--radius-sm); padding: 14px 18px; font-size: 1rem; font-family: var(--font-body); color: var(--brown-dark); background: var(--cream); transition: border-color 0.2s; outline: none; margin-bottom: 8px; }
   .quiz-input:focus { border-color: var(--amber); background: white; }
   .quiz-options { display: flex; flex-direction: column; gap: 12px; }
-  .quiz-option {
-    display: flex; align-items: center; gap: 14px;
-    padding: 16px 20px; border-radius: var(--radius-sm);
-    border: 2px solid rgba(44,26,14,0.10);
-    cursor: pointer; transition: all 0.2s;
-    background: var(--cream);
-    font-size: 0.95rem; font-weight: 500; color: var(--brown-mid);
-  }
+  .quiz-option { display: flex; align-items: center; gap: 14px; padding: 16px 20px; border-radius: var(--radius-sm); border: 2px solid rgba(44,26,14,0.10); cursor: pointer; transition: all 0.2s; background: var(--cream); font-size: 0.95rem; font-weight: 500; color: var(--brown-mid); }
   .quiz-option:hover { border-color: var(--amber); background: var(--amber-pale); color: var(--brown-dark); }
   .quiz-option.selected { border-color: var(--amber); background: var(--amber-pale); color: var(--brown-dark); font-weight: 600; }
   .quiz-option.selected .opt-letter { background: var(--amber); color: white; }
   .quiz-option-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   .quiz-option-grid .quiz-option { flex-direction: column; text-align: center; padding: 20px 14px; gap: 8px; justify-content: center; }
   .quiz-option-grid .quiz-option .opt-icon { font-size: 2.2rem; }
-  .opt-letter {
-    min-width: 30px; height: 30px; border-radius: 50%;
-    background: rgba(44,26,14,0.08); display: flex; align-items: center; justify-content: center;
-    font-size: 0.8rem; font-weight: 700; color: var(--brown-soft);
-    transition: all 0.2s; flex-shrink: 0;
-  }
+  .opt-letter { min-width: 30px; height: 30px; border-radius: 50%; background: rgba(44,26,14,0.08); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; color: var(--brown-soft); transition: all 0.2s; flex-shrink: 0; }
   .quiz-btn-row { display: flex; gap: 12px; margin-top: 28px; }
-  .btn-back {
-    background: transparent; color: var(--brown-soft);
-    border: 2px solid rgba(44,26,14,0.12); border-radius: 50px;
-    padding: 14px 24px; font-size: 0.95rem; font-weight: 500;
-    cursor: pointer; transition: all 0.2s; font-family: var(--font-body);
-  }
+  .btn-back { background: transparent; color: var(--brown-soft); border: 2px solid rgba(44,26,14,0.12); border-radius: 50px; padding: 14px 24px; font-size: 0.95rem; font-weight: 500; cursor: pointer; transition: all 0.2s; font-family: var(--font-body); }
   .btn-back:hover { border-color: var(--brown-mid); color: var(--brown-mid); }
   .quiz-hint { font-size: 0.78rem; color: var(--brown-soft); margin-top: 12px; text-align: center; }
 
@@ -467,23 +405,10 @@
   .privacy-note a { color: var(--amber); text-decoration: none; }
 
   /* ── RESULTS ── */
-  .results-container {
-    min-height: 100vh;
-    background: linear-gradient(160deg, var(--cream) 0%, var(--sand) 100%);
-    padding: 60px 5% 80px;
-  }
+  .results-container { min-height: 100vh; background: linear-gradient(160deg, var(--cream) 0%, var(--sand) 100%); padding: 60px 5% 80px; }
   .results-header { text-align: center; margin-bottom: 48px; }
-  .results-pet-name {
-    font-family: var(--font-script);
-    font-size: 1.5rem; color: var(--brown-soft);
-    margin-bottom: 4px;
-  }
-  .results-personality-name {
-    font-family: var(--font-display);
-    font-size: clamp(2.2rem, 4vw, 3rem);
-    font-weight: 900; color: var(--amber);
-    letter-spacing: -1px; margin-bottom: 12px;
-  }
+  .results-pet-name { font-family: var(--font-script); font-size: 1.5rem; color: var(--brown-soft); margin-bottom: 4px; }
+  .results-personality-name { font-family: var(--font-display); font-size: clamp(2.2rem, 4vw, 3rem); font-weight: 900; color: var(--amber); letter-spacing: -1px; margin-bottom: 12px; }
   .results-emoji { font-size: 4rem; margin-bottom: 12px; display: block; }
   .results-desc { font-size: 1rem; color: var(--brown-soft); max-width: 500px; margin: 0 auto; line-height: 1.65; }
   .results-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 1000px; margin: 0 auto; }
@@ -496,44 +421,61 @@
   .breakdown-bar { height: 8px; background: var(--sand); border-radius: 50px; overflow: hidden; }
   .breakdown-fill { height: 100%; border-radius: 50px; transition: width 1s ease 0.3s; }
   .traits-chips { display: flex; flex-wrap: wrap; gap: 8px; }
-  .trait-chip {
-    padding: 6px 14px; border-radius: 50px; font-size: 0.8rem; font-weight: 600;
-    border: 2px solid;
-  }
+  .trait-chip { padding: 6px 14px; border-radius: 50px; font-size: 0.8rem; font-weight: 600; border: 2px solid; }
   .care-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
-  .care-list li {
-    display: flex; align-items: flex-start; gap: 10px;
-    font-size: 0.88rem; color: var(--brown-mid); line-height: 1.5;
-  }
+  .care-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.88rem; color: var(--brown-mid); line-height: 1.5; }
   .care-check { color: var(--green-accent); font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
-  .products-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  /* ── PRODUCT CARDS WITH IMAGE ── */
+  .products-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
   .product-item {
     border: 2px solid rgba(44,26,14,0.08); border-radius: var(--radius-sm);
-    padding: 14px; transition: all 0.2s; cursor: pointer;
+    overflow: hidden; transition: all 0.2s; cursor: pointer;
+    display: flex; flex-direction: row; align-items: stretch;
+    background: var(--cream);
   }
-  .product-item:hover { border-color: var(--amber); background: var(--amber-pale); }
-  .product-name { font-size: 0.85rem; font-weight: 700; color: var(--brown-dark); margin-bottom: 3px; }
-  .product-desc { font-size: 0.75rem; color: var(--brown-soft); margin-bottom: 8px; }
+  .product-item:hover { border-color: var(--amber); background: white; box-shadow: var(--shadow-card); }
+  .product-img-wrap {
+    width: 88px; min-width: 88px; height: 88px;
+    overflow: hidden; background: var(--sand);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .product-img-wrap img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.3s ease;
+    display: block;
+  }
+  .product-item:hover .product-img-wrap img { transform: scale(1.08); }
+  .product-img-wrap .img-fallback {
+    font-size: 2rem; line-height: 1;
+  }
+  .product-info { padding: 12px 14px; display: flex; flex-direction: column; justify-content: space-between; flex: 1; min-width: 0; }
+  .product-name { font-size: 0.85rem; font-weight: 700; color: var(--brown-dark); margin-bottom: 3px; line-height: 1.3; }
+  .product-desc { font-size: 0.75rem; color: var(--brown-soft); margin-bottom: 6px; line-height: 1.4; }
+  .product-footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
   .product-price { font-size: 0.9rem; font-weight: 700; color: var(--green-accent); }
+  .product-shop-btn {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: var(--amber); color: white; border: none; border-radius: 50px;
+    padding: 5px 12px; font-size: 0.72rem; font-weight: 600;
+    cursor: pointer; text-decoration: none; font-family: var(--font-body);
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+  .product-shop-btn:hover { background: var(--amber-light); }
+
+  /* ── RESULTS SHARE ── */
   .results-share { text-align: center; margin-top: 40px; }
   .results-share h3 { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; color: var(--brown-dark); margin-bottom: 6px; }
   .results-share p { color: var(--brown-soft); font-size: 0.9rem; margin-bottom: 20px; }
   .share-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-  .btn-share {
-    padding: 12px 24px; border-radius: 50px; font-size: 0.88rem; font-weight: 600;
-    cursor: pointer; border: 2px solid; transition: all 0.2s; font-family: var(--font-body);
-    display: flex; align-items: center; gap: 6px;
-  }
+  .btn-share { padding: 12px 24px; border-radius: 50px; font-size: 0.88rem; font-weight: 600; cursor: pointer; border: 2px solid; transition: all 0.2s; font-family: var(--font-body); display: flex; align-items: center; gap: 6px; }
   .btn-retake { background: white; color: var(--amber); border-color: var(--amber); }
   .btn-retake:hover { background: var(--amber); color: white; }
 
   /* ── FOOTER ── */
-  footer {
-    background: var(--brown-dark); color: rgba(255,255,255,0.6);
-    padding: 48px 5% 32px;
-    display: grid; grid-template-columns: 2fr 1fr 1fr;
-    gap: 40px; align-items: start;
-  }
+  footer { background: var(--brown-dark); color: rgba(255,255,255,0.6); padding: 48px 5% 32px; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; align-items: start; }
   footer .footer-logo { font-family: var(--font-display); font-size: 1.6rem; font-weight: 900; color: white; margin-bottom: 8px; }
   footer .footer-logo span { color: var(--amber); }
   footer p { font-size: 0.85rem; line-height: 1.6; max-width: 280px; }
@@ -541,11 +483,38 @@
   footer ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
   footer ul li { font-size: 0.85rem; cursor: pointer; transition: color 0.2s; }
   footer ul li:hover { color: var(--amber-light); }
-  .footer-bottom {
-    background: var(--brown-dark); border-top: 1px solid rgba(255,255,255,0.08);
-    padding: 16px 5%; text-align: center;
-    font-size: 0.78rem; color: rgba(255,255,255,0.35);
-  }
+  .footer-bottom { background: var(--brown-dark); border-top: 1px solid rgba(255,255,255,0.08); padding: 16px 5%; text-align: center; font-size: 0.78rem; color: rgba(255,255,255,0.35); }
+
+  /* ── MODAL ── */
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(44,26,14,0.55); z-index: 200; align-items: center; justify-content: center; padding: 20px; }
+  .modal-overlay.open { display: flex; }
+  .modal-box { background: var(--cream); border-radius: var(--radius); padding: 40px; max-width: 640px; width: 100%; max-height: 80vh; overflow-y: auto; position: relative; box-shadow: 0 24px 80px rgba(44,26,14,0.25); }
+  .modal-close { position: absolute; top: 16px; right: 20px; background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--brown-soft); line-height: 1; }
+  .modal-close:hover { color: var(--brown-dark); }
+  .modal-box h2 { font-family: var(--font-display); font-size: 1.6rem; font-weight: 900; margin-bottom: 6px; color: var(--brown-dark); }
+  .modal-box .modal-date { font-size: 0.8rem; color: var(--brown-soft); margin-bottom: 24px; }
+  .modal-box h3 { font-size: 1rem; font-weight: 700; color: var(--brown-dark); margin: 20px 0 8px; }
+  .modal-box p, .modal-box li { font-size: 0.88rem; line-height: 1.7; color: var(--brown-mid); }
+  .modal-box ul { padding-left: 18px; }
+  .modal-box a { color: var(--amber); }
+
+  /* ── TOAST ── */
+  .toast { position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--brown-dark); color: white; padding: 14px 28px; border-radius: 50px; font-size: 0.9rem; font-weight: 500; box-shadow: 0 8px 32px rgba(44,26,14,0.3); z-index: 300; opacity: 0; pointer-events: none; transition: all 0.3s ease; white-space: nowrap; }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* ── NAV HAMBURGER ── */
+  .nav-hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 36px; height: 36px; cursor: pointer; background: none; border: none; padding: 4px; border-radius: 8px; transition: background 0.2s; }
+  .nav-hamburger:hover { background: var(--amber-pale); }
+  .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--brown-dark); border-radius: 2px; transition: all 0.3s ease; transform-origin: center; }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .mobile-nav-overlay { display: none; position: fixed; inset: 70px 0 0 0; background: rgba(251,247,240,0.98); backdrop-filter: blur(16px); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 32px 24px; animation: slideDown 0.25s ease; }
+  .mobile-nav-overlay.open { display: flex; }
+  @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+  .mobile-nav-overlay a { font-size: 1.2rem; font-weight: 600; color: var(--brown-dark); text-decoration: none; padding: 14px 0; width: 100%; text-align: center; border-bottom: 1px solid rgba(44,26,14,0.07); cursor: pointer; transition: color 0.2s; }
+  .mobile-nav-overlay a:hover { color: var(--amber); }
+  .mobile-nav-overlay .mobile-nav-cta { margin-top: 16px; background: var(--amber); color: white; border: none; border-radius: 50px; padding: 14px 36px; font-size: 1rem; font-weight: 600; cursor: pointer; width: 100%; font-family: var(--font-body); }
 
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
@@ -558,115 +527,6 @@
     .values-grid { grid-template-columns: 1fr; }
     footer { grid-template-columns: 1fr; }
   }
-  /* ── HAMBURGER MENU ── */
-  .nav-hamburger {
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    gap: 5px;
-    width: 36px; height: 36px;
-    cursor: pointer;
-    background: none; border: none;
-    padding: 4px;
-    border-radius: 8px;
-    transition: background 0.2s;
-  }
-  .nav-hamburger:hover { background: var(--amber-pale); }
-  .nav-hamburger span {
-    display: block;
-    width: 22px; height: 2px;
-    background: var(--brown-dark);
-    border-radius: 2px;
-    transition: all 0.3s ease;
-    transform-origin: center;
-  }
-  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-  .nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-  /* Mobile nav overlay */
-  .mobile-nav-overlay {
-    display: none;
-    position: fixed;
-    inset: 70px 0 0 0;
-    background: rgba(251,247,240,0.98);
-    backdrop-filter: blur(16px);
-    z-index: 99;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 32px 24px;
-    animation: slideDown 0.25s ease;
-  }
-  .mobile-nav-overlay.open { display: flex; }
-  @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-  .mobile-nav-overlay a {
-    font-size: 1.2rem; font-weight: 600;
-    color: var(--brown-dark); text-decoration: none;
-    padding: 14px 0; width: 100%; text-align: center;
-    border-bottom: 1px solid rgba(44,26,14,0.07);
-    cursor: pointer;
-    transition: color 0.2s;
-  }
-  .mobile-nav-overlay a:hover { color: var(--amber); }
-  .mobile-nav-overlay .mobile-nav-cta {
-    margin-top: 16px;
-    background: var(--amber); color: white;
-    border: none; border-radius: 50px;
-    padding: 14px 36px; font-size: 1rem; font-weight: 600;
-    cursor: pointer; width: 100%;
-    font-family: var(--font-body);
-  }
-
-  /* ── PRIVACY MODAL ── */
-  .modal-overlay {
-    display: none;
-    position: fixed; inset: 0;
-    background: rgba(44,26,14,0.55);
-    z-index: 200;
-    align-items: center; justify-content: center;
-    padding: 20px;
-  }
-  .modal-overlay.open { display: flex; }
-  .modal-box {
-    background: var(--cream);
-    border-radius: var(--radius);
-    padding: 40px;
-    max-width: 640px; width: 100%;
-    max-height: 80vh;
-    overflow-y: auto;
-    position: relative;
-    box-shadow: 0 24px 80px rgba(44,26,14,0.25);
-  }
-  .modal-close {
-    position: absolute; top: 16px; right: 20px;
-    background: none; border: none;
-    font-size: 1.4rem; cursor: pointer;
-    color: var(--brown-soft); line-height: 1;
-  }
-  .modal-close:hover { color: var(--brown-dark); }
-  .modal-box h2 { font-family: var(--font-display); font-size: 1.6rem; font-weight: 900; margin-bottom: 6px; color: var(--brown-dark); }
-  .modal-box .modal-date { font-size: 0.8rem; color: var(--brown-soft); margin-bottom: 24px; }
-  .modal-box h3 { font-size: 1rem; font-weight: 700; color: var(--brown-dark); margin: 20px 0 8px; }
-  .modal-box p, .modal-box li { font-size: 0.88rem; line-height: 1.7; color: var(--brown-mid); }
-  .modal-box ul { padding-left: 18px; }
-  .modal-box a { color: var(--amber); }
-
-  /* ── COMING SOON TOAST ── */
-  .toast {
-    position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(20px);
-    background: var(--brown-dark); color: white;
-    padding: 14px 28px; border-radius: 50px;
-    font-size: 0.9rem; font-weight: 500;
-    box-shadow: 0 8px 32px rgba(44,26,14,0.3);
-    z-index: 300;
-    opacity: 0; pointer-events: none;
-    transition: all 0.3s ease;
-    white-space: nowrap;
-  }
-  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
   @media (max-width: 600px) {
     .how-grid { grid-template-columns: 1fr; }
     .email-row { grid-template-columns: 1fr; }
@@ -674,7 +534,100 @@
     .nav-links { display: none; }
     .nav-hamburger { display: flex; }
     .quiz-card { padding: 28px 22px; }
+    .products-grid { grid-template-columns: 1fr; }
   }
+
+  /* ── BLOG ── */
+  .blog-hero { padding: 80px 5% 56px; background: linear-gradient(160deg, var(--cream) 60%, var(--amber-pale) 100%); }
+  .blog-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 32px; padding: 0 5% 96px; }
+  @media (max-width: 700px) { .blog-grid { grid-template-columns: 1fr; } }
+
+  .blog-card {
+    background: white; border-radius: var(--radius);
+    box-shadow: var(--shadow-card); overflow: hidden;
+    display: flex; flex-direction: column;
+    transition: transform 0.25s, box-shadow 0.25s;
+    cursor: pointer;
+  }
+  .blog-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-warm); }
+  body.dark .blog-card { background: #1F1409; }
+
+  .blog-card-img { width: 100%; height: 220px; object-fit: cover; display: block; transition: transform 0.4s ease; }
+  .blog-card:hover .blog-card-img { transform: scale(1.04); }
+  .blog-card-img-wrap { overflow: hidden; position: relative; height: 220px; } /* legacy */
+  .blog-card-img-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 50%, rgba(44,26,14,0.22) 100%); }
+
+  .blog-card-body { padding: 28px 28px 20px; flex: 1; display: flex; flex-direction: column; }
+  .blog-tag { display: inline-block; background: var(--amber-pale); color: var(--amber); font-size: 0.72rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 4px 12px; border-radius: 50px; margin-bottom: 14px; border: 1px solid rgba(232,130,12,0.2); }
+  .blog-title { font-family: var(--font-display); font-size: 1.25rem; font-weight: 900; color: var(--brown-dark); line-height: 1.3; margin-bottom: 10px; }
+  .blog-excerpt { font-size: 0.88rem; color: var(--brown-soft); line-height: 1.65; flex: 1; margin-bottom: 20px; }
+  body.dark .blog-excerpt { color: var(--brown-mid); }
+
+  .blog-meta { display: flex; align-items: center; gap: 12px; padding-top: 16px; border-top: 1px solid rgba(44,26,14,0.07); }
+  body.dark .blog-meta { border-top-color: rgba(212,184,150,0.08); }
+  .blog-author-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--amber-pale); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+  .blog-author-name { font-size: 0.82rem; font-weight: 700; color: var(--brown-dark); }
+  .blog-date { font-size: 0.76rem; color: var(--brown-soft); }
+  .blog-read-time { font-size: 0.76rem; color: var(--brown-soft); margin-left: auto; }
+
+  .blog-card-footer { padding: 0 28px 22px; display: flex; align-items: center; gap: 10px; }
+  .blog-action-btn {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: none; border: 2px solid rgba(44,26,14,0.10); border-radius: 50px;
+    padding: 7px 16px; font-size: 0.8rem; font-weight: 600; color: var(--brown-soft);
+    cursor: pointer; font-family: var(--font-body); transition: all 0.2s;
+  }
+  body.dark .blog-action-btn { border-color: rgba(212,184,150,0.12); color: var(--brown-mid); }
+  .blog-action-btn:hover { border-color: var(--amber); color: var(--amber); }
+  .blog-action-btn.liked { border-color: #E84B6A; color: #E84B6A; background: rgba(232,75,106,0.06); }
+  .blog-read-btn {
+    margin-left: auto; background: var(--amber); color: white; border: none; border-radius: 50px;
+    padding: 8px 18px; font-size: 0.8rem; font-weight: 600;
+    cursor: pointer; font-family: var(--font-body); transition: all 0.2s;
+  }
+  .blog-read-btn:hover { background: var(--amber-light); }
+
+  /* ── BLOG POST MODAL ── */
+  .blog-post-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.65); z-index: 400;
+    align-items: flex-start; justify-content: center;
+    padding: 40px 20px; overflow-y: auto;
+    backdrop-filter: blur(6px);
+  }
+  .blog-post-overlay.open { display: flex; animation: fadeIn 0.25s ease; }
+  .blog-post-modal {
+    background: var(--cream); border-radius: 28px;
+    max-width: 720px; width: 100%; position: relative;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.35);
+    overflow: hidden; margin: auto;
+  }
+  body.dark .blog-post-modal { background: #1A1209; }
+  .blog-post-cover { width: 100%; height: 280px; object-fit: cover; display: block; }
+  .blog-post-content { padding: 40px 44px 48px; }
+  @media (max-width: 600px) { .blog-post-content { padding: 28px 22px 36px; } }
+  .blog-post-close {
+    position: absolute; top: 16px; right: 16px;
+    width: 40px; height: 40px; border-radius: 50%;
+    background: rgba(0,0,0,0.45); color: white; border: none;
+    font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s; z-index: 1;
+  }
+  .blog-post-close:hover { background: rgba(0,0,0,0.7); }
+  .blog-post-tag { display: inline-block; background: var(--amber-pale); color: var(--amber); font-size: 0.72rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 4px 12px; border-radius: 50px; margin-bottom: 14px; border: 1px solid rgba(232,130,12,0.2); }
+  .blog-post-title { font-family: var(--font-display); font-size: clamp(1.5rem,3vw,2.1rem); font-weight: 900; color: var(--brown-dark); line-height: 1.2; margin-bottom: 16px; }
+  .blog-post-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 28px; padding-bottom: 20px; border-bottom: 1px solid rgba(44,26,14,0.08); }
+  body.dark .blog-post-meta { border-bottom-color: rgba(212,184,150,0.08); }
+  .blog-post-meta .blog-author-name { font-size: 0.85rem; }
+  .blog-post-meta .blog-date { font-size: 0.8rem; }
+  .blog-post-body { font-size: 0.95rem; line-height: 1.8; color: var(--brown-mid); }
+  .blog-post-body h3 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; color: var(--brown-dark); margin: 28px 0 10px; }
+  .blog-post-body p { margin-bottom: 16px; }
+  .blog-post-body ul { padding-left: 20px; margin-bottom: 16px; }
+  .blog-post-body ul li { margin-bottom: 8px; }
+  .blog-post-body strong { color: var(--brown-dark); font-weight: 700; }
+  .blog-post-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 32px; padding-top: 24px; border-top: 1px solid rgba(44,26,14,0.08); align-items: center; }
+  body.dark .blog-post-actions { border-top-color: rgba(212,184,150,0.08); }
 </style>
 </head>
 <body>
@@ -690,23 +643,44 @@
     <a onclick="showPage('about')">About Us</a>
     <a onclick="scrollToSection('how')">How It Works</a>
     <a onclick="scrollToSection('testimonials')">Testimonials</a>
+    <a onclick="showPage('blog')">Blog</a>
   </div>
-  <button class="nav-cta" onclick="startQuiz()">Take The Test ✨</button>
+  <div style="display:flex;align-items:center;gap:10px;">
+    <button class="dark-toggle" id="dark-toggle" onclick="toggleDark()" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
+    <button class="nav-cta" onclick="startQuiz()">Take The Test ✨</button>
+  </div>
   <button class="nav-hamburger" id="nav-hamburger" onclick="toggleMobileNav()" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
 </nav>
 
-<!-- MOBILE NAV OVERLAY -->
+<!-- CONFETTI CANVAS -->
+<canvas id="confetti-canvas"></canvas>
+
+<!-- SHARE CARD MODAL -->
+<div class="share-card-overlay" id="share-card-overlay" onclick="closeShareCard(event)">
+  <div class="share-card-modal">
+    <h3>📸 Your Personality Card</h3>
+    <p>Screenshot or download to share on Instagram &amp; TikTok!</p>
+    <canvas id="personality-card-canvas"></canvas>
+    <div class="share-card-btns">
+      <button class="btn-download" onclick="downloadCard()">⬇️ Download Card</button>
+      <button class="btn-close-modal" onclick="document.getElementById('share-card-overlay').classList.remove('open')">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- MOBILE NAV -->
 <div class="mobile-nav-overlay" id="mobile-nav">
   <a onclick="showPage('home');closeMobileNav()">🏠 Home</a>
   <a onclick="showPage('about');closeMobileNav()">🐾 About Us</a>
   <a onclick="scrollToSection('how');closeMobileNav()">💡 How It Works</a>
   <a onclick="scrollToSection('testimonials');closeMobileNav()">⭐ Testimonials</a>
+  <a onclick="showPage('blog');closeMobileNav()">📝 Blog</a>
   <button class="mobile-nav-cta" onclick="startQuiz();closeMobileNav()">Take The Free Test ✨</button>
 </div>
 
-<!-- PRIVACY POLICY MODAL -->
+<!-- PRIVACY MODAL -->
 <div class="modal-overlay" id="privacy-modal" onclick="closePrivacyModal(event)">
   <div class="modal-box">
     <button class="modal-close" onclick="document.getElementById('privacy-modal').classList.remove('open')">✕</button>
@@ -735,19 +709,17 @@
     <h3>5. Cookies</h3>
     <p>This site uses minimal cookies for basic functionality and does not use tracking or advertising cookies.</p>
     <h3>6. Your Rights</h3>
-    <p>You have the right to access, correct, or delete your personal data at any time. To exercise these rights, contact us at <a href="mailto:petstoreanimus@gmail.com">petstoreanimus@gmail.com</a>.</p>
+    <p>You have the right to access, correct, or delete your personal data at any time. To exercise these rights, contact us at <a href="/cdn-cgi/l/email-protection#93e3f6e7e0e7fce1f6f2fdfafee6e0d3f4fef2faffbdf0fcfe"><span class="__cf_email__" data-cfemail="e8988d9c9b9c879a8d898681859d9ba88f85898184c68b8785">[email&#160;protected]</span></a>.</p>
     <h3>7. Contact</h3>
-    <p>If you have any questions about this Privacy Policy, please contact us at <a href="mailto:petstoreanimus@gmail.com">petstoreanimus@gmail.com</a>.</p>
+    <p>If you have any questions about this Privacy Policy, please contact us at <a href="/cdn-cgi/l/email-protection#4d3d28393e39223f282c232420383e0d2a202c2421632e2220"><span class="__cf_email__" data-cfemail="a3d3c6d7d0d7ccd1c6c2cdcaced6d0e3c4cec2cacf8dc0ccce">[email&#160;protected]</span></a>.</p>
   </div>
 </div>
 
-<!-- TOAST NOTIFICATION -->
+<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
-<!-- ═══════════════════════════ HOME PAGE ═══════════════════════════ -->
+<!-- ═══════════════ HOME PAGE ═══════════════ -->
 <div id="page-home" class="page active">
-
-  <!-- HERO -->
   <section class="hero">
     <div class="hero-bg"></div>
     <div class="hero-blob"></div>
@@ -823,36 +795,234 @@
     </div>
   </section>
 
-  <!-- PERSONALITY TYPES -->
+  <!-- PERSONALITY TYPES — now with images -->
   <section class="personalities-bg">
     <div class="section-label">Personality Types</div>
     <h2 class="section-title" style="color:white;">Which one is your pet?</h2>
     <p class="section-sub" style="color:rgba(255,255,255,0.6);">Every pet is a unique blend — our test reveals their dominant personality and what makes them truly special.</p>
     <div class="personalities-grid">
+
       <div class="personality-card pc-adventurer">
-        <div class="pc-emoji">🏃</div>
-        <div class="pc-name">The Adventurer</div>
-        <div class="pc-desc">Bold, energetic and always ready for the next big thing. Loves new experiences.</div>
-        <div class="pc-tag">High Energy</div>
+        <div class="pc-anim pc-anim-adventurer">
+          <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg">
+            <!-- sky dots -->
+            <circle class="adv-stars" cx="60" cy="30" r="3" fill="rgba(255,255,255,0.6)"/>
+            <circle class="adv-stars" cx="180" cy="18" r="2" fill="rgba(255,255,255,0.5)" style="animation-delay:.4s"/>
+            <circle class="adv-stars" cx="310" cy="28" r="2.5" fill="rgba(255,255,255,0.55)" style="animation-delay:.8s"/>
+            <circle class="adv-stars" cx="350" cy="42" r="2" fill="rgba(255,255,255,0.4)" style="animation-delay:1.2s"/>
+            <!-- scrolling ground stripes -->
+            <g class="adv-ground">
+              <rect x="0" y="118" width="480" height="6" rx="3" fill="rgba(255,255,255,0.12)"/>
+              <rect x="0" y="130" width="480" height="3" rx="2" fill="rgba(255,255,255,0.07)"/>
+              <!-- dashes -->
+              <rect x="10" y="136" width="28" height="4" rx="2" fill="rgba(255,255,255,0.15)"/>
+              <rect x="90" y="136" width="28" height="4" rx="2" fill="rgba(255,255,255,0.15)"/>
+              <rect x="170" y="136" width="28" height="4" rx="2" fill="rgba(255,255,255,0.15)"/>
+              <rect x="250" y="136" width="28" height="4" rx="2" fill="rgba(255,255,255,0.15)"/>
+              <rect x="330" y="136" width="28" height="4" rx="2" fill="rgba(255,255,255,0.15)"/>
+              <rect x="410" y="136" width="28" height="4" rx="2" fill="rgba(255,255,255,0.15)"/>
+            </g>
+            <!-- speed lines -->
+            <line x1="20" y1="80" x2="80" y2="80" stroke="rgba(255,255,255,0.18)" stroke-width="2" stroke-dasharray="8,6"/>
+            <line x1="10" y1="95" x2="60" y2="95" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" stroke-dasharray="5,5"/>
+            <!-- skateboard + dog group moving across -->
+            <g style="animation: advSkate 2.2s linear infinite">
+              <!-- skateboard deck -->
+              <rect x="0" y="108" width="60" height="8" rx="4" fill="rgba(255,255,255,0.9)"/>
+              <!-- wheels -->
+              <circle cx="8" cy="118" r="5" fill="rgba(255,255,255,0.7)"/>
+              <circle cx="52" cy="118" r="5" fill="rgba(255,255,255,0.7)"/>
+              <circle cx="8" cy="118" r="2" fill="rgba(255,200,80,0.9)"/>
+              <circle cx="52" cy="118" r="2" fill="rgba(255,200,80,0.9)"/>
+              <!-- dog body -->
+              <ellipse cx="24" cy="96" rx="20" ry="12" fill="rgba(255,255,255,0.92)"/>
+              <!-- dog head -->
+              <circle cx="40" cy="84" r="12" fill="rgba(255,255,255,0.92)"/>
+              <!-- ears -->
+              <ellipse cx="32" cy="76" rx="5" ry="7" fill="rgba(255,200,100,0.85)" transform="rotate(-15 32 76)"/>
+              <ellipse cx="48" cy="76" rx="5" ry="7" fill="rgba(255,200,100,0.85)" transform="rotate(15 48 76)"/>
+              <!-- eyes -->
+              <circle cx="36" cy="82" r="2.5" fill="#333"/>
+              <circle cx="44" cy="82" r="2.5" fill="#333"/>
+              <circle cx="37" cy="81" r="1" fill="white"/>
+              <circle cx="45" cy="81" r="1" fill="white"/>
+              <!-- nose -->
+              <ellipse cx="40" cy="88" rx="3" ry="2" fill="#555"/>
+              <!-- tail -->
+              <path d="M4 92 Q-6 80 2 70" stroke="rgba(255,255,255,0.9)" stroke-width="4" fill="none" stroke-linecap="round"/>
+              <!-- legs animated -->
+              <rect x="10" y="102" width="6" height="12" rx="3" fill="rgba(255,230,150,0.85)" style="animation:advLeg 0.3s steps(2) infinite"/>
+              <rect x="20" y="102" width="6" height="12" rx="3" fill="rgba(255,230,150,0.85)" style="animation:advLeg 0.3s steps(2) infinite 0.15s"/>
+              <rect x="30" y="102" width="6" height="12" rx="3" fill="rgba(255,230,150,0.85)" style="animation:advLeg 0.3s steps(2) infinite 0.05s"/>
+            </g>
+            <!-- wind effect text -->
+            <text x="320" y="75" font-size="22" fill="rgba(255,255,255,0.3)" font-family="serif">💨</text>
+          </svg>
+          <style>
+            @keyframes advLeg { 0%{transform:skewX(-8deg)} 100%{transform:skewX(8deg)} }
+          </style>
+        </div>
+        <div class="pc-body">
+          <span class="pc-emoji">🏃</span>
+          <div class="pc-name">The Adventurer</div>
+          <div class="pc-desc">Bold, energetic and always ready for the next big thing. Loves new experiences.</div>
+          <div class="pc-tag">High Energy</div>
+        </div>
       </div>
+
       <div class="personality-card pc-cuddler">
-        <div class="pc-emoji">🤗</div>
-        <div class="pc-name">The Cuddler</div>
-        <div class="pc-desc">Warm, affectionate and happiest when close to their favorite humans.</div>
-        <div class="pc-tag">Affectionate</div>
+        <div class="pc-anim pc-anim-cuddler">
+          <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg">
+            <!-- soft glow -->
+            <radialGradient id="cuddleGrad" cx="50%" cy="60%" r="40%">
+              <stop offset="0%" stop-color="rgba(255,180,220,0.5)"/>
+              <stop offset="100%" stop-color="rgba(255,180,220,0)"/>
+            </radialGradient>
+            <circle class="cuddle-glow" cx="200" cy="95" r="38" fill="url(#cuddleGrad)"/>
+            <!-- cozy rug/floor -->
+            <rect x="60" y="128" width="280" height="18" rx="9" fill="rgba(255,255,255,0.12)"/>
+            <!-- dog body curled up -->
+            <g class="cuddle-dog">
+              <ellipse cx="200" cy="108" rx="48" ry="26" fill="rgba(255,220,170,0.92)"/>
+              <!-- head -->
+              <circle cx="236" cy="92" r="20" fill="rgba(255,220,170,0.95)"/>
+              <!-- floppy ear -->
+              <ellipse cx="224" cy="82" rx="7" ry="11" fill="rgba(220,160,80,0.85)" transform="rotate(-20 224 82)"/>
+              <ellipse cx="248" cy="80" rx="6" ry="9" fill="rgba(220,160,80,0.85)" transform="rotate(10 248 80)"/>
+              <!-- sleepy eyes (half closed) -->
+              <path d="M229 90 Q232 87 235 90" stroke="#555" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <path d="M239 90 Q242 87 245 90" stroke="#555" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <!-- nose + smile -->
+              <ellipse cx="236" cy="97" rx="4" ry="2.5" fill="#886"/>
+              <path d="M232 101 Q236 105 240 101" stroke="#886" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <!-- curled tail -->
+              <path d="M152 105 Q130 85 148 72 Q162 62 170 78" stroke="rgba(255,220,170,0.9)" stroke-width="8" fill="none" stroke-linecap="round"/>
+              <!-- paws -->
+              <ellipse cx="175" cy="126" rx="14" ry="8" fill="rgba(255,200,140,0.85)"/>
+              <ellipse cx="205" cy="130" rx="12" ry="7" fill="rgba(255,200,140,0.75)"/>
+            </g>
+            <!-- floating hearts -->
+            <text class="cuddle-heart1" x="265" y="58" font-size="18" fill="rgba(255,100,130,0.9)">♥</text>
+            <text class="cuddle-heart2" x="145" y="52" font-size="14" fill="rgba(255,140,170,0.75)">♥</text>
+            <text class="cuddle-heart3" x="300" y="74" font-size="11" fill="rgba(255,160,190,0.6)">♥</text>
+            <text class="cuddle-heart1" x="96"  y="66" font-size="10" fill="rgba(255,120,150,0.5)" style="animation-delay:1.2s">♥</text>
+          </svg>
+        </div>
+        <div class="pc-body">
+          <span class="pc-emoji">🤗</span>
+          <div class="pc-name">The Cuddler</div>
+          <div class="pc-desc">Warm, affectionate and happiest when close to their favorite humans.</div>
+          <div class="pc-tag">Affectionate</div>
+        </div>
       </div>
+
       <div class="personality-card pc-zen">
-        <div class="pc-emoji">🧘</div>
-        <div class="pc-name">The Zen Master</div>
-        <div class="pc-desc">Calm, wise, and unshakeable. Their peaceful energy brings harmony to every room.</div>
-        <div class="pc-tag">Low-Stress</div>
+        <div class="pc-anim pc-anim-zen">
+          <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg">
+            <!-- water ripples from centre bottom -->
+            <circle class="zen-ripple1" cx="200" cy="120" r="20" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="2"/>
+            <circle class="zen-ripple2" cx="200" cy="120" r="20" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/>
+            <circle class="zen-ripple3" cx="200" cy="120" r="20" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+            <!-- lotus leaves on water -->
+            <ellipse cx="115" cy="126" rx="30" ry="10" fill="rgba(80,200,120,0.35)"/>
+            <ellipse cx="285" cy="126" rx="30" ry="10" fill="rgba(80,200,120,0.35)"/>
+            <!-- floating particles -->
+            <circle class="zen-particle" cx="80"  cy="50" r="3" fill="rgba(255,255,255,0.5)"/>
+            <circle class="zen-particle" cx="320" cy="40" r="2" fill="rgba(255,255,255,0.4)"/>
+            <circle class="zen-particle" cx="150" cy="30" r="2.5" fill="rgba(255,255,255,0.45)"/>
+            <!-- cat silhouette sitting upright, eyes closed (meditating) -->
+            <g class="zen-cat">
+              <!-- body -->
+              <ellipse cx="200" cy="108" rx="28" ry="22" fill="rgba(255,255,255,0.88)"/>
+              <!-- head -->
+              <circle cx="200" cy="80" r="22" fill="rgba(255,255,255,0.88)"/>
+              <!-- ears -->
+              <polygon points="183,64 188,46 196,64" fill="rgba(220,240,230,0.9)"/>
+              <polygon points="204,64 212,46 217,64" fill="rgba(220,240,230,0.9)"/>
+              <!-- inner ears -->
+              <polygon points="185,63 188,52 194,63" fill="rgba(160,220,180,0.6)"/>
+              <polygon points="206,63 212,52 215,63" fill="rgba(160,220,180,0.6)"/>
+              <!-- closed, peaceful eyes -->
+              <path d="M191 79 Q196 74 201 79" stroke="#3a7a5a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <path d="M199 79 Q204 74 209 79" stroke="#3a7a5a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <!-- small smile -->
+              <path d="M196 87 Q200 91 204 87" stroke="#4a8a6a" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <!-- nose -->
+              <polygon points="199,83 201,83 200,86" fill="#4a8a6a"/>
+              <!-- whiskers -->
+              <line x1="175" y1="84" x2="192" y2="86" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/>
+              <line x1="175" y1="88" x2="192" y2="88" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/>
+              <line x1="208" y1="86" x2="225" y2="84" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/>
+              <line x1="208" y1="88" x2="225" y2="88" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/>
+              <!-- tail curled around body -->
+              <path d="M172 118 Q150 140 175 148 Q200 154 200 132" stroke="rgba(255,255,255,0.85)" stroke-width="7" fill="none" stroke-linecap="round"/>
+              <!-- paws tucked in (loaf mode) -->
+              <ellipse cx="192" cy="128" rx="10" ry="6" fill="rgba(230,250,240,0.7)"/>
+              <ellipse cx="208" cy="128" rx="10" ry="6" fill="rgba(230,250,240,0.7)"/>
+            </g>
+          </svg>
+        </div>
+        <div class="pc-body">
+          <span class="pc-emoji">🧘</span>
+          <div class="pc-name">The Zen Master</div>
+          <div class="pc-desc">Calm, wise, and unshakeable. Their peaceful energy brings harmony to every room.</div>
+          <div class="pc-tag">Low-Stress</div>
+        </div>
       </div>
+
       <div class="personality-card pc-social">
-        <div class="pc-emoji">🦋</div>
-        <div class="pc-name">The Social Butterfly</div>
-        <div class="pc-desc">Outgoing, playful and the life of every party. Everyone's best friend.</div>
-        <div class="pc-tag">People-Lover</div>
+        <div class="pc-anim pc-anim-social">
+          <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg">
+            <!-- ground -->
+            <ellipse cx="200" cy="145" rx="160" ry="12" fill="rgba(255,255,255,0.1)"/>
+            <!-- confetti -->
+            <rect class="social-confetti" x="60"  y="100" width="8" height="8" rx="2" fill="rgba(255,220,80,0.9)"  transform="rotate(20,64,104)"/>
+            <rect class="social-confetti" x="110" y="80"  width="6" height="6" rx="1" fill="rgba(255,255,255,0.8)" transform="rotate(45,113,83)"/>
+            <rect class="social-confetti" x="280" y="90"  width="7" height="7" rx="2" fill="rgba(255,220,120,0.9)" transform="rotate(-15,283,93)"/>
+            <rect class="social-confetti" x="320" y="70"  width="5" height="5" rx="1" fill="rgba(255,255,255,0.7)" transform="rotate(30,322,72)"/>
+            <circle class="social-confetti" cx="240" cy="55" r="4" fill="rgba(255,180,200,0.85)"/>
+            <!-- spinning star -->
+            <g class="social-star" style="transform-origin:340px 50px">
+              <polygon points="340,38 343,47 352,47 345,53 348,62 340,56 332,62 335,53 328,47 337,47" fill="rgba(255,230,80,0.85)"/>
+            </g>
+            <!-- dog 1 (left, orange) bouncing -->
+            <g class="social-dog1">
+              <ellipse cx="140" cy="112" rx="32" ry="20" fill="rgba(255,200,120,0.92)"/>
+              <circle cx="162" cy="92" r="18" fill="rgba(255,200,120,0.95)"/>
+              <ellipse cx="152" cy="82" rx="6" ry="9" fill="rgba(220,150,60,0.85)" transform="rotate(-20 152 82)"/>
+              <ellipse cx="172" cy="80" rx="5" ry="8" fill="rgba(220,150,60,0.85)" transform="rotate(15 172 80)"/>
+              <circle cx="157" cy="90" r="3" fill="#333"/>
+              <circle cx="167" cy="90" r="3" fill="#333"/>
+              <circle cx="158" cy="89" r="1.2" fill="white"/>
+              <circle cx="168" cy="89" r="1.2" fill="white"/>
+              <ellipse cx="162" cy="98" rx="4" ry="2.5" fill="#a06030"/>
+              <path d="M158 103 Q162 108 166 103" stroke="#a06030" stroke-width="2" fill="none"/>
+              <path d="M108 108 Q95 92 108 82" stroke="rgba(255,200,120,0.9)" stroke-width="6" fill="none" stroke-linecap="round"/>
+            </g>
+            <!-- dog 2 (right, white/light) bouncing differently -->
+            <g class="social-dog2">
+              <ellipse cx="260" cy="115" rx="30" ry="19" fill="rgba(240,240,255,0.92)"/>
+              <circle cx="238" cy="95" r="17" fill="rgba(240,240,255,0.95)"/>
+              <ellipse cx="228" cy="84" rx="5" ry="8" fill="rgba(200,200,240,0.85)" transform="rotate(-10 228 84)"/>
+              <ellipse cx="248" cy="82" rx="6" ry="9" fill="rgba(200,200,240,0.85)" transform="rotate(20 248 82)"/>
+              <circle cx="233" cy="93" r="3" fill="#333"/>
+              <circle cx="243" cy="93" r="3" fill="#333"/>
+              <circle cx="234" cy="92" r="1.2" fill="white"/>
+              <circle cx="244" cy="92" r="1.2" fill="white"/>
+              <ellipse cx="238" cy="100" rx="3.5" ry="2" fill="#888"/>
+              <path d="M234 104 Q238 109 242 104" stroke="#888" stroke-width="2" fill="none"/>
+              <path d="M290 112 Q306 96 292 85" stroke="rgba(240,240,255,0.9)" stroke-width="6" fill="none" stroke-linecap="round"/>
+            </g>
+          </svg>
+        </div>
+        <div class="pc-body">
+          <span class="pc-emoji">🦋</span>
+          <div class="pc-name">The Social Butterfly</div>
+          <div class="pc-desc">Outgoing, playful and the life of every party. Everyone's best friend.</div>
+          <div class="pc-tag">People-Lover</div>
+        </div>
       </div>
+
     </div>
   </section>
 
@@ -891,14 +1061,12 @@
     </div>
   </section>
 
-  <!-- CTA BAND -->
   <section class="cta-band">
     <h2>Ready to meet the real them?</h2>
     <p>Join 12,000+ pet parents who've discovered their pet's true personality.</p>
     <button class="btn-white" onclick="startQuiz()">🐾 Take The Free Test</button>
   </section>
 
-  <!-- FOOTER -->
   <footer>
     <div>
       <div class="footer-logo">Ani<span>mus</span></div>
@@ -911,6 +1079,7 @@
         <li onclick="startQuiz()">Take The Test</li>
         <li onclick="showPage('about')">About Us</li>
         <li onclick="scrollToSection('testimonials')">Testimonials</li>
+        <li onclick="showPage('blog')">Blog</li>
       </ul>
     </div>
     <div>
@@ -918,7 +1087,7 @@
       <ul>
         <li onclick="showToast('Instagram coming soon! 🐾')">Instagram</li>
         <li onclick="showToast('TikTok coming soon! 🐾')">TikTok</li>
-        <li><a href="mailto:petstoreanimus@gmail.com" style="color:inherit;text-decoration:none;">Contact Us</a></li>
+        <li><a href="/cdn-cgi/l/email-protection#ccbca9b8bfb8a3bea9ada2a5a1b9bf8caba1ada5a0e2afa3a1" style="color:inherit;text-decoration:none;">Contact Us</a></li>
         <li onclick="document.getElementById('privacy-modal').classList.add('open')">Privacy Policy</li>
       </ul>
     </div>
@@ -926,7 +1095,7 @@
   <div class="footer-bottom">© 2025 Animus · Built with love for pet parents everywhere 🐾</div>
 </div>
 
-<!-- ═══════════════════════════ ABOUT PAGE ═══════════════════════════ -->
+<!-- ═══════════════ ABOUT PAGE ═══════════════ -->
 <div id="page-about" class="page">
   <section class="about-hero">
     <div>
@@ -941,9 +1110,7 @@
       </div>
     </div>
     <div class="about-card-visual">
-      <div class="about-card-top">
-        <div class="big-emoji">🐾</div>
-      </div>
+      <div class="about-card-top"><div class="big-emoji">🐾</div></div>
       <div class="about-card-body">
         <p style="font-size:0.9rem;line-height:1.65;color:var(--brown-mid);">At Animus, we believe every pet has a unique personality that deserves to be understood and celebrated. Our mission is to help pet parents discover what makes their companions tick, fostering deeper connections and happier, healthier relationships.</p>
         <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--sand);">
@@ -953,37 +1120,22 @@
       </div>
     </div>
   </section>
-
   <section class="about-values">
     <div class="section-header">
       <div class="section-label">Our Values</div>
       <h2 class="section-title">What drives us every day</h2>
     </div>
     <div class="values-grid">
-      <div class="value-card">
-        <div class="value-icon">💡</div>
-        <h4>Our Mission</h4>
-        <p>To help pet parents discover what makes their companions tick — going beyond selling products to building genuine understanding between owners and their pets.</p>
-      </div>
-      <div class="value-card">
-        <div class="value-icon">🎯</div>
-        <h4>Our Vision</h4>
-        <p>A world where every pet is understood as the unique individual they are, and every owner has the knowledge to give them the life they deserve.</p>
-      </div>
-      <div class="value-card">
-        <div class="value-icon">✏️</div>
-        <h4>Our Work</h4>
-        <p>We combine behavioral science with thoughtful design to create a quiz experience that's fun, insightful, and genuinely useful for everyday pet care decisions.</p>
-      </div>
+      <div class="value-card"><div class="value-icon">💡</div><h4>Our Mission</h4><p>To help pet parents discover what makes their companions tick — going beyond selling products to building genuine understanding between owners and their pets.</p></div>
+      <div class="value-card"><div class="value-icon">🎯</div><h4>Our Vision</h4><p>A world where every pet is understood as the unique individual they are, and every owner has the knowledge to give them the life they deserve.</p></div>
+      <div class="value-card"><div class="value-icon">✏️</div><h4>Our Work</h4><p>We combine behavioral science with thoughtful design to create a quiz experience that's fun, insightful, and genuinely useful for everyday pet care decisions.</p></div>
     </div>
   </section>
-
   <section class="cta-band">
     <h2>Curious about your pet?</h2>
     <p>Take our free personality test and unlock insights in just 2 minutes.</p>
     <button class="btn-white" onclick="startQuiz()">🐾 Start The Test</button>
   </section>
-
   <footer>
     <div>
       <div class="footer-logo">Ani<span>mus</span></div>
@@ -1002,7 +1154,7 @@
       <ul>
         <li onclick="showToast('Instagram coming soon! 🐾')">Instagram</li>
         <li onclick="showToast('TikTok coming soon! 🐾')">TikTok</li>
-        <li><a href="mailto:petstoreanimus@gmail.com" style="color:inherit;text-decoration:none;">Contact Us</a></li>
+        <li><a href="/cdn-cgi/l/email-protection#b5c5d0c1c6c1dac7d0d4dbdcd8c0c6f5d2d8d4dcd99bd6dad8" style="color:inherit;text-decoration:none;">Contact Us</a></li>
         <li onclick="document.getElementById('privacy-modal').classList.add('open')">Privacy Policy</li>
       </ul>
     </div>
@@ -1010,164 +1162,311 @@
   <div class="footer-bottom">© 2025 Animus · Built with love for pet parents everywhere 🐾</div>
 </div>
 
-<!-- ═══════════════════════════ QUIZ PAGE ═══════════════════════════ -->
+<!-- ═══════════════ QUIZ PAGE ═══════════════ -->
 <div id="page-quiz" class="page">
   <div class="quiz-container">
     <div class="quiz-logo">🐾 Animus</div>
-    <div class="quiz-card" id="quiz-card">
-      <!-- Injected by JS -->
+    <div class="quiz-card" id="quiz-card"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ RESULTS PAGE ═══════════════ -->
+<div id="page-results" class="page">
+  <div class="results-container" id="results-container"></div>
+</div>
+
+<!-- ═══════════════ BLOG PAGE ═══════════════ -->
+<div id="page-blog" class="page">
+  <section class="blog-hero">
+    <div class="section-label">Animus Blog</div>
+    <h1 class="section-title">Pet Insights & Personality Tips</h1>
+    <p class="section-sub">Science-backed reads for pet parents who want to understand their companion better.</p>
+  </section>
+
+  <div class="blog-grid" style="padding-top:48px;">
+
+    <!-- POST 1 -->
+    <article class="blog-card" onclick="openBlogPost(0)">
+      <div class="blog-anim blog-anim-1">
+        <svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg">
+          <!-- background hills -->
+          <ellipse cx="150" cy="220" rx="200" ry="80" fill="rgba(255,255,255,0.06)"/>
+          <ellipse cx="450" cy="220" rx="180" ry="70" fill="rgba(255,255,255,0.04)"/>
+          <!-- ground -->
+          <rect x="0" y="182" width="600" height="38" rx="0" fill="rgba(255,255,255,0.08)"/>
+          <!-- wave accents -->
+          <path class="b1-wave" d="M0 170 Q75 155 150 170 Q225 185 300 170 Q375 155 450 170 Q525 185 600 170" fill="none" stroke="rgba(255,200,100,0.2)" stroke-width="3"/>
+          <path class="b1-wave" d="M0 160 Q100 145 200 160 Q300 175 400 160 Q500 145 600 160" fill="none" stroke="rgba(255,200,100,0.12)" stroke-width="2"/>
+          <!-- training stars -->
+          <g class="b1-star"><polygon points="90,60 94,74 108,74 97,83 101,97 90,88 79,97 83,83 72,74 86,74" fill="rgba(255,200,80,0.85)"/></g>
+          <g class="b1-star" style="transform-origin:300px 45px"><polygon points="300,32 303,42 313,42 305,48 308,58 300,52 292,58 295,48 287,42 297,42" fill="rgba(255,220,120,0.7)"/></g>
+          <g class="b1-star" style="transform-origin:500px 65px"><polygon points="500,52 503,62 513,62 505,68 508,78 500,72 492,78 495,68 487,62 497,62" fill="rgba(255,200,80,0.6)"/></g>
+          <!-- dog trainer silhouette (person) -->
+          <circle cx="480" cy="115" r="18" fill="rgba(255,200,150,0.7)"/>
+          <rect x="468" y="133" width="24" height="40" rx="8" fill="rgba(255,180,100,0.65)"/>
+          <line x1="492" y1="145" x2="520" y2="160" stroke="rgba(255,180,100,0.7)" stroke-width="4" stroke-linecap="round"/>
+          <!-- leash -->
+          <path d="M520 160 Q490 175 380 178" stroke="rgba(255,255,255,0.4)" stroke-width="2" fill="none" stroke-dasharray="4,3"/>
+          <!-- dog (animated walking) -->
+          <g class="b1-dog">
+            <ellipse cx="350" cy="168" rx="40" ry="22" fill="rgba(255,220,160,0.9)"/>
+            <circle cx="384" cy="150" r="20" fill="rgba(255,220,160,0.92)"/>
+            <ellipse cx="373" cy="138" rx="7" ry="11" fill="rgba(220,170,80,0.8)" transform="rotate(-18 373 138)"/>
+            <ellipse cx="393" cy="136" rx="6" ry="10" fill="rgba(220,170,80,0.8)" transform="rotate(12 393 136)"/>
+            <circle cx="379" cy="148" r="4" fill="#333"/>
+            <circle cx="389" cy="148" r="4" fill="#333"/>
+            <circle cx="380" cy="147" r="1.5" fill="white"/>
+            <circle cx="390" cy="147" r="1.5" fill="white"/>
+            <ellipse cx="384" cy="158" rx="5" ry="3" fill="#a07040"/>
+            <path d="M379 163 Q384 168 389 163" stroke="#a07040" stroke-width="2.5" fill="none"/>
+            <!-- happy tongue -->
+            <path d="M382 165 Q384 172 386 165" fill="rgba(255,120,120,0.8)"/>
+            <path d="M310 163 Q293 145 308 132" stroke="rgba(255,220,160,0.85)" stroke-width="8" fill="none" stroke-linecap="round"/>
+            <!-- legs -->
+            <rect x="332" y="182" width="9" height="16" rx="4" fill="rgba(240,190,120,0.85)"/>
+            <rect x="348" y="185" width="9" height="14" rx="4" fill="rgba(240,190,120,0.85)" style="animation:advLeg 0.5s steps(2) infinite"/>
+            <rect x="362" y="182" width="9" height="16" rx="4" fill="rgba(240,190,120,0.85)" style="animation:advLeg 0.5s steps(2) infinite 0.25s"/>
+          </g>
+          <!-- title accent -->
+          <text x="30" y="58" font-family="serif" font-size="28" font-weight="900" fill="rgba(255,255,255,0.12)" letter-spacing="-1">TRAINING</text>
+          <text x="30" y="86" font-family="serif" font-size="22" font-weight="700" fill="rgba(255,255,255,0.08)">TIPS &amp; TRICKS</text>
+        </svg>
+      </div>
+      <div class="blog-card-body">
+        <span class="blog-tag">🐕 Dog Behavior</span>
+        <h2 class="blog-title">What Your Dog's Personality Type Says About Their Training Style</h2>
+        <p class="blog-excerpt">Not all dogs learn the same way. Understanding whether your dog is an Adventurer, Cuddler, Zen Master, or Social Butterfly can completely transform how you train — and how much they enjoy it.</p>
+        <div class="blog-meta">
+          <div class="blog-author-avatar">🐾</div>
+          <div>
+            <div class="blog-author-name">Animus Team</div>
+            <div class="blog-date">June 12, 2025</div>
+          </div>
+          <span class="blog-read-time">⏱ 5 min read</span>
+        </div>
+      </div>
+      <div class="blog-card-footer">
+        <button class="blog-action-btn" id="like-btn-0" onclick="toggleLike(event,0)">❤️ <span id="like-count-0">47</span></button>
+        <button class="blog-action-btn" onclick="shareBlogPost(event,0)">🔗 Share</button>
+        <button class="blog-read-btn" onclick="openBlogPost(0)">Read →</button>
+      </div>
+    </article>
+
+    <!-- POST 2 -->
+    <article class="blog-card" onclick="openBlogPost(1)">
+      <div class="blog-anim blog-anim-2">
+        <svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg">
+          <!-- starfield background -->
+          <circle cx="40"  cy="30"  r="1.5" fill="rgba(255,255,255,0.5)"/>
+          <circle cx="120" cy="55"  r="1"   fill="rgba(255,255,255,0.4)"/>
+          <circle cx="200" cy="20"  r="2"   fill="rgba(255,255,255,0.6)"/>
+          <circle cx="320" cy="40"  r="1.5" fill="rgba(255,255,255,0.5)"/>
+          <circle cx="430" cy="15"  r="1"   fill="rgba(255,255,255,0.45)"/>
+          <circle cx="530" cy="50"  r="2"   fill="rgba(255,255,255,0.55)"/>
+          <circle cx="560" cy="100" r="1.5" fill="rgba(255,255,255,0.4)"/>
+          <circle cx="70"  cy="130" r="1"   fill="rgba(255,255,255,0.35)"/>
+          <!-- DNA / science spiral -->
+          <g class="b2-dna" style="transform-origin:90px 110px">
+            <ellipse cx="90" cy="110" rx="22" ry="50" fill="none" stroke="rgba(100,200,255,0.3)" stroke-width="2" stroke-dasharray="6,4"/>
+            <circle cx="90" cy="70"  r="5" fill="rgba(100,200,255,0.5)"/>
+            <circle cx="90" cy="90"  r="4" fill="rgba(80,180,255,0.4)"/>
+            <circle cx="90" cy="110" r="5" fill="rgba(100,200,255,0.5)"/>
+            <circle cx="90" cy="130" r="4" fill="rgba(80,180,255,0.4)"/>
+            <circle cx="90" cy="150" r="5" fill="rgba(100,200,255,0.5)"/>
+          </g>
+          <!-- floating science orbs -->
+          <circle class="b2-orb" cx="180" cy="85" r="28" fill="rgba(20,80,160,0.35)" stroke="rgba(100,180,255,0.3)" stroke-width="1.5"/>
+          <circle class="b2-orb" cx="430" cy="75" r="22" fill="rgba(20,60,140,0.3)" stroke="rgba(80,160,255,0.25)" stroke-width="1.5"/>
+          <circle class="b2-orb" cx="520" cy="130" r="18" fill="rgba(10,50,120,0.3)" stroke="rgba(80,160,255,0.2)" stroke-width="1.5"/>
+          <!-- sparkle science particles -->
+          <g class="b2-spark"><circle cx="340" cy="60"  r="4" fill="rgba(200,240,255,0.9)"/><line x1="336" y1="56" x2="344" y2="64" stroke="rgba(200,240,255,0.7)" stroke-width="1"/><line x1="344" y1="56" x2="336" y2="64" stroke="rgba(200,240,255,0.7)" stroke-width="1"/></g>
+          <g class="b2-spark"><circle cx="490" cy="95"  r="3" fill="rgba(180,230,255,0.8)"/><line x1="487" y1="92" x2="493" y2="98" stroke="rgba(180,230,255,0.6)" stroke-width="1"/><line x1="493" y1="92" x2="487" y2="98" stroke="rgba(180,230,255,0.6)" stroke-width="1"/></g>
+          <g class="b2-spark"><circle cx="160" cy="150" r="3.5" fill="rgba(160,220,255,0.85)"/></g>
+          <!-- cat sitting looking at stars -->
+          <g class="b2-cat">
+            <!-- body -->
+            <ellipse cx="310" cy="170" rx="42" ry="30" fill="rgba(200,220,255,0.88)"/>
+            <!-- head -->
+            <circle cx="310" cy="132" r="30" fill="rgba(200,220,255,0.9)"/>
+            <!-- ears -->
+            <polygon points="290,112 295,88 304,112" fill="rgba(170,195,240,0.9)"/>
+            <polygon points="316,112 325,88 330,112" fill="rgba(170,195,240,0.9)"/>
+            <polygon points="292,111 295,93 302,111" fill="rgba(130,160,220,0.5)"/>
+            <polygon points="318,111 325,93 328,111" fill="rgba(130,160,220,0.5)"/>
+            <!-- wide curious eyes looking upward -->
+            <circle cx="300" cy="130" r="8" fill="#1a3a6a"/>
+            <circle cx="320" cy="130" r="8" fill="#1a3a6a"/>
+            <circle cx="298" cy="127" r="3" fill="white"/>
+            <circle cx="318" cy="127" r="3" fill="white"/>
+            <!-- tiny sparkle in each eye -->
+            <circle cx="295" cy="125" r="1" fill="rgba(200,240,255,0.9)"/>
+            <circle cx="315" cy="125" r="1" fill="rgba(200,240,255,0.9)"/>
+            <!-- small nose & mouth -->
+            <polygon points="309,140 311,140 310,143" fill="#6a8ab0"/>
+            <path d="M306 144 Q310 148 314 144" stroke="#6a8ab0" stroke-width="1.5" fill="none"/>
+            <!-- whiskers -->
+            <line x1="276" y1="139" x2="298" y2="141" stroke="rgba(150,180,240,0.6)" stroke-width="1.5"/>
+            <line x1="276" y1="144" x2="298" y2="143" stroke="rgba(150,180,240,0.6)" stroke-width="1.5"/>
+            <line x1="322" y1="141" x2="344" y2="139" stroke="rgba(150,180,240,0.6)" stroke-width="1.5"/>
+            <line x1="322" y1="143" x2="344" y2="144" stroke="rgba(150,180,240,0.6)" stroke-width="1.5"/>
+            <!-- tail -->
+            <path d="M268 190 Q245 210 265 218 Q285 224 288 200" stroke="rgba(200,220,255,0.85)" stroke-width="9" fill="none" stroke-linecap="round"/>
+            <!-- paws -->
+            <ellipse cx="296" cy="196" rx="14" ry="8" fill="rgba(180,205,250,0.7)"/>
+            <ellipse cx="322" cy="196" rx="14" ry="8" fill="rgba(180,205,250,0.7)"/>
+          </g>
+          <!-- text accent -->
+          <text x="370" y="170" font-family="serif" font-size="26" font-weight="900" fill="rgba(255,255,255,0.08)" letter-spacing="-1">SCIENCE</text>
+          <text x="370" y="196" font-family="serif" font-size="20" font-weight="700" fill="rgba(255,255,255,0.05)">OF PETS</text>
+        </svg>
+      </div>
+      <div class="blog-card-body">
+        <span class="blog-tag">🐱 Cat Behavior</span>
+        <h2 class="blog-title">Do Cats Really Have Personalities? What Science (and Your Pet) Already Know</h2>
+        <p class="blog-excerpt">Research shows cats have consistent, measurable personality traits that shape everything from how they play to how stressed they get. Here's what the latest behavioral science says — and how to use it.</p>
+        <div class="blog-meta">
+          <div class="blog-author-avatar">🐈</div>
+          <div>
+            <div class="blog-author-name">Animus Team</div>
+            <div class="blog-date">May 28, 2025</div>
+          </div>
+          <span class="blog-read-time">⏱ 6 min read</span>
+        </div>
+      </div>
+      <div class="blog-card-footer">
+        <button class="blog-action-btn" id="like-btn-1" onclick="toggleLike(event,1)">❤️ <span id="like-count-1">83</span></button>
+        <button class="blog-action-btn" onclick="shareBlogPost(event,1)">🔗 Share</button>
+        <button class="blog-read-btn" onclick="openBlogPost(1)">Read →</button>
+      </div>
+    </article>
+
+  </div>
+
+  <section class="cta-band">
+    <h2>Ready to profile your pet?</h2>
+    <p>Take our free 2-minute quiz and get their full personality breakdown today.</p>
+    <button class="btn-white" onclick="startQuiz()">🐾 Take The Free Test</button>
+  </section>
+
+  <footer>
+    <div>
+      <div class="footer-logo">Ani<span>mus</span></div>
+      <p>Helping pet parents understand what makes their companions tick — fostering deeper connections and happier, healthier relationships.</p>
+    </div>
+    <div>
+      <h5>Navigate</h5>
+      <ul>
+        <li onclick="showPage('home')">Home</li>
+        <li onclick="startQuiz()">Take The Test</li>
+        <li onclick="showPage('about')">About Us</li>
+        <li onclick="showPage('blog')">Blog</li>
+      </ul>
+    </div>
+    <div>
+      <h5>Connect</h5>
+      <ul>
+        <li onclick="showToast('Instagram coming soon! 🐾')">Instagram</li>
+        <li onclick="showToast('TikTok coming soon! 🐾')">TikTok</li>
+        <li><a href="mailto:hello@animuspet.com" style="color:inherit;text-decoration:none;">Contact Us</a></li>
+        <li onclick="document.getElementById('privacy-modal').classList.add('open')">Privacy Policy</li>
+      </ul>
+    </div>
+  </footer>
+  <div class="footer-bottom">© 2025 Animus · Built with love for pet parents everywhere 🐾</div>
+</div>
+
+<!-- ═══════════════ BLOG POST MODAL ═══════════════ -->
+<div class="blog-post-overlay" id="blog-post-overlay" onclick="closeBlogPostOnBg(event)">
+  <div class="blog-post-modal" id="blog-post-modal">
+    <button class="blog-post-close" onclick="closeBlogPost()">✕</button>
+    <div id="blog-post-cover-anim" style="width:100%;height:200px;background:linear-gradient(135deg,#7a3d00,#c46200);display:flex;align-items:center;justify-content:center;font-size:3rem;transition:background 0.3s;">🐾</div>
+    <div class="blog-post-content">
+      <span class="blog-post-tag" id="blog-post-tag"></span>
+      <h1 class="blog-post-title" id="blog-post-title"></h1>
+      <div class="blog-post-meta">
+        <div class="blog-author-avatar" id="blog-post-avatar"></div>
+        <div>
+          <div class="blog-author-name">Animus Team</div>
+          <div class="blog-date" id="blog-post-date"></div>
+        </div>
+        <span class="blog-read-time" id="blog-post-read-time" style="margin-left:auto;"></span>
+      </div>
+      <div class="blog-post-body" id="blog-post-body"></div>
+      <div class="blog-post-actions">
+        <button class="blog-action-btn" id="modal-like-btn" onclick="toggleLikeFromModal()">❤️ Like</button>
+        <button class="blog-action-btn" id="modal-share-btn" onclick="shareBlogPostFromModal()">🔗 Share</button>
+        <button class="blog-read-btn" onclick="closeBlogPost()" style="margin-left:auto;">Close ✕</button>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════════════════ RESULTS PAGE ═══════════════════════════ -->
-<div id="page-results" class="page">
-  <div class="results-container" id="results-container">
-    <!-- Injected by JS -->
-  </div>
-</div>
-
-<script>
-// ══════════════════════════════════════
-// STATE
-// ══════════════════════════════════════
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ── STATE ──
 let state = {
-  petType: null,
-  petName: '',
-  ownerName: '',
-  ownerEmail: '',
-  answers: {},
-  scores: { adventurer: 0, cuddler: 0, zen: 0, social: 0 },
-  step: 0
+  petType: null, petName: '', ownerName: '', ownerEmail: '',
+  answers: {}, scores: { adventurer: 0, cuddler: 0, zen: 0, social: 0 }, step: 0
 };
 
-// ══════════════════════════════════════
-// QUIZ DATA
-// ══════════════════════════════════════
+// ── QUIZ DATA ──
 const quizSteps = [
-  {
-    id: 'pet_type',
-    emoji: '🐾',
-    question: 'What type of pet do you have?',
-    type: 'pet_select'
-  },
-  {
-    id: 'pet_name',
-    emoji: null,
-    question: null,
-    type: 'name_input'
-  },
-  {
-    id: 'q1',
-    emoji: '👋',
-    question: 'When a stranger approaches, how does your pet typically react?',
-    type: 'options',
-    options: [
-      { label: 'Runs to greet them excitedly', scores: { social: 2 } },
-      { label: 'Observes cautiously from a distance', scores: { zen: 2 } },
-      { label: 'Hides or retreats to a safe spot', scores: { cuddler: 2 } },
-      { label: 'Barks/meows but warms up eventually', scores: { adventurer: 1, social: 1 } }
-    ]
-  },
-  {
-    id: 'q2',
-    emoji: '🏠',
-    question: 'What does your pet prefer to do on a lazy Sunday afternoon?',
-    type: 'options',
-    options: [
-      { label: 'Nap all day in the coziest spot', scores: { zen: 2 } },
-      { label: 'Cuddle next to you on the couch', scores: { cuddler: 2 } },
-      { label: 'Play with toys or explore around', scores: { adventurer: 2 } },
-      { label: 'Follow you from room to room', scores: { social: 2 } }
-    ]
-  },
-  {
-    id: 'q3',
-    emoji: '🎾',
-    question: 'How does your pet respond to playtime?',
-    type: 'options',
-    options: [
-      { label: 'Goes absolutely wild and non-stop', scores: { adventurer: 2 } },
-      { label: 'Plays gently and then snuggles up', scores: { cuddler: 2 } },
-      { label: 'Prefers to watch more than participate', scores: { zen: 2 } },
-      { label: 'Loves group play and showing off', scores: { social: 2 } }
-    ]
-  },
-  {
-    id: 'q4',
-    emoji: '🌿',
-    question: 'When you take your pet outside, they usually…',
-    type: 'options',
-    options: [
-      { label: 'Run ahead and explore everything', scores: { adventurer: 2 } },
-      { label: 'Stay close to your side', scores: { cuddler: 2 } },
-      { label: 'Walk at a calm, steady pace', scores: { zen: 2 } },
-      { label: 'Try to greet every person and animal', scores: { social: 2 } }
-    ]
-  },
-  {
-    id: 'q5',
-    emoji: '😴',
-    question: 'Where does your pet sleep?',
-    type: 'options',
-    options: [
-      { label: 'Pressed against you or in your bed', scores: { cuddler: 2 } },
-      { label: 'Their own cozy bed in a quiet spot', scores: { zen: 2 } },
-      { label: 'Wherever they last had an adventure', scores: { adventurer: 2 } },
-      { label: 'Near the door to catch all the action', scores: { social: 2 } }
-    ]
-  },
-  {
-    id: 'q6',
-    emoji: '😟',
-    question: 'How does your pet handle being left alone?',
-    type: 'options',
-    options: [
-      { label: 'Gets anxious and misses you a lot', scores: { cuddler: 2 } },
-      { label: 'Completely fine — barely notices', scores: { zen: 2 } },
-      { label: 'Uses it as adventure/exploration time', scores: { adventurer: 2 } },
-      { label: 'Waits by the door for your return', scores: { social: 2 } }
-    ]
-  },
-  {
-    id: 'q7',
-    emoji: '🍖',
-    question: 'How would you describe your pet\'s eating style?',
-    type: 'options',
-    options: [
-      { label: 'Eats quickly and moves on immediately', scores: { adventurer: 2 } },
-      { label: 'Slow and mindful — savors every bite', scores: { zen: 2 } },
-      { label: 'Wants you nearby while they eat', scores: { cuddler: 2 } },
-      { label: 'Gets excited and does tricks for food', scores: { social: 2 } }
-    ]
-  },
-  {
-    id: 'q8',
-    emoji: '⭐',
-    question: 'In three words, your pet is mostly…',
-    type: 'options',
-    options: [
-      { label: 'Bold, brave, restless', scores: { adventurer: 3 } },
-      { label: 'Warm, gentle, loyal', scores: { cuddler: 3 } },
-      { label: 'Calm, wise, peaceful', scores: { zen: 3 } },
-      { label: 'Social, playful, charming', scores: { social: 3 } }
-    ]
-  },
-  {
-    id: 'email',
-    type: 'email_capture'
-  }
+  { id: 'pet_type', emoji: '🐾', question: 'What type of pet do you have?', type: 'pet_select' },
+  { id: 'pet_name', emoji: null, question: null, type: 'name_input' },
+  { id: 'q1', emoji: '👋', question: 'When a stranger approaches, how does your pet typically react?', type: 'options', options: [
+    { label: 'Runs to greet them excitedly', scores: { social: 2 } },
+    { label: 'Observes cautiously from a distance', scores: { zen: 2 } },
+    { label: 'Hides or retreats to a safe spot', scores: { cuddler: 2 } },
+    { label: 'Barks/meows but warms up eventually', scores: { adventurer: 1, social: 1 } }
+  ]},
+  { id: 'q2', emoji: '🏠', question: 'What does your pet prefer to do on a lazy Sunday afternoon?', type: 'options', options: [
+    { label: 'Nap all day in the coziest spot', scores: { zen: 2 } },
+    { label: 'Cuddle next to you on the couch', scores: { cuddler: 2 } },
+    { label: 'Play with toys or explore around', scores: { adventurer: 2 } },
+    { label: 'Follow you from room to room', scores: { social: 2 } }
+  ]},
+  { id: 'q3', emoji: '🎾', question: 'How does your pet respond to playtime?', type: 'options', options: [
+    { label: 'Goes absolutely wild and non-stop', scores: { adventurer: 2 } },
+    { label: 'Plays gently and then snuggles up', scores: { cuddler: 2 } },
+    { label: 'Prefers to watch more than participate', scores: { zen: 2 } },
+    { label: 'Loves group play and showing off', scores: { social: 2 } }
+  ]},
+  { id: 'q4', emoji: '🌿', question: 'When you take your pet outside, they usually…', type: 'options', options: [
+    { label: 'Run ahead and explore everything', scores: { adventurer: 2 } },
+    { label: 'Stay close to your side', scores: { cuddler: 2 } },
+    { label: 'Walk at a calm, steady pace', scores: { zen: 2 } },
+    { label: 'Try to greet every person and animal', scores: { social: 2 } }
+  ]},
+  { id: 'q5', emoji: '😴', question: 'Where does your pet sleep?', type: 'options', options: [
+    { label: 'Pressed against you or in your bed', scores: { cuddler: 2 } },
+    { label: 'Their own cozy bed in a quiet spot', scores: { zen: 2 } },
+    { label: 'Wherever they last had an adventure', scores: { adventurer: 2 } },
+    { label: 'Near the door to catch all the action', scores: { social: 2 } }
+  ]},
+  { id: 'q6', emoji: '😟', question: 'How does your pet handle being left alone?', type: 'options', options: [
+    { label: 'Gets anxious and misses you a lot', scores: { cuddler: 2 } },
+    { label: 'Completely fine — barely notices', scores: { zen: 2 } },
+    { label: 'Uses it as adventure/exploration time', scores: { adventurer: 2 } },
+    { label: 'Waits by the door for your return', scores: { social: 2 } }
+  ]},
+  { id: 'q7', emoji: '🍖', question: "How would you describe your pet's eating style?", type: 'options', options: [
+    { label: 'Eats quickly and moves on immediately', scores: { adventurer: 2 } },
+    { label: 'Slow and mindful — savors every bite', scores: { zen: 2 } },
+    { label: 'Wants you nearby while they eat', scores: { cuddler: 2 } },
+    { label: 'Gets excited and does tricks for food', scores: { social: 2 } }
+  ]},
+  { id: 'q8', emoji: '⭐', question: 'In three words, your pet is mostly…', type: 'options', options: [
+    { label: 'Bold, brave, restless', scores: { adventurer: 3 } },
+    { label: 'Warm, gentle, loyal', scores: { cuddler: 3 } },
+    { label: 'Calm, wise, peaceful', scores: { zen: 3 } },
+    { label: 'Social, playful, charming', scores: { social: 3 } }
+  ]},
+  { id: 'email', type: 'email_capture' }
 ];
 
-// ══════════════════════════════════════
-// PERSONALITIES DATA
-// ══════════════════════════════════════
+// ── PERSONALITIES DATA (with product images via Unsplash) ──
 const personalities = {
   adventurer: {
-    name: 'The Adventurer',
-    emoji: '🏃',
-    color: '#E8820C',
-    colorLight: '#FDE8CC',
+    name: 'The Adventurer', emoji: '🏃', color: '#E8820C', colorLight: '#FDE8CC',
     desc: 'Your pet is a born explorer! They have boundless energy, love new experiences, and approach the world with fearless curiosity. Every day is a new expedition for them.',
     traits: [
       { label: 'Bold', color: '#E8820C', bg: '#FDE8CC' },
@@ -1180,20 +1479,25 @@ const personalities = {
       'Rotate toys weekly to prevent boredom',
       'Try outdoor adventures like hiking trails or dog parks',
       'Provide puzzle feeders to stimulate their curious mind',
-      'Consider agility training — they\'ll thrive on challenges'
+      "Consider agility training — they'll thrive on challenges"
     ],
     products: [
-      { name: 'Explorer Activity Bundle', desc: 'Durable toys for adventurers', price: '$49.99' },
-      { name: 'Outdoor Adventure Harness', desc: 'Secure & comfy for trails', price: '$34.99' },
-      { name: 'Puzzle Feeder Pro', desc: 'Mental stimulation at mealtime', price: '$24.99' },
-      { name: 'Interactive Treat Launcher', desc: 'Keep them chasing & active', price: '$29.99' }
+      { name: 'Explorer Activity Bundle', desc: 'Durable toys for adventurers', price: '$49.99',
+        img: 'https://images.unsplash.com/photo-1537151625747-0369537434ce?w=120&h=120&fit=crop&crop=faces&q=80',
+        fallback: '🎾', amazon: 'durable+dog+activity+toys+bundle' },
+      { name: 'Outdoor Adventure Harness', desc: 'Secure & comfy for trails', price: '$34.99',
+        img: 'https://images.unsplash.com/photo-1518717758536-85ae29035b6d?w=120&h=120&fit=crop&crop=faces&q=80',
+        fallback: '🦺', amazon: 'outdoor+dog+harness+hiking' },
+      { name: 'Puzzle Feeder Pro', desc: 'Mental stimulation at mealtime', price: '$24.99',
+        img: 'https://images.unsplash.com/photo-1477884213360-7e9d7dcc1e48?w=120&h=120&fit=crop&crop=faces&q=80',
+        fallback: '🧩', amazon: 'dog+puzzle+feeder+slow+bowl' },
+      { name: 'Interactive Treat Launcher', desc: 'Keep them chasing & active', price: '$29.99',
+        img: 'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=120&h=120&fit=crop&crop=faces&q=80',
+        fallback: '🚀', amazon: 'automatic+dog+treat+launcher' }
     ]
   },
   cuddler: {
-    name: 'The Cuddler',
-    emoji: '🤗',
-    color: '#7C5CBF',
-    colorLight: '#EDE5FA',
+    name: 'The Cuddler', emoji: '🤗', color: '#7C5CBF', colorLight: '#EDE5FA',
     desc: 'Your pet is a love bug through and through. They find their greatest happiness in physical closeness, gentle moments, and being your constant shadow. Bond is everything to them.',
     traits: [
       { label: 'Affectionate', color: '#7C5CBF', bg: '#EDE5FA' },
@@ -1209,18 +1513,23 @@ const personalities = {
       'Introduce changes gradually to avoid anxiety'
     ],
     products: [
-      { name: 'Luxury Comfort Bed', desc: 'Premium plush for snugglers', price: '$59.99' },
-      { name: 'Calming Blanket Set', desc: 'Weighted comfort at rest', price: '$39.99' },
-      { name: 'Gentle Grooming Kit', desc: 'Spa experience at home', price: '$29.99' },
-      { name: 'Heartbeat Plush Toy', desc: 'Soothing company when apart', price: '$22.99' }
+      { name: 'Luxury Comfort Bed', desc: 'Premium plush for snugglers', price: '$59.99',
+        img: 'https://images.unsplash.com/photo-1574144611937-0df059b5ef3e?w=120&h=120&fit=crop&crop=faces&q=80',
+        fallback: '🛏️', amazon: 'luxury+plush+dog+bed+orthopaedic' },
+      { name: 'Calming Blanket Set', desc: 'Weighted comfort at rest', price: '$39.99',
+        img: 'https://images.unsplash.com/photo-1478098711619-5ab0361f4b56?w=120&h=120&fit=crop&crop=faces&q=80',
+        fallback: '🧸', amazon: 'calming+pet+blanket+anxiety' },
+      { name: 'Gentle Grooming Kit', desc: 'Spa experience at home', price: '$29.99',
+        img: 'https://images.unsplash.com/photo-1533743983669-94fa945f5042?w=120&h=120&fit=crop&crop=faces&q=80',
+        fallback: '✂️', amazon: 'gentle+pet+grooming+kit+brush' },
+      { name: 'Heartbeat Plush Toy', desc: 'Soothing company when apart', price: '$22.99',
+        img: 'https://images.unsplash.com/photo-1573865526739-10659fec78a5?w=120&h=120&fit=crop&crop=faces&q=80',
+        fallback: '💝', amazon: 'heartbeat+puppy+plush+toy+anxiety' }
     ]
   },
   zen: {
-    name: 'The Zen Master',
-    emoji: '🧘',
-    color: '#3DAA7A',
-    colorLight: '#D4F4E7',
-    desc: 'Your pet is the embodiment of serenity. They\'re calm, wise, and rarely flustered by anything. Their peaceful energy brings balance to your home and everyone in it.',
+    name: 'The Zen Master', emoji: '🧘', color: '#3DAA7A', colorLight: '#D4F4E7',
+    desc: "Your pet is the embodiment of serenity. They're calm, wise, and rarely flustered by anything. Their peaceful energy brings balance to your home and everyone in it.",
     traits: [
       { label: 'Calm', color: '#3DAA7A', bg: '#D4F4E7' },
       { label: 'Patient', color: '#3DAA7A', bg: '#D4F4E7' },
@@ -1235,18 +1544,23 @@ const personalities = {
       'Zen pets thrive with calm, slow-paced environments'
     ],
     products: [
-      { name: 'Serenity Orthopedic Bed', desc: 'Premium comfort & joint support', price: '$84.99' },
-      { name: 'Calm Essential Kit', desc: 'Relaxation tools & aromatherapy', price: '$39.99' },
-      { name: 'Zen Feeder Bowl', desc: 'Mindful, slow-paced feeding', price: '$24.99' },
-      { name: 'Wellness Grooming Set', desc: 'Gentle massage & spa experience', price: '$29.99' }
+      { name: 'Serenity Orthopedic Bed', desc: 'Premium comfort & joint support', price: '$84.99',
+        img: 'https://images.unsplash.com/photo-1536809901100-ade278931e9b?w=120&h=120&fit=crop&crop=faces&q=80',
+        fallback: '🛏️', amazon: 'orthopedic+dog+bed+memory+foam' },
+      { name: 'Calm Essential Kit', desc: 'Relaxation tools & aromatherapy', price: '$39.99',
+        img: 'https://images.unsplash.com/photo-1555229005-8bee62e14ef6?w=120&h=120&fit=crop&crop=faces&q=80',
+        fallback: '🌿', amazon: 'calming+essential+oil+diffuser+pets' },
+      { name: 'Zen Feeder Bowl', desc: 'Mindful, slow-paced feeding', price: '$24.99',
+        img: 'https://images.unsplash.com/photo-1551717743-ea28dc55e8d7?w=120&h=120&fit=crop&crop=faces&q=80',
+        fallback: '🍵', amazon: 'slow+feeder+dog+bowl+puzzle' },
+      { name: 'Wellness Grooming Set', desc: 'Gentle massage & spa experience', price: '$29.99',
+        img: 'https://images.unsplash.com/photo-1495360010541-f48722b8d07a?w=120&h=120&fit=crop&crop=faces&q=80',
+        fallback: '🌸', amazon: 'pet+massage+grooming+wellness+kit' }
     ]
   },
   social: {
-    name: 'The Social Butterfly',
-    emoji: '🦋',
-    color: '#E84B6A',
-    colorLight: '#FCE4EA',
-    desc: 'Your pet is a natural-born charmer! They light up every room, make friends with everyone, and live for interaction. Social time isn\'t optional for them — it\'s essential.',
+    name: 'The Social Butterfly', emoji: '🦋', color: '#E84B6A', colorLight: '#FCE4EA',
+    desc: "Your pet is a natural-born charmer! They light up every room, make friends with everyone, and live for interaction. Social time isn't optional for them — it's essential.",
     traits: [
       { label: 'Outgoing', color: '#E84B6A', bg: '#FCE4EA' },
       { label: 'Playful', color: '#E8820C', bg: '#FDE8CC' },
@@ -1261,67 +1575,58 @@ const personalities = {
       'Always introduce them to new friends and environments'
     ],
     products: [
-      { name: 'Social Play Bundle', desc: 'Interactive toys for sharing', price: '$44.99' },
-      { name: 'Training Treat Pack', desc: 'For rewarding good behavior', price: '$19.99' },
-      { name: 'Tug-of-War Rope Set', desc: 'Perfect for group play', price: '$22.99' },
-      { name: 'Photo Collar Tag', desc: 'Show off their personality', price: '$14.99' }
+      { name: 'Social Play Bundle', desc: 'Interactive toys for sharing', price: '$44.99',
+        img: 'https://images.unsplash.com/photo-1583511655857-d19b40a7a54d?w=120&h=120&fit=crop&crop=faces&q=80',
+        fallback: '🎉', amazon: 'interactive+dog+toys+social+play' },
+      { name: 'Training Treat Pack', desc: 'For rewarding good behavior', price: '$19.99',
+        img: 'https://images.unsplash.com/photo-1504826260979-242151ee45b7?w=120&h=120&fit=crop&crop=faces&q=80',
+        fallback: '🍖', amazon: 'dog+training+treats+reward+pack' },
+      { name: 'Tug-of-War Rope Set', desc: 'Perfect for group play', price: '$22.99',
+        img: 'https://images.unsplash.com/photo-1568640347023-a616a30bc3bd?w=120&h=120&fit=crop&crop=faces&q=80',
+        fallback: '🪢', amazon: 'dog+tug+rope+toy+durable' },
+      { name: 'Photo Collar Tag', desc: "Show off their personality", price: '$14.99',
+        img: 'https://images.unsplash.com/photo-1601758125946-6ec2ef64daf8?w=120&h=120&fit=crop&crop=faces&q=80',
+        fallback: '🏷️', amazon: 'personalized+pet+id+tag+collar' }
     ]
   }
 };
 
-// ══════════════════════════════════════
-// PAGE NAVIGATION
-// ══════════════════════════════════════
+// ── NAVIGATION ──
 function showPage(pageId) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + pageId).classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-
 function toggleMobileNav() {
-  const overlay = document.getElementById('mobile-nav');
-  const btn = document.getElementById('nav-hamburger');
-  overlay.classList.toggle('open');
-  btn.classList.toggle('open');
+  document.getElementById('mobile-nav').classList.toggle('open');
+  document.getElementById('nav-hamburger').classList.toggle('open');
 }
-
 function closeMobileNav() {
   document.getElementById('mobile-nav').classList.remove('open');
   document.getElementById('nav-hamburger').classList.remove('open');
 }
-
 function closePrivacyModal(event) {
-  if (event.target === document.getElementById('privacy-modal')) {
+  if (event.target === document.getElementById('privacy-modal'))
     document.getElementById('privacy-modal').classList.remove('open');
-  }
 }
-
 let toastTimer;
 function showToast(msg) {
   const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
+  t.textContent = msg; t.classList.add('show');
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
 }
-
 function scrollToSection(id) {
   showPage('home');
-  setTimeout(() => {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  }, 100);
+  setTimeout(() => { const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: 'smooth' }); }, 100);
 }
-
 function startQuiz() {
   state = { petType: null, petName: '', ownerName: '', ownerEmail: '', answers: {}, scores: { adventurer: 0, cuddler: 0, zen: 0, social: 0 }, step: 0 };
   showPage('quiz');
   renderQuizStep();
 }
 
-// ══════════════════════════════════════
-// QUIZ RENDERING
-// ══════════════════════════════════════
+// ── QUIZ RENDER ──
 function renderQuizStep() {
   const card = document.getElementById('quiz-card');
   const step = quizSteps[state.step];
@@ -1357,7 +1662,7 @@ function renderQuizStep() {
       <p class="quiz-hint">We'll personalize your results with their name 🐾</p>
       <div class="quiz-btn-row">
         <button class="btn-back" onclick="prevStep()">← Back</button>
-        <button class="btn-primary" style="flex:1" onclick="nextStep()" id="name-next-btn">Continue →</button>
+        <button class="btn-primary" style="flex:1" onclick="nextStep()">Continue →</button>
       </div>`;
     setTimeout(() => document.getElementById('pet-name-input')?.focus(), 100);
   } else if (step.type === 'options') {
@@ -1401,33 +1706,21 @@ function renderQuizStep() {
   }
 }
 
-function selectPet(type) {
-  state.petType = type;
-  renderQuizStep();
-}
-
-function selectOption(questionId, index) {
-  state.answers[questionId] = index;
-  renderQuizStep();
-}
+function selectPet(type) { state.petType = type; renderQuizStep(); }
+function selectOption(questionId, index) { state.answers[questionId] = index; renderQuizStep(); }
 
 function nextStep() {
   const step = quizSteps[state.step];
-  if (step.type === 'name_input' && !state.petName.trim()) {
+  if (step.type === 'name_input' && !state.petName.trim())
     state.petName = state.petType === 'dog' ? 'your pup' : 'your kitty';
-  }
   if (state.step < quizSteps.length - 1) {
     state.step++;
     renderQuizStep();
     document.getElementById('quiz-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 }
-
 function prevStep() {
-  if (state.step > 0) {
-    state.step--;
-    renderQuizStep();
-  }
+  if (state.step > 0) { state.step--; renderQuizStep(); }
 }
 
 async function submitEmail() {
@@ -1437,82 +1730,72 @@ async function submitEmail() {
     if (inp) { inp.style.borderColor = '#E84B6A'; inp.focus(); }
     return;
   }
-
-  // Show loading state on button
   const btn = document.querySelector('#quiz-card .btn-primary');
-  const originalText = btn ? btn.innerHTML : '';
   if (btn) { btn.innerHTML = '⏳ Sending…'; btn.disabled = true; }
-
-  // Submit to Formspree
   try {
     await fetch('https://formspree.io/f/xnjoqakv', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({
-        name: state.ownerName,
-        email: state.ownerEmail,
-        petName: state.petName,
-        petType: state.petType
-      })
+      body: JSON.stringify({ name: state.ownerName, email: state.ownerEmail, petName: state.petName, petType: state.petType })
     });
-  } catch(e) {
-    // Silently continue even if submission fails — don't block the user
-  }
-
+  } catch(e) {}
   calculateResults();
   renderResults();
   showPage('results');
 }
 
-// ══════════════════════════════════════
-// SCORING
-// ══════════════════════════════════════
+// ── SCORING ──
 function calculateResults() {
   state.scores = { adventurer: 0, cuddler: 0, zen: 0, social: 0 };
   quizSteps.forEach(step => {
     if (step.type === 'options' && state.answers[step.id] !== undefined) {
       const chosen = step.options[state.answers[step.id]];
-      Object.entries(chosen.scores).forEach(([key, val]) => {
-        state.scores[key] += val;
-      });
+      Object.entries(chosen.scores).forEach(([key, val]) => { state.scores[key] += val; });
     }
   });
 }
-
 function getDominantPersonality() {
   return Object.entries(state.scores).sort((a, b) => b[1] - a[1])[0][0];
 }
-
 function getScorePercents() {
   const total = Object.values(state.scores).reduce((a, b) => a + b, 0) || 1;
   return Object.fromEntries(Object.entries(state.scores).map(([k, v]) => [k, Math.round((v / total) * 100)]));
 }
 
-// ══════════════════════════════════════
-// RESULTS RENDERING
-// ══════════════════════════════════════
+// ── RESULTS RENDER ──
 function renderResults() {
   const dominant = getDominantPersonality();
   const p = personalities[dominant];
   const percents = getScorePercents();
   const petName = state.petName || (state.petType === 'dog' ? 'Your Pup' : 'Your Kitty');
   const ownerName = state.ownerName ? `, ${state.ownerName}` : '';
+  const barColors = { adventurer: '#E8820C', cuddler: '#7C5CBF', zen: '#3DAA7A', social: '#E84B6A' };
+  const barLabels = { adventurer: 'The Adventurer', cuddler: 'The Cuddler', zen: 'The Zen Master', social: 'Social Butterfly' };
 
-  const barColors = {
-    adventurer: '#E8820C',
-    cuddler: '#7C5CBF',
-    zen: '#3DAA7A',
-    social: '#E84B6A'
-  };
-  const barLabels = {
-    adventurer: 'The Adventurer',
-    cuddler: 'The Cuddler',
-    zen: 'The Zen Master',
-    social: 'Social Butterfly'
-  };
+  const productsHTML = p.products.map(prod => `
+    <div class="product-item">
+      <div class="product-img-wrap">
+        <img
+          src="${prod.img}"
+          alt="${prod.name}"
+          loading="lazy"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        />
+        <span class="img-fallback" style="display:none;width:100%;height:100%;align-items:center;justify-content:center;font-size:2rem;">${prod.fallback}</span>
+      </div>
+      <div class="product-info">
+        <div>
+          <div class="product-name">${prod.name}</div>
+          <div class="product-desc">${prod.desc}</div>
+        </div>
+        <div class="product-footer">
+          <div class="product-price">${prod.price}</div>
+          <a href="https://www.amazon.com/s?k=${encodeURIComponent(prod.amazon)}" target="_blank" rel="noopener" class="product-shop-btn">🛒 Shop</a>
+        </div>
+      </div>
+    </div>`).join('');
 
-  const container = document.getElementById('results-container');
-  container.innerHTML = `
+  document.getElementById('results-container').innerHTML = `
     <div style="max-width:900px;margin:0 auto;">
       <div style="text-align:center;margin-bottom:48px;">
         <div style="display:inline-flex;align-items:center;gap:8px;background:${p.colorLight};color:${p.color};font-size:0.8rem;font-weight:700;letter-spacing:0.5px;padding:6px 16px;border-radius:50px;margin-bottom:20px;border:1px solid ${p.color}30;">
@@ -1525,14 +1808,12 @@ function renderResults() {
       </div>
 
       <div class="results-grid">
-        <!-- Breakdown -->
         <div class="results-card">
           <h3>📊 Personality Breakdown</h3>
           ${Object.entries(barLabels).map(([key, label]) => `
             <div class="breakdown-row">
               <div class="breakdown-label">
-                <span>${label}</span>
-                <span>${percents[key]}%</span>
+                <span>${label}</span><span>${percents[key]}%</span>
               </div>
               <div class="breakdown-bar">
                 <div class="breakdown-fill" style="width:0%;background:${barColors[key]}" data-width="${percents[key]}%"></div>
@@ -1540,7 +1821,6 @@ function renderResults() {
             </div>`).join('')}
         </div>
 
-        <!-- Key Traits -->
         <div class="results-card">
           <h3>✨ Key Traits</h3>
           <div class="traits-chips" style="margin-bottom:24px;">
@@ -1552,18 +1832,9 @@ function renderResults() {
           </ul>
         </div>
 
-        <!-- Products -->
         <div class="results-card" style="grid-column:1/-1">
           <h3>🛍️ Recommended Products for ${petName}</h3>
-          <div class="products-grid">
-            ${p.products.map(prod => `
-              <div class="product-item">
-                <div class="product-name">${prod.name}</div>
-                <div class="product-desc">${prod.desc}</div>
-                <div class="product-price">${prod.price}</div>
-                <a href="https://www.amazon.com/s?k=${encodeURIComponent(prod.name + ' pet')}" target="_blank" rel="noopener" style="display:inline-block;margin-top:12px;background:var(--amber);color:white;border:none;border-radius:50px;padding:8px 18px;font-size:0.8rem;font-weight:600;cursor:pointer;text-decoration:none;font-family:var(--font-body);">🛒 Shop on Amazon</a>
-              </div>`).join('')}
-          </div>
+          <div class="products-grid">${productsHTML}</div>
         </div>
       </div>
 
@@ -1572,30 +1843,421 @@ function renderResults() {
         <p>Share ${petName}'s personality or discover someone else's pet!</p>
         <div class="share-btns">
           <button class="btn-share btn-retake" onclick="startQuiz()">🔄 Test Another Pet</button>
-          <button class="btn-share" style="background:var(--amber);color:white;border-color:var(--amber)" onclick="shareResult('${p.name}', '${petName}')">📤 Share Results</button>
+          <button class="btn-share" style="background:var(--amber);color:white;border-color:var(--amber)" onclick="openShareCard()">🃏 Share Card</button>
           <button class="btn-share" style="background:white;color:var(--brown-mid);border-color:rgba(44,26,14,0.15)" onclick="showPage('home')">🏠 Back to Home</button>
         </div>
       </div>
     </div>`;
 
-  // Animate bars after DOM update
   setTimeout(() => {
-    document.querySelectorAll('.breakdown-fill').forEach(bar => {
-      bar.style.width = bar.dataset.width;
-    });
+    document.querySelectorAll('.breakdown-fill').forEach(bar => { bar.style.width = bar.dataset.width; });
+    if (window.launchConfetti) window.launchConfetti();
   }, 200);
 }
 
-function shareResult(personality, petName) {
-  const text = `🐾 ${petName} just got their Animus personality result: "${personality}"! Find out your pet's personality at animuspet.com`;
-  if (navigator.share) {
-    navigator.share({ title: 'Animus Pet Personality', text, url: 'https://animuspet.com' }).catch(() => {});
-  } else if (navigator.clipboard) {
-    navigator.clipboard.writeText(text).then(() => alert('Copied to clipboard! 🐾'));
+// ── DARK MODE ──
+function toggleDark() {
+  const isDark = document.body.classList.toggle('dark');
+  document.getElementById('dark-toggle').textContent = isDark ? '☀️' : '🌙';
+  try { localStorage.setItem('animus-dark', isDark ? '1' : '0'); } catch(e) {}
+}
+(function() {
+  try { if (localStorage.getItem('animus-dark') === '1') { document.body.classList.add('dark'); document.getElementById('dark-toggle').textContent = '☀️'; } } catch(e) {}
+})();
+
+// ── CONFETTI ──
+(function() {
+  const canvas = document.getElementById('confetti-canvas');
+  const ctx = canvas.getContext('2d');
+  let pieces = [], raf;
+  const COLORS = ['#E8820C','#F4A340','#FDE8CC','#7C5CBF','#3DAA7A','#E84B6A','#F9C06B','#A886E8'];
+
+  function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  window.addEventListener('resize', resize); resize();
+
+  function makePiece() {
+    return {
+      x: Math.random() * canvas.width,
+      y: -12,
+      r: Math.random() * 7 + 4,
+      color: COLORS[Math.floor(Math.random() * COLORS.length)],
+      vx: (Math.random() - 0.5) * 3,
+      vy: Math.random() * 3 + 2,
+      angle: Math.random() * Math.PI * 2,
+      spin: (Math.random() - 0.5) * 0.18,
+      shape: Math.random() > 0.5 ? 'rect' : 'circle',
+      opacity: 1
+    };
+  }
+
+  window.launchConfetti = function() {
+    cancelAnimationFrame(raf);
+    pieces = [];
+    for (let i = 0; i < 160; i++) {
+      const p = makePiece();
+      p.y = Math.random() * -200;
+      pieces.push(p);
+    }
+    loop();
+    setTimeout(() => { cancelAnimationFrame(raf); ctx.clearRect(0, 0, canvas.width, canvas.height); }, 4500);
+  };
+
+  function loop() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    pieces.forEach((p, i) => {
+      p.x += p.vx; p.y += p.vy; p.angle += p.spin;
+      p.vy += 0.06;
+      if (p.y > canvas.height * 0.8) p.opacity -= 0.035;
+      ctx.save();
+      ctx.globalAlpha = Math.max(0, p.opacity);
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.angle);
+      ctx.fillStyle = p.color;
+      if (p.shape === 'rect') {
+        ctx.fillRect(-p.r, -p.r / 2, p.r * 2, p.r);
+      } else {
+        ctx.beginPath(); ctx.arc(0, 0, p.r, 0, Math.PI * 2); ctx.fill();
+      }
+      ctx.restore();
+    });
+    pieces = pieces.filter(p => p.opacity > 0 && p.y < canvas.height + 20);
+    if (pieces.length > 0) raf = requestAnimationFrame(loop);
+    else ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+})();
+
+// ── PERSONALITY SHARE CARD ──
+let _shareCardPersonality = null;
+let _shareCardPetName = null;
+
+function openShareCard() {
+  const dominant = getDominantPersonality();
+  const p = personalities[dominant];
+  const petName = state.petName || (state.petType === 'dog' ? 'Your Pup' : 'Your Kitty');
+  _shareCardPersonality = p;
+  _shareCardPetName = petName;
+  document.getElementById('share-card-overlay').classList.add('open');
+  setTimeout(() => drawPersonalityCard(p, petName), 80);
+}
+
+function closeShareCard(event) {
+  if (event.target === document.getElementById('share-card-overlay'))
+    document.getElementById('share-card-overlay').classList.remove('open');
+}
+
+function drawPersonalityCard(p, petName) {
+  const canvas = document.getElementById('personality-card-canvas');
+  const W = 540, H = 960;
+  canvas.width = W; canvas.height = H;
+  canvas.style.width = '100%';
+  const ctx = canvas.getContext('2d');
+
+  // Gradient background based on personality colour
+  const grad = ctx.createLinearGradient(0, 0, W, H);
+  const c = p.color;
+  grad.addColorStop(0, shadeHex(c, -20));
+  grad.addColorStop(1, shadeHex(c, 30));
+  ctx.fillStyle = grad;
+  ctx.roundRect(0, 0, W, H, 32);
+  ctx.fill();
+
+  // Dot pattern overlay
+  ctx.fillStyle = 'rgba(255,255,255,0.05)';
+  for (let y = 20; y < H; y += 44)
+    for (let x = 20; x < W; x += 44) {
+      ctx.beginPath(); ctx.arc(x, y, 3, 0, Math.PI * 2); ctx.fill();
+    }
+
+  // Top paw badge
+  ctx.fillStyle = 'rgba(255,255,255,0.15)';
+  roundRect(ctx, W/2 - 60, 40, 120, 36, 18);
+  ctx.fill();
+  ctx.fillStyle = 'rgba(255,255,255,0.9)';
+  ctx.font = '500 13px DM Sans, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('🐾 animuspet.com', W/2, 63);
+
+  // Giant emoji
+  ctx.font = '110px serif';
+  ctx.textAlign = 'center';
+  ctx.fillText(p.emoji, W/2, 260);
+
+  // Pet name (script style)
+  ctx.fillStyle = 'rgba(255,255,255,0.75)';
+  ctx.font = 'italic 500 30px Playfair Display, serif';
+  ctx.textAlign = 'center';
+  ctx.fillText(petName + "'s personality", W/2, 310);
+
+  // Personality name
+  ctx.fillStyle = '#FFFFFF';
+  ctx.font = '900 62px Playfair Display, serif';
+  ctx.textAlign = 'center';
+  wrapText(ctx, p.name, W/2, 390, W - 80, 72);
+
+  // Divider
+  ctx.strokeStyle = 'rgba(255,255,255,0.25)';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(60, 470); ctx.lineTo(W - 60, 470); ctx.stroke();
+
+  // Description
+  ctx.fillStyle = 'rgba(255,255,255,0.82)';
+  ctx.font = '400 22px DM Sans, sans-serif';
+  wrapText(ctx, p.desc, W/2, 510, W - 100, 34);
+
+  // Trait pills
+  const traits = p.traits.map(t => t.label);
+  const pillH = 38, pillPad = 20, pillGap = 12;
+  let pillX = 0;
+  const totalPillW = traits.reduce((a, t) => a + ctx.measureText(t).width + pillPad * 2, 0) + pillGap * (traits.length - 1);
+  pillX = (W - totalPillW) / 2;
+  const pillY = 680;
+  ctx.font = '600 18px DM Sans, sans-serif';
+  traits.forEach(trait => {
+    const tw = ctx.measureText(trait).width + pillPad * 2;
+    ctx.fillStyle = 'rgba(255,255,255,0.22)';
+    roundRect(ctx, pillX, pillY, tw, pillH, pillH/2);
+    ctx.fill();
+    ctx.fillStyle = 'rgba(255,255,255,0.95)';
+    ctx.textAlign = 'left';
+    ctx.fillText(trait, pillX + pillPad, pillY + 26);
+    pillX += tw + pillGap;
+  });
+
+  // Bottom bar
+  ctx.fillStyle = 'rgba(0,0,0,0.2)';
+  roundRect(ctx, 0, H - 100, W, 100, 0);
+  ctx.fill();
+  ctx.fillStyle = 'rgba(255,255,255,0.9)';
+  ctx.font = '700 20px DM Sans, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('Discover your pet\'s personality', W/2, H - 56);
+  ctx.fillStyle = 'rgba(255,255,255,0.6)';
+  ctx.font = '400 16px DM Sans, sans-serif';
+  ctx.fillText('animuspet.com — Free quiz, instant results', W/2, H - 28);
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
+}
+
+function wrapText(ctx, text, x, y, maxW, lineH) {
+  const words = text.split(' ');
+  let line = '';
+  let cy = y;
+  words.forEach((word, i) => {
+    const test = line + word + ' ';
+    if (ctx.measureText(test).width > maxW && i > 0) {
+      ctx.fillText(line.trim(), x, cy);
+      line = word + ' ';
+      cy += lineH;
+    } else { line = test; }
+  });
+  ctx.fillText(line.trim(), x, cy);
+}
+
+function shadeHex(hex, pct) {
+  const n = parseInt(hex.slice(1), 16);
+  const r = Math.min(255, Math.max(0, (n >> 16) + pct));
+  const g = Math.min(255, Math.max(0, ((n >> 8) & 0xff) + pct));
+  const b = Math.min(255, Math.max(0, (n & 0xff) + pct));
+  return '#' + [r, g, b].map(v => v.toString(16).padStart(2,'0')).join('');
+}
+
+// ── BLOG DATA ──
+const blogPosts = [
+  {
+    tag: '🐕 Dog Behavior',
+    title: "What Your Dog's Personality Type Says About Their Training Style",
+    date: 'June 12, 2025',
+    readTime: '⏱ 5 min read',
+    avatar: '🐾',
+    coverBg: 'linear-gradient(135deg,#2a1a00 0%,#7a3d00 50%,#c46200 100%)',
+    coverEmoji: '🏃🐕',
+    body: `
+      <p>If you've ever felt like training your dog is harder than it should be, there's a good chance the issue isn't stubbornness — it's a mismatch between your methods and your dog's personality type.</p>
+      <p>At Animus, we've identified four core personality types in dogs: <strong>The Adventurer</strong>, <strong>The Cuddler</strong>, <strong>The Zen Master</strong>, and <strong>The Social Butterfly</strong>. Each one responds best to a different training approach — and getting this right can cut your training time in half.</p>
+
+      <h3>🏃 The Adventurer: Make It a Challenge</h3>
+      <p>Adventurers are high-energy, easily bored, and respond poorly to repetitive drills. They shine with <strong>puzzle-based training</strong> and activities that tap into their natural drive to explore. Short bursts of intense engagement work better than long sessions. Think scent trails, agility work, and timed tasks. If they feel challenged, they'll stay locked in.</p>
+
+      <h3>🤗 The Cuddler: Positive Reinforcement Always</h3>
+      <p>Cuddlers are extremely sensitive to tone and emotional signals. They thrive on <strong>praise, physical affection, and consistency</strong>. Harsh corrections — even mild ones — can cause them to shut down and become withdrawn. Reward-based training with clear signals and lots of encouragement is the gold standard for this type. They want to make you happy; your job is to show them how.</p>
+
+      <h3>🧘 The Zen Master: Patience Over Pressure</h3>
+      <p>Zen Masters are thoughtful and low-reactive. They won't rush into a command just because you repeated it louder. What works is <strong>calm, low-pressure repetition</strong> paired with food rewards. They learn steadily and retain well — you just can't rush the process. A quiet training environment with minimal distractions is ideal.</p>
+
+      <h3>🦋 The Social Butterfly: Use the Group</h3>
+      <p>Social Butterflies are highly motivated by interaction and audience. They learn fastest in <strong>group training classes</strong> where they can show off and feed off other dogs' energy. Solo training sessions can feel boring to them. Leaning into their social nature — incorporating group play rewards and public practice — gets results fast.</p>
+
+      <h3>The Key Takeaway</h3>
+      <p>Training isn't one-size-fits-all, and the most common training failures come from applying the wrong method to the wrong personality. Take the <strong>Animus pet personality quiz</strong> to find out which type your dog is — it's free and takes about 2 minutes. The results include specific training tips tailored to their profile.</p>
+      <p>Understanding your dog's personality isn't just useful for training — it's the foundation for a deeper, happier relationship with your companion.</p>
+    `
+  },
+  {
+    tag: '🐱 Cat Behavior',
+    title: 'Do Cats Really Have Personalities? What Science (and Your Pet) Already Know',
+    date: 'May 28, 2025',
+    readTime: '⏱ 6 min read',
+    avatar: '🐈',
+    coverBg: 'linear-gradient(135deg,#0a1a2e 0%,#0e3a5a 50%,#1a6090 100%)',
+    coverEmoji: '🔬🐱',
+    body: `
+      <p>For decades, popular culture painted cats as aloof, indifferent creatures who tolerate humans at best. But behavioral science has been quietly dismantling that myth — and what researchers have found is fascinating.</p>
+      <p>Cats have <strong>stable, measurable personality traits</strong> that influence how they interact with people, manage stress, respond to novelty, and form attachments. And those traits aren't random — they cluster into consistent types.</p>
+
+      <h3>What the Research Shows</h3>
+      <p>A landmark study from the University of South Australia identified five core feline personality factors — including neuroticism, extraversion, dominance, impulsiveness, and agreeableness. Sound familiar? It maps onto frameworks used for human personality research. Cats aren't just fuzzy mysteries; they're psychologically complex individuals.</p>
+      <p>Another study published in <em>PLOS ONE</em> found that <strong>cats form secure attachment bonds with their owners</strong>, comparable to what infants display toward caregivers. The notion that cats don't care about you — science says otherwise.</p>
+
+      <h3>Why Personality Type Matters for Cat Care</h3>
+      <ul>
+        <li><strong>Environment design:</strong> A Zen Master cat needs quiet, low-stimulation spaces. A Social Butterfly cat needs interactive toys and frequent engagement.</li>
+        <li><strong>Vet visits:</strong> High-neuroticism cats (those with anxious or reactive personalities) need specific handling strategies to avoid trauma during checkups.</li>
+        <li><strong>Multi-pet households:</strong> Knowing your cat's personality type helps you predict compatibility with new animals before introducing them.</li>
+        <li><strong>Enrichment:</strong> The right enrichment for your cat depends on their personality. What works for one does nothing for another.</li>
+      </ul>
+
+      <h3>The Four Animus Cat Types</h3>
+      <p>Our quiz maps your cat's behaviors onto four dominant personalities: <strong>The Adventurer</strong> (curious, daring, loves exploring), <strong>The Cuddler</strong> (lap-loving, sensitive, bonded deeply to one person), <strong>The Zen Master</strong> (calm, observant, low-stress), and <strong>The Social Butterfly</strong> (chatty, playful, social with everyone).</p>
+      <p>Each type comes with specific care tips, enrichment recommendations, and product suggestions matched to their profile.</p>
+
+      <h3>How to Use This</h3>
+      <p>The best way to start is to take the Animus quiz — it asks 8 quick questions about your cat's actual behavior (not what you wish they did) and returns an accurate, nuanced personality breakdown. No email required to see results.</p>
+      <p>Understanding your cat's personality type isn't about labeling them — it's about meeting them where they are, and building a relationship on that foundation.</p>
+    `
+  }
+];
+
+let currentBlogPost = null;
+
+function openBlogPost(idx) {
+  const post = blogPosts[idx];
+  currentBlogPost = idx;
+  const coverEl = document.getElementById('blog-post-cover-anim');
+  coverEl.style.background = post.coverBg || 'linear-gradient(135deg,#2a1a00,#c46200)';
+  coverEl.textContent = post.coverEmoji || '🐾';
+  document.getElementById('blog-post-tag').textContent = post.tag;
+  document.getElementById('blog-post-title').textContent = post.title;
+  document.getElementById('blog-post-date').textContent = post.date;
+  document.getElementById('blog-post-read-time').textContent = post.readTime;
+  document.getElementById('blog-post-avatar').textContent = post.avatar;
+  document.getElementById('blog-post-body').innerHTML = post.body;
+  // Sync like button state
+  const liked = localStorage.getItem('animus_like_' + idx) === '1';
+  const modalLikeBtn = document.getElementById('modal-like-btn');
+  const likeCount = parseInt(document.getElementById('like-count-' + idx).textContent);
+  modalLikeBtn.className = 'blog-action-btn' + (liked ? ' liked' : '');
+  modalLikeBtn.innerHTML = (liked ? '❤️' : '🤍') + ' <span>' + likeCount + '</span>';
+  document.getElementById('blog-post-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeBlogPost() {
+  document.getElementById('blog-post-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeBlogPostOnBg(e) {
+  if (e.target === document.getElementById('blog-post-overlay')) closeBlogPost();
+}
+
+function toggleLike(e, idx) {
+  e.stopPropagation();
+  const key = 'animus_like_' + idx;
+  const liked = localStorage.getItem(key) === '1';
+  const countEl = document.getElementById('like-count-' + idx);
+  const btn = document.getElementById('like-btn-' + idx);
+  let count = parseInt(countEl.textContent);
+  if (liked) {
+    localStorage.removeItem(key);
+    count--;
+    btn.className = 'blog-action-btn';
+    btn.innerHTML = '❤️ <span id="like-count-' + idx + '">' + count + '</span>';
+    showToast('Unliked 🤍');
   } else {
-    prompt('Copy and share:', text);
+    localStorage.setItem(key, '1');
+    count++;
+    btn.className = 'blog-action-btn liked';
+    btn.innerHTML = '❤️ <span id="like-count-' + idx + '">' + count + '</span>';
+    showToast('Liked! ❤️');
   }
 }
+
+function toggleLikeFromModal() {
+  if (currentBlogPost === null) return;
+  const idx = currentBlogPost;
+  const key = 'animus_like_' + idx;
+  const liked = localStorage.getItem(key) === '1';
+  const countEl = document.getElementById('like-count-' + idx);
+  const cardBtn = document.getElementById('like-btn-' + idx);
+  const modalBtn = document.getElementById('modal-like-btn');
+  let count = parseInt(countEl.textContent);
+  if (liked) {
+    localStorage.removeItem(key);
+    count--;
+    cardBtn.className = 'blog-action-btn';
+    cardBtn.innerHTML = '❤️ <span id="like-count-' + idx + '">' + count + '</span>';
+    modalBtn.className = 'blog-action-btn';
+    modalBtn.innerHTML = '🤍 <span>' + count + '</span>';
+    showToast('Unliked 🤍');
+  } else {
+    localStorage.setItem(key, '1');
+    count++;
+    cardBtn.className = 'blog-action-btn liked';
+    cardBtn.innerHTML = '❤️ <span id="like-count-' + idx + '">' + count + '</span>';
+    modalBtn.className = 'blog-action-btn liked';
+    modalBtn.innerHTML = '❤️ <span>' + count + '</span>';
+    showToast('Liked! ❤️');
+  }
+}
+
+function shareBlogPost(e, idx) {
+  e.stopPropagation();
+  const post = blogPosts[idx];
+  doShare(post.title);
+}
+
+function shareBlogPostFromModal() {
+  if (currentBlogPost === null) return;
+  doShare(blogPosts[currentBlogPost].title);
+}
+
+function doShare(title) {
+  const url = window.location.href.split('?')[0];
+  if (navigator.share) {
+    navigator.share({ title: title, text: 'Check this out from Animus!', url: url })
+      .catch(() => {});
+  } else {
+    navigator.clipboard.writeText(url).then(() => showToast('Link copied! 🔗')).catch(() => {
+      showToast('Share: ' + url);
+    });
+  }
+}
+
+// Restore like state on page load
+(function initLikes() {
+  [0, 1].forEach(idx => {
+    if (localStorage.getItem('animus_like_' + idx) === '1') {
+      const btn = document.getElementById('like-btn-' + idx);
+      if (btn) {
+        const count = btn.querySelector('span') ? btn.querySelector('span').textContent : '0';
+        btn.className = 'blog-action-btn liked';
+      }
+    }
+  });
+})();
+
 </script>
 </body>
 </html>
